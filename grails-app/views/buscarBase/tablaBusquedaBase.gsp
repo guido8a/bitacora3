@@ -1,4 +1,7 @@
 <util:renderHTML html="${msg}"/>
+<asset:stylesheet src="/apli/lzm.context-0.5.css"/>
+<asset:javascript src="/apli/lzm.context-0.5.js"/>
+
 
 <style type="text/css">
 table {

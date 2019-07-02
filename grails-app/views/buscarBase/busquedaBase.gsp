@@ -95,6 +95,11 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<div id="cargando" class="text-center hidden">
+    <asset:image src="apli/spinner32.gif" style="padding: 40px;"/>
+    <div class="loading-footer">Espere por favor</div>
+</div>
+
 
 <script>
     $(function () {
@@ -108,8 +113,13 @@
 
 <script type="text/javascript">
 
+
+
     $(".btnBusqueda").click(function () {
-        $("#bandeja").html("").append($("<div style='width:100%; text-align: center;'/>").append(spinnerSquare64));
+        // $("#bandeja").html("").append($("<div style='width:100%; text-align: center;'/>").append(spinnerSquare64));
+
+        $("#bandeja").append($("#cargando").removeClass('hidden'));
+
         var buscar = $("#buscar").val();
 
         var datos = "buscar=" + buscar;
