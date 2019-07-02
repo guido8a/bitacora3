@@ -28,6 +28,9 @@
     <asset:javascript src="/apli/bootbox.js"/>
     <asset:javascript src="/apli/bootbox.js"/>
     <asset:javascript src="/apli/lzm.context-0.5.js"/>
+    <asset:javascript src="/jquery/jquery.validate.min.js"/>
+    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>
+    <asset:javascript src="/jquery/messages_es.js"/>
 
 </head>
 
@@ -49,13 +52,13 @@
 
 <mn:menu title="${g.layoutTitle(default: 'Bitácora')}"/>
 
-<div class="container" style="min-width: 1000px !important;">
+<div class="container" style="min-width: 1000px !important; margin-top: 80px; overflow-y: hidden">
     <g:layoutBody/>
 </div>
 
-<div id="spinner" class="spinner" style="display:none;">
-    <g:message code="spinner.alt" default="Loading&hellip;"/>
-</div>
+%{--<div id="spinner" class="spinner" style="display:none;">--}%
+%{--    <g:message code="spinner.alt" default="Loading&hellip;"/>--}%
+%{--</div>--}%
 
 <asset:javascript src="application.js"/>
 

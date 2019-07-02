@@ -4,16 +4,17 @@
 <head>
     <meta name="layout" content="main">
     <title>Bitácora - Artículo</title>
-    <script src="${resource(dir: 'js/plugins/ckeditor', file: 'ckeditor.js')}"></script>
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
-    <script src="${resource(dir: 'js/plugins/jQuery-File-Upload-9.5.6/js/vendor', file: 'jquery.ui.widget.js')}"></script>
-    <script src="${resource(dir: 'js/plugins/jQuery-File-Upload-9.5.6/js/imgResize', file: 'load-image.min.js')}"></script>
-    <script src="${resource(dir: 'js/plugins/jQuery-File-Upload-9.5.6/js/imgResize', file: 'canvas-to-blob.min.js')}"></script>
-    <script src="${resource(dir: 'js/plugins/jQuery-File-Upload-9.5.6/js', file: 'jquery.iframe-transport.js')}"></script>
-    <script src="${resource(dir: 'js/plugins/jQuery-File-Upload-9.5.6/js', file: 'jquery.fileupload.js')}"></script>
-    <script src="${resource(dir: 'js/plugins/jQuery-File-Upload-9.5.6/js', file: 'jquery.fileupload-process.js')}"></script>
-    <script src="${resource(dir: 'js/plugins/jQuery-File-Upload-9.5.6/js', file: 'jquery.fileupload-image.js')}"></script>
-    <link href="${resource(dir: 'js/plugins/jQuery-File-Upload-9.5.6/css', file: 'jquery.fileupload.css')}" rel="stylesheet">
+
+    <asset:javascript src="/jquery-3.3.1.min.js"/>
+    <asset:javascript src="/ckeditor/ckeditor.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/load-image.min.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/canvas-to-blob.min.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.iframe-transport.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-process.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-image.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/css/jquery.fileupload.css"/>
 
     <style type="text/css">
     .mediano {
@@ -63,6 +64,7 @@
         line-height      : 100%;
         font-size        : 14px;
         font-weight      : bold;
+
     }
 
     .background-image {
@@ -101,7 +103,7 @@
 
     <div class="panel-heading">
         <h3 class="panel-title" style="text-align: right"><i class="fa fa-pencil-square"></i> Bitácora - Artículo
-           "${base?.problema?.size() < 26 ? base?.problema : base?.problema[0..25]+"..."}"</h3>
+        "${base?.problema?.size() < 26 ? base?.problema : base?.problema[0..25]+"..."}"</h3>
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success sobrepuesto" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
@@ -215,32 +217,32 @@
                 %{--//tab imágenes--}%
                 <div id="imagenes" class="tab-pane fade">
 
-                <g:if test="${base?.id}">
+                    <g:if test="${base?.id}">
 
-                    <div class="row">
-                        <div class="col-md-10">
-                            <label class="col-md-5 control-label text-info">
-                                Cargue imágenes referentes al tema: '${base?.problema}"
-                            </label>
-                            <div class="col-md-6">
-                                <span class="btn btn-success fileinput-button" style="position: relative;height: 40px;margin-top: 10px">
-                                    <i class="glyphicon glyphicon-plus"></i>
-                                    <span>Seleccionar archivos</span>
-                                    <input type="file" name="file" id="file" class="file" multiple accept=".jpeg, .jpg, .png">
-                                </span>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-md-5 control-label text-info">
+                                    Cargue imágenes referentes al tema: '${base?.problema}"
+                                </label>
+                                <div class="col-md-6">
+                                    <span class="btn btn-success fileinput-button" style="position: relative;height: 40px;margin-top: 10px">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>Seleccionar archivos</span>
+                                        <input type="file" name="file" id="file" class="file" multiple accept=".jpeg, .jpg, .png">
+                                    </span>
+                                </div>
                             </div>
                         </div>
+                    </g:if>
+
+                    <div style="margin-top:15px;margin-bottom: 20px" class="vertical-container" id="files">
+                        <p class="css-vertical-text" id="titulo-arch" style="display: none">Imagen</p>
+
+                        <div class="linea" id="linea-arch" style="display: none"></div>
                     </div>
-                </g:if>
-
-                <div style="margin-top:15px;margin-bottom: 20px" class="vertical-container" id="files">
-                    <p class="css-vertical-text" id="titulo-arch" style="display: none">Imagen</p>
-
-                    <div class="linea" id="linea-arch" style="display: none"></div>
-                </div>
 
 
-                <div id="divCarrusel"></div>
+                    <div id="divCarrusel"></div>
 
 
                 </div>
@@ -550,7 +552,7 @@
 
     $("#btnVer").click(function () {
         var id_base = ${base?.id}
-        console.log('id:', id_base);
+            console.log('id:', id_base);
         $("#dialog-body").html(spinner);
         $.ajax({
             type: 'POST',
