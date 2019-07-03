@@ -203,10 +203,10 @@
                     if (parts[0] != "INFO") {
                         log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                         if (parts[0] == "SUCCESS") {
-                            setTimeout(function () {
+                            // setTimeout(function () {
                                 // location.reload(true);
                                 dialog.modal('hide');
-                            }, 800);
+                            // }, 800);
                         } else {
                             spinner.replaceWith($btn);
                             dialog.modal('hide');
