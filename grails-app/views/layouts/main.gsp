@@ -9,8 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
 
-
-
     <asset:javascript src="/jquery/jquery-2.2.4.js"/>
     %{--    <asset:javascript src="/apli/bootstrap.min.js"/>--}%
     <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>
@@ -31,19 +29,17 @@
     <asset:stylesheet src="/apli/bootstrap.css"/>
     <asset:stylesheet src="/bootstrap-grid.css"/>
     <asset:stylesheet src="/bootstrap-reboot.css"/>
-    <asset:stylesheet src="/fontawesome/font-awesome.min.css"/>
     <asset:stylesheet src="/jquery/jquery-ui-1.10.3.custom.min.css"/>
     <asset:stylesheet src="/apli/lzm.context-0.5.css"/>
     <asset:stylesheet src="/apli/jquery.pnotify.js"/>
     <asset:stylesheet src="/apli/jquery.pnotify.default.css"/>
-
-    %{--    <asset:javascript src="/jquery-3.3.1.min.js"/>--}%
-
+    <asset:stylesheet src="/fontawesome-5.9.0/css/fontawesome.css"/>
+    <asset:stylesheet src="/fontawesome-5.9.0/css/brands.css"/>
+    <asset:stylesheet src="/fontawesome-5.9.0/css/solid.css"/>
 
     <script type="text/javascript">
-
         var spinner = $('<asset:image src="apli/spinner32.gif" style="padding: 40px;"/>');
-
+        var spinnerSquare64 = $('<asset:image src="/spinner_64.GIF" style="padding: 40px;"/>');
     </script>
 
 

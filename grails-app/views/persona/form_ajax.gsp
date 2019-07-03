@@ -161,8 +161,7 @@
 
                         <div class="col-md-10">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="col-md-10">
+                                    <div class="col-md-8">
                                         <g:select name="perfil" from="${Prfl.list([sort: 'nombre'])}" class="form-control input-sm"
                                                   optionKey="id" optionValue="nombre"/>
                                     </div>
@@ -172,10 +171,9 @@
                                             <i class="fa fa-plus"></i> Agregar perfil
                                         </a>
                                     </div>
-                                </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row" style="margin-top: 5px">
                                 <div class="col-md-6">
                                     <table id="tblPerfiles" class="table table-hover table-bordered table-condensed">
                                         <g:each in="${perfiles.perfil}" var="perfil">
@@ -185,7 +183,7 @@
                                                 </td>
                                                 <td width="35">
                                                     <a href="#" class="btn btn-danger btn-xs btn-deletePerfil">
-                                                        <i class="fa fa-trash-o"></i>
+                                                        <i class="fa fa-trash"></i>
                                                     </a>
                                                 </td>
                                             </tr>

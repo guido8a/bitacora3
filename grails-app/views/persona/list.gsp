@@ -36,7 +36,7 @@
             <input type="text" class="form-control span2 input-search" placeholder="Buscar" value="${params.search}">
             <span class="input-group-btn">
                 <g:link action="list" class="btn btn-primary btn-search">
-                    <i class="fa fa-search"></i>&nbsp;
+                    <i class="fas fa-search"></i>&nbsp;
                 </g:link>
             </span>
         </div><!-- /input-group -->
@@ -78,6 +78,7 @@
                     <li>
                         <a href="#" class="a" data-tipo="inactivo">
                             <i class="fa fa-user text-muted"></i> Inactivo
+                        </a>
                         </a>
                     </li>
                     <li class="divider"></li>
@@ -188,6 +189,11 @@
         if ($form.valid()) {
             // $btn.replaceWith(spinner);
             // openLoader("Grabando");
+            var dialog = bootbox.dialog({
+                message: '<p class="text-center mb-0" style="font-size: 14px"><i class="fa fa-3x fa-spin fa-cog"></i> Guardando...</p>',
+                closeButton: false
+            });
+
             $.ajax({
                 type    : "POST",
                 url     : '${createLink(controller: 'persona', action:'save_ajax')}',
@@ -198,15 +204,16 @@
                         log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                         if (parts[0] == "SUCCESS") {
                             setTimeout(function () {
-                                location.reload(true);
+                                // location.reload(true);
+                                dialog.modal('hide');
                             }, 800);
                         } else {
                             spinner.replaceWith($btn);
+                            dialog.modal('hide');
                             return false;
                         }
                     } else {
-                        closeLoader();
-
+                        // closeLoader();
                         bootbox.dialog({
                             title   : "Alerta",
                             message : "<i class='fa fa-warning fa-3x pull-left text-warning text-shadow'></i>" + parts[1],
@@ -523,7 +530,7 @@
 
         var editar = {
             label           : 'Editar',
-            icon            : "fa fa-pencil",
+            icon            : "fa fa-pen",
             separator_after : true,
             action          : function (e) {
                 createEditRow(id, "persona");
@@ -532,7 +539,7 @@
 
         var config = {
             label           : 'Perfiles',
-            icon            : "fa fa-gears",
+            icon            : "fa fa-address-card",
             separator_after : true,
             url             : "${createLink(action: 'config')}/" + id
         };
@@ -569,7 +576,7 @@
 
         var eliminar = {
             label            : 'Eliminar Persona',
-            icon             : "fa fa-trash-o",
+            icon             : "fa fa-times-circle",
             separator_before : true,
             action           : function (e) {
                 deleteRow(id);
