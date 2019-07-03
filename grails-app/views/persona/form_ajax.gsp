@@ -1,6 +1,6 @@
 <%@ page import="seguridad.Departamento; seguridad.Prfl; seguridad.Persona" %>
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
+%{--<asset:javascript src="/jquery/ui.js"/>--}%
 <g:if test="${!personaInstance}">
     <elm:notFound elem="Persona" genero="o"/>
 </g:if>
@@ -18,8 +18,7 @@
                     </label>
                 </span>
                 <div class="col-md-8">
-                    <g:textField name="login" maxlength="15" pattern="${personaInstance.constraints.login.matches}"
-                                 class="form-control input-sm unique noEspacios required" value="${personaInstance?.login}" style="width: 160px"/>
+                    <g:textField name="login" maxlength="15" class="form-control input-sm unique noEspacios required" value="${personaInstance?.login}" style="width: 160px"/>
                 </div>
             </div>
 
@@ -48,8 +47,7 @@
                         </label>
 
                         <div class="col-md-8">
-                            <g:textField name="nombre" maxlength="40" pattern="${personaInstance.constraints.nombre.matches}"
-                                         required="" class="form-control input-sm required" value="${personaInstance?.nombre}"/>
+                            <g:textField name="nombre" maxlength="40" required="" class="form-control input-sm required" value="${personaInstance?.nombre}"/>
                         </div>
                     </span>
                 </div>
@@ -61,7 +59,7 @@
                         </label>
 
                         <div class="col-md-8">
-                            <g:textField name="apellido" maxlength="40" pattern="${personaInstance.constraints.apellido.matches}" required="" class="form-control input-sm required" value="${personaInstance?.apellido}"/>
+                            <g:textField name="apellido" maxlength="40" required="" class="form-control input-sm required" value="${personaInstance?.apellido}"/>
                         </div>
                     </span>
                 </div>
@@ -137,7 +135,7 @@
                         </label>
 
                         <div class="col-md-2">
-                            <g:textField name="sigla" maxlength="8" pattern="${personaInstance.constraints.sigla.matches}" class="form-control input-sm" value="${personaInstance?.sigla}"/>
+                            <g:textField name="sigla" maxlength="8" class="form-control input-sm" value="${personaInstance?.sigla}"/>
                         </div>
 
 
