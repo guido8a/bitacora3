@@ -5,16 +5,37 @@
     <meta name="layout" content="main">
     <title>Bitácora - Artículo</title>
 
-    <asset:javascript src="/jquery-3.3.1.min.js"/>
+%{--    <asset:javascript src="/jquery-3.3.1.min.js"/>--}%
+%{--    <asset:javascript src="/jquery/jquery-2.2.4.js"/>--}%
+%{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}%
     <asset:javascript src="/ckeditor/ckeditor.js"/>
-    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>
-    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/load-image.min.js"/>
-    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/canvas-to-blob.min.js"/>
-    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.iframe-transport.js"/>
-    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload.js"/>
-    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-process.js"/>
-    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-image.js"/>
-    <asset:javascript src="/jQuery-File-Upload-9.5.6/css/jquery.fileupload.css"/>
+%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>--}%
+%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/load-image.min.js"/>--}%
+%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/canvas-to-blob.min.js"/>--}%
+%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.iframe-transport.js"/>--}%
+%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload.js"/>--}%
+%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-process.js"/>--}%
+%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-image.js"/>--}%
+%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/css/jquery.fileupload.css"/>--}%
+
+%{--    <asset:javascript src="/jquery/jquery.validate.min.js"/>--}%
+%{--    <asset:javascript src="/jquery/jquery.validate.js"/>--}%
+%{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
+%{--    <asset:javascript src="/jquery/messages_es.js"/>--}%
+
+%{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.min.js"/>--}%
+%{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>--}%
+%{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
+%{--    <asset:javascript src="/jquery-validation-1.11.1/localization/messages_es.js"/>--}%
+
+%{--    <asset:javascript src="/jquery-validation-1.19.1/dist/jquery.validate.js"/>--}%
+%{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>--}%
+%{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
+%{--    <asset:javascript src="/jquery-validation-1.19.1/dist/localization/messages_es.js"/>--}%
+
+
+
+
 
     <style type="text/css">
     .mediano {
@@ -319,6 +340,7 @@
         var texto = CKEDITOR.instances.algoritmo.getData();
         var base_id = '${base?.id}';
         if($form.valid()){
+        // if($form.validate()){
             $.ajax({
                 type: 'POST',
                 url: "${createLink(controller: 'base', action: 'guardarProblema_ajax')}",

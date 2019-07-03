@@ -23,14 +23,14 @@
     <asset:javascript src="/apli/bootstrap.min.js"/>
     <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>
     <asset:javascript src="/apli/funciones.js"/>
-    <asset:javascript src="/apli/functions.js"/>
     <asset:javascript src="/apli/loader.js"/>
     <asset:javascript src="/apli/bootbox.js"/>
-    <asset:javascript src="/apli/bootbox.js"/>
     <asset:javascript src="/apli/lzm.context-0.5.js"/>
-    <asset:javascript src="/jquery/jquery.validate.min.js"/>
+
+    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.min.js"/>
+    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>
     <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>
-    <asset:javascript src="/jquery/messages_es.js"/>
+    <asset:javascript src="/jquery-validation-1.11.1/localization/messages_es.js"/>
 
 </head>
 
@@ -60,7 +60,7 @@
 %{--    <g:message code="spinner.alt" default="Loading&hellip;"/>--}%
 %{--</div>--}%
 
-<asset:javascript src="application.js"/>
+<asset:javascript src="jquery/application.js"/>
 
 </body>
 </html>
