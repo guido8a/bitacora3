@@ -12,7 +12,11 @@
     <asset:javascript src="/jquery/jquery-2.2.4.js"/>
     %{--    <asset:javascript src="/apli/bootstrap.min.js"/>--}%
     <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>
+
     <asset:javascript src="/apli/bootstrap.js"/>
+%{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
+%{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
+%{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
 
     <asset:javascript src="/apli/funciones.js"/>
     <asset:javascript src="/apli/loader.js"/>
