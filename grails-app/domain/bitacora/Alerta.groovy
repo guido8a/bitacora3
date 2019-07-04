@@ -3,9 +3,9 @@ package bitacora
 import seguridad.Departamento
 import seguridad.Persona
 
-//import happy.tramites.Tramite
+import audita.Auditable
 
-class Alerta {
+class Alerta implements Auditable {
     static auditable = true
     Persona persona
     Departamento departamento
@@ -30,6 +30,7 @@ class Alerta {
             fechaRecibido column: 'altrfcrc'
             actividad column: 'actv__id'
         }
+
     }
 
     static constraints = {
