@@ -5,33 +5,33 @@
     <meta name="layout" content="main">
     <title>Bitácora - Artículo</title>
 
-%{--    <asset:javascript src="/jquery-3.3.1.min.js"/>--}%
-%{--    <asset:javascript src="/jquery/jquery-2.2.4.js"/>--}%
-%{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}%
+    %{--    <asset:javascript src="/jquery-3.3.1.min.js"/>--}%
+    %{--    <asset:javascript src="/jquery/jquery-2.2.4.js"/>--}%
+    %{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}%
     <asset:javascript src="/ckeditor/ckeditor.js"/>
-%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>--}%
-%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/load-image.min.js"/>--}%
-%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/canvas-to-blob.min.js"/>--}%
-%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.iframe-transport.js"/>--}%
-%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload.js"/>--}%
-%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-process.js"/>--}%
-%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-image.js"/>--}%
-%{--    <asset:javascript src="/jQuery-File-Upload-9.5.6/css/jquery.fileupload.css"/>--}%
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/load-image.min.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/canvas-to-blob.min.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.iframe-transport.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-process.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-image.js"/>
+    <asset:javascript src="/jQuery-File-Upload-9.5.6/css/jquery.fileupload.css"/>
 
-%{--    <asset:javascript src="/jquery/jquery.validate.min.js"/>--}%
-%{--    <asset:javascript src="/jquery/jquery.validate.js"/>--}%
-%{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
-%{--    <asset:javascript src="/jquery/messages_es.js"/>--}%
+    %{--    <asset:javascript src="/jquery/jquery.validate.min.js"/>--}%
+    %{--    <asset:javascript src="/jquery/jquery.validate.js"/>--}%
+    %{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
+    %{--    <asset:javascript src="/jquery/messages_es.js"/>--}%
 
-%{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.min.js"/>--}%
-%{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>--}%
-%{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
-%{--    <asset:javascript src="/jquery-validation-1.11.1/localization/messages_es.js"/>--}%
+    %{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.min.js"/>--}%
+    %{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>--}%
+    %{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
+    %{--    <asset:javascript src="/jquery-validation-1.11.1/localization/messages_es.js"/>--}%
 
-%{--    <asset:javascript src="/jquery-validation-1.19.1/dist/jquery.validate.js"/>--}%
-%{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>--}%
-%{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
-%{--    <asset:javascript src="/jquery-validation-1.19.1/dist/localization/messages_es.js"/>--}%
+    %{--    <asset:javascript src="/jquery-validation-1.19.1/dist/jquery.validate.js"/>--}%
+    %{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>--}%
+    %{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
+    %{--    <asset:javascript src="/jquery-validation-1.19.1/dist/localization/messages_es.js"/>--}%
 
 
 
@@ -123,23 +123,28 @@
 <div class="panel panel-primary col-md-12">
 
     <div class="panel-heading">
-        <h3 class="panel-title" style="text-align: right"><i class="fa fa-pencil-square"></i> Bitácora - Artículo
-        "${base?.problema?.size() < 26 ? base?.problema : base?.problema[0..25]+"..."}"</h3>
-        <a href="#" id="btnGuardar" class="btn btn-sm btn-success sobrepuesto" title="Guardar información">
+
+        <h3 class="panel-title" style="margin-left: 480px" title="${base?.problema ?: ''}">
+                <i class="fa fa-pen"></i> Artículo:
+            "${base?.problema?.size() < 55 ? base?.problema : base?.problema[0..54]+"..."}"
+        </h3>
+
+        <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarr"
+           class="btn btn-sm btn-warning sobrepuesto" title="Consultar artículo">
+            <i class="fa fa-chevron-circle-left"></i> Consultar
+        </a>
+        <a href="#" id="btnGuardar" class="btn btn-sm btn-success sobrepuesto" style="margin-left: 103px" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
-        <a href="#" id="btnImprimir" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 94px" title="Imrpimir artículo">
+        <a href="#" id="btnImprimir" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 196px" title="Imrpimir artículo">
             <i class="fa fa-print"></i> Imprimir
         </a>
-        <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarr"
-           class="btn btn-sm btn-primary sobrepuesto" style="margin-left: 188px" title="Consultar artículo">
-            <i class="fa fa-check"></i> Consultar
-        </a>
-        <a href="#" id="btnBase" class="btn btn-sm btn-primary sobrepuesto"
-           style="margin-left: 290px" title="Crear nuevo registro">
+
+        <a href="#" id="btnBase" class="btn btn-sm btn-warning sobrepuesto"
+           style="margin-left: 291px" title="Crear nuevo registro">
             <i class="fa fa-check"></i> Crear Nuevo
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-primary sobrepuesto" style="margin-left: 410px" title="Ver registro">
+        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 414px" title="Ver registro">
             <i class="fa fa-search"></i> Ver
         </a>
     </div>
@@ -335,12 +340,16 @@
     });
 
     $("#btnGuardar").click(function () {
+
         var $form = $("#frmProblema");
-//        var texto = CKEDITOR.instances.editor1.getData();
         var texto = CKEDITOR.instances.algoritmo.getData();
         var base_id = '${base?.id}';
+
         if($form.valid()){
-        // if($form.validate()){
+            var dialog = bootbox.dialog({
+                message: '<p class="text-center mb-0" style="font-size: 14px"><i class="fa fa-3x fa-spin fa-cog"></i> Guardando...</p>',
+                closeButton: false
+            });
             $.ajax({
                 type: 'POST',
                 url: "${createLink(controller: 'base', action: 'guardarProblema_ajax')}",
@@ -358,10 +367,12 @@
                     var parte = msg.split("_");
                     if(parte[0] == 'ok'){
                         log("Problema guardado correctamente","success")
-                        setTimeout(function () {
-                            reCargar(parte[1]);
-                        }, 500);
+                        dialog.modal('hide');
+                        // setTimeout(function () {
+                        //     reCargar(parte[1]);
+                        // }, 500);
                     }else{
+                        dialog.modal('hide');
                         log("Error al guardar el problema","error")
                     }
                 }

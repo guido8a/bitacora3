@@ -41,13 +41,13 @@
             Buscar en la base de conocimiento por:
             <div class="btn-group">
                 <input id="buscar" type="search" class="form-control">
-                <span id="limpiaBuscar" class="glyphicon glyphicon-remove-circle"
-                      title="Limpiar texto de búsqueda"></span>
+%{--                <span id="limpiaBuscar" class="glyphicon glyphicon-remove-circle"--}%
+%{--                      title="Limpiar texto de búsqueda"></span>--}%
             </div>
             <a href="#" name="busqueda" class="btn btn-info btnBusqueda btn-ajax"><i
-                    class="fa fa-check-square-o"></i> Buscar</a>
+                    class="fas fa-search"></i> Buscar</a>
             <a href="#" id="actualizarPlbr" class="btn btn-success btnActualizar"><i
-                    class="fa fa-code-fork"></i> Actualiza Buscador</a>
+                    class="fa fa"></i> Actualiza Buscador</a>
         </div>
     </div>
 </div>
@@ -194,7 +194,7 @@
 
         var editar = {
             label: 'Editar',
-            icon: "fa fa-pencil",
+            icon: "fa fa-pen",
             action: function (e) {
                 location.href = '${createLink(controller: 'base', action: 'base')}/' + id
             }
@@ -203,7 +203,7 @@
 
         items.ver = ver;
 //                items.administrar = administrar;
-        items.anexos = anexos;
+//         items.anexos = anexos;
         items.editar = editar;
         items.aprobar = aprobar;
 
