@@ -14,13 +14,10 @@
     <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>
 
     <asset:javascript src="/apli/bootstrap.js"/>
-%{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
-%{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
-%{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
 
     <asset:javascript src="/apli/funciones.js"/>
     <asset:javascript src="/apli/loader.js"/>
-    <asset:javascript src="/apli/bootbox.all.min.js"/>
+    <asset:javascript src="/apli/bootbox.js"/>
     <asset:javascript src="/apli/lzm.context-0.5.js"/>
 
     <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.min.js"/>
