@@ -20,8 +20,7 @@
 
     %{--    <asset:javascript src="/jquery/jquery.validate.min.js"/>--}%
     %{--    <asset:javascript src="/jquery/jquery.validate.js"/>--}%
-    %{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.c
-    ustom.min.js"/>--}%
+    %{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
     %{--    <asset:javascript src="/jquery/messages_es.js"/>--}%
 
     %{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.min.js"/>--}%
