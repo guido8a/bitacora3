@@ -26,6 +26,7 @@
     <asset:javascript src="/jquery-validation-1.11.1/localization/messages_es.js"/>
 
     <asset:javascript src="/apli/jquery.pnotify.js"/>
+    <asset:javascript src="/apli/fontawesome.all.min.js"/>
 
     <asset:stylesheet src="/apli/bootstrap.css"/>
     <asset:stylesheet src="/bootstrap-grid.css"/>
@@ -34,9 +35,10 @@
     <asset:stylesheet src="/apli/lzm.context-0.5.css"/>
     <asset:stylesheet src="/apli/jquery.pnotify.js"/>
     <asset:stylesheet src="/apli/jquery.pnotify.default.css"/>
-    <asset:stylesheet src="/fontawesome-5.9.0/css/fontawesome.css"/>
-    <asset:stylesheet src="/fontawesome-5.9.0/css/brands.css"/>
-    <asset:stylesheet src="/fontawesome-5.9.0/css/solid.css"/>
+    <asset:stylesheet src="/apli/font-awesome.min.css"/>
+%{--    <asset:stylesheet src="/fontawesome-5.9.0/css/fontawesome.css"/>--}%
+%{--    <asset:stylesheet src="/fontawesome-5.9.0/css/brands.css"/>--}%
+%{--    <asset:stylesheet src="/fontawesome-5.9.0/css/solid.css"/>--}%
 
     <script type="text/javascript">
         var spinner = $('<asset:image src="apli/spinner32.gif" style="padding: 40px;"/>');
