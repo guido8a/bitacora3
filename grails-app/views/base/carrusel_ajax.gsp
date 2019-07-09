@@ -29,8 +29,10 @@
                     <a href="#" class="btn btn-danger btnEliminarImagen btn-sm" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 50%">
                         <i class="fa fa-times-circle"></i>
                     </a>
-                    <img src="${resource(dir: directorio, file: imagen?.ruta)}" style="padding: 10px; height: 400px"/>
-%{--                    <asset:image src="${resource(dir: directorio, file: imagen?.ruta)}" style="padding: 10px;"/>--}%
+%{--                    <asset:image src="${'apli/' + base?.id + "/" + imagen?.ruta}" style="padding: 10px; width: 400px"/>--}%
+                    <asset:image src="${directorio + imagen?.ruta}" style="padding: 10px; width: 400px"/>
+%{--                    <g:img dir="assets/apli/1/" file="${imagen?.ruta}" width="400px"/>--}%
+%{--                    <g:img dir="home/fabricio/imas/1/" file="${imagen?.ruta}" width="400px"/>--}%
                     <span>
                         <strong>Descripcion:</strong>  ${imagen?.descripcion}
                     </span>
@@ -41,7 +43,8 @@
                     <a href="#" class="btn btn-danger btnEliminarImagen btn-xs" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 50%">
                         <i class="fa fa-times-circle"></i>
                     </a>
-                    <img src="${resource(dir: directorio, file: imagen?.ruta)}" style="padding: 10px; height: 400px"/>
+%{--                    <img src="${resource(dir: directorio, file: imagen?.ruta)}" style="padding: 10px; height: 400px"/>--}%
+                    <asset:image src="${directorio + imagen?.ruta}" style="padding: 10px; width: 400px"/>
                     <span>
                         <strong>Descripcion:</strong> ${imagen?.descripcion}
                     </span>

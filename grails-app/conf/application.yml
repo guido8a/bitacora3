@@ -1,5 +1,10 @@
 ---
 grails:
+    resources:
+        pattern: '/**'
+    nuevoPath:
+        nuevo: 'apli/'
+        nuevo2: '/home/fabricio/imas/'
     profile: web
     codegen:
         defaultPackage: bitacora3

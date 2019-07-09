@@ -205,16 +205,17 @@ class BaseController extends seguridad.Shield {
 
         def base = Base.get(params.id)
         def listaImagenes = Imagen.findAllByBase(base)
-        def directorio = '/home/fabricio/imas/' + base?.id + "/"
+//        def directorio = '/home/fabricio/imas/' + base?.id + "/"
 //        def directorio = '/static/imagenes/' + base?.id + "/"
 
+        Config config = grailsApplication.config
+        def p = config.getProperty("grails.nuevoPath.nuevo")
 
-//        def f = this.class.classLoader.getProperties()
+        def directorio = p + base?.id + "/"
 
         println("directorio " + directorio)
-//        println(" - " + '/grails-app/')
 
-        return [listaImagenes: listaImagenes, directorio: directorio]
+        return [listaImagenes: listaImagenes, directorio: directorio, base: base]
 
     }
 
@@ -235,17 +236,17 @@ class BaseController extends seguridad.Shield {
 
 //        String folderPath = "${cdnFolder}/pointOfInterest/${params.id}"
 
-
-        GrailsApplication grailsApplication
-//        Config config = grailsApplication.config
-
 //        def cdnFolder = config.getRequiredProperty("grails.guides.cdnFolder")
 //        def cdnFolder = grailsApplication.config.getProperty("grails.guides.cdnFolder")
-        def cdnFolder = "/home/fabricio/imas"
-//        def cdnFolder = '/static/imagenes'
+//        def cdnFolder = grailsApplication.config.getProperty("grails.nuevoPath")
+//        def cdnFolder = '/grails-app/images/assets/apli'
+
+
+
+        def cdnFolder = "/home/fabricio/IdeaProjects/bitacora3/grails-app/assets/images/apli"
         def path = "${cdnFolder}/${params.id}/"
 
-
+        println("folder " + cdnFolder)
 //        File folder = new File(folderPath)
         File folder = new File(path)
 
@@ -283,6 +284,7 @@ class BaseController extends seguridad.Shield {
 
                 def nombre = fileName + "." + ext
                 def pathFile = path + nombre
+                println("---->" + pathFile)
                 def fn = fileName
                 def src = new File(pathFile)
                 def i = 1
