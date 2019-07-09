@@ -973,7 +973,7 @@ class PersonaController extends seguridad.Shield {
 
 
     def save_ajax() {
-        println "save_ajx: $params"
+//        println "save_ajx: $params"
         params.mail = params.mail.toString().toLowerCase()
         def personaInstance = new Persona()
         if (params.id) {
@@ -1039,7 +1039,6 @@ class PersonaController extends seguridad.Shield {
             }
         }
         render "SUCCESS*${params.id ? 'Actualización' : 'Creación'} de Persona exitosa."
-        return
     } //save para grabar desde ajax
 
 

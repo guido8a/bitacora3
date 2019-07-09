@@ -32,7 +32,7 @@
 
 <body>
 <div style="margin-top: 0px; min-height: 60px" class="vertical-container">
-    <p class="css-vertical-text">Buscar</p>
+    <p class="css-vertical-text"></p>
 
     <div class="linea"></div>
 
@@ -41,13 +41,17 @@
             Buscar en la base de conocimiento por:
             <div class="btn-group">
                 <input id="buscar" type="search" class="form-control">
-%{--                <span id="limpiaBuscar" class="glyphicon glyphicon-remove-circle"--}%
-%{--                      title="Limpiar texto de búsqueda"></span>--}%
+                %{--                <span id="limpiaBuscar" class="glyphicon glyphicon-remove-circle"--}%
+                %{--                      title="Limpiar texto de búsqueda"></span>--}%
             </div>
             <a href="#" name="busqueda" class="btn btn-info btnBusqueda btn-ajax"><i
                     class="fas fa-search"></i> Buscar</a>
             <a href="#" id="actualizarPlbr" class="btn btn-success btnActualizar"><i
                     class="fa fa"></i> Actualiza Buscador</a>
+            <a href="#" id="btnBase" class="btn btn-warning sobrepuesto"
+               title="Crear nuevo registro">
+                <i class="fa fa-check"></i> Crear Nuevo
+            </a>
         </div>
     </div>
 </div>
@@ -205,7 +209,7 @@
 //                items.administrar = administrar;
 //         items.anexos = anexos;
         items.editar = editar;
-        items.aprobar = aprobar;
+        // items.aprobar = aprobar;
 
         return items
     }

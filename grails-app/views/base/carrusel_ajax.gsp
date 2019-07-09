@@ -23,28 +23,27 @@
     %{--<li data-target="#carousel-example-generic" data-slide-to="2"></li>--}%
     </ol>
     <div class="carousel-inner" role="listbox">
-
-
         <g:each in="${listaImagenes}" var="imagen" status="k">
             <g:if test="${k == 0}">
                 <div class="item active">
-                    <a href="#" class="btn btn-danger btnEliminarImagen btn-xs" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 50%">
-                        <i class="fa fa-close"></i>
+                    <a href="#" class="btn btn-danger btnEliminarImagen btn-sm" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 50%">
+                        <i class="fa fa-times-circle"></i>
                     </a>
-                    <img src="${resource(dir: 'imagenes', file: imagen?.ruta)}" style="padding: 10px; height: 400px"/>
+                    <img src="${resource(dir: directorio, file: imagen?.ruta)}" style="padding: 10px; height: 400px"/>
+%{--                    <asset:image src="${resource(dir: directorio, file: imagen?.ruta)}" style="padding: 10px;"/>--}%
                     <span>
-                        ${imagen?.descripcion}
+                        <strong>Descripcion:</strong>  ${imagen?.descripcion}
                     </span>
                 </div>
             </g:if>
             <g:else>
                 <div class="item">
                     <a href="#" class="btn btn-danger btnEliminarImagen btn-xs" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 50%">
-                        <i class="fa fa-close"></i>
+                        <i class="fa fa-times-circle"></i>
                     </a>
-                    <img src="${resource(dir: 'imagenes', file: imagen?.ruta)}" style="padding: 10px; height: 400px"/>
+                    <img src="${resource(dir: directorio, file: imagen?.ruta)}" style="padding: 10px; height: 400px"/>
                     <span>
-                        ${imagen?.descripcion}
+                        <strong>Descripcion:</strong> ${imagen?.descripcion}
                     </span>
                 </div>
             </g:else>

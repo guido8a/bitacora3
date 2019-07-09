@@ -1,8 +1,9 @@
 package bitacora
 
 import seguridad.Persona
+import audita.Auditable
 
-class Base {
+class Base implements Auditable{
     Persona persona
     Tema tema
     Date fecha

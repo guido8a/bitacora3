@@ -5,9 +5,6 @@
     <meta name="layout" content="main">
     <title>Bitácora - Artículo</title>
 
-    %{--    <asset:javascript src="/jquery-3.3.1.min.js"/>--}%
-    %{--    <asset:javascript src="/jquery/jquery-2.2.4.js"/>--}%
-    %{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}%
     <asset:javascript src="/ckeditor/ckeditor.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/load-image.min.js"/>
@@ -125,8 +122,8 @@
     <div class="panel-heading">
 
         <h3 class="panel-title" style="margin-left: 480px" title="${base?.problema ?: ''}">
-                <i class="fa fa-pen"></i> Artículo:
-            "${base?.problema?.size() < 55 ? base?.problema : base?.problema[0..54]+"..."}"
+            <i class="fa fa-pen"></i> Artículo:
+        "${base?.problema?.size() < 55 ? base?.problema : base?.problema[0..54]+"..."}"
         </h3>
 
         <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarr"
@@ -244,19 +241,22 @@
                 <div id="imagenes" class="tab-pane fade">
 
                     <g:if test="${base?.id}">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label text-info" style="font-size: 14px">
+                                    Cargue imágenes referentes al tema: <strong>'${base?.problema}"</strong>
+                                </label>
+                            </div>
+                        </div>
 
                         <div class="row">
-                            <div class="col-md-10">
-                                <label class="col-md-5 control-label text-info">
-                                    Cargue imágenes referentes al tema: '${base?.problema}"
-                                </label>
-                                <div class="col-md-6">
-                                    <span class="btn btn-success fileinput-button" style="position: relative;height: 40px;margin-top: 10px">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                        <span>Seleccionar archivos</span>
-                                        <input type="file" name="file" id="file" class="file" multiple accept=".jpeg, .jpg, .png">
-                                    </span>
-                                </div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-6">
+                                %{--                                    <span class="btn btn-success fileinput-button" style="position: relative;height: 40px;margin-top: 10px">--}%
+                                %{--                                        <i class="glyphicon glyphicon-plus"></i>--}%
+                                %{--                                        <span>Seleccionar archivos</span>--}%
+                                <input type="file" name="file" id="file" title="Buscar Archivo" class="file btn btn-success" multiple accept=".jpeg, .jpg, .png">
+                                %{--                                    </span>--}%
                             </div>
                         </div>
                     </g:if>
@@ -275,7 +275,7 @@
 
 
                 <div id="videos" class="tab-pane fade">
-                    <h4>VIDEOS</h4>
+                    <h4></h4>
                 </div>
             </div>
         </div>
@@ -287,7 +287,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                %{--<h4 class="modal-title">Problema y Solución</h4>--}%
                 Problema y Solución..
             </div>
 
@@ -328,15 +327,7 @@
 
 
     $("#btnBase").click(function () {
-//        CKEDITOR.instances.algoritmo.setData('');
-//        $("#prbl").val('');
-//        $("#clve").val('');
-//        $("#slcn").val('');
-//        $("#refe").val('');
-//        $("#obsr").val('');
-
         location.href="${createLink(controller: 'base', action: 'base')}"
-
     });
 
     $("#btnGuardar").click(function () {
@@ -346,10 +337,7 @@
         var base_id = '${base?.id}';
 
         if($form.valid()){
-            var dialog = bootbox.dialog({
-                message: '<p class="text-center mb-0" style="font-size: 14px"><i class="fa fa-3x fa-spin fa-cog"></i> Guardando...</p>',
-                closeButton: false
-            });
+            var dialog = cargarLoader("Guardando...");
             $.ajax({
                 type: 'POST',
                 url: "${createLink(controller: 'base', action: 'guardarProblema_ajax')}",
@@ -366,7 +354,7 @@
                 success: function (msg) {
                     var parte = msg.split("_");
                     if(parte[0] == 'ok'){
-                        log("Problema guardado correctamente","success")
+                        log("Problema guardado correctamente","success");
                         dialog.modal('hide');
                         // setTimeout(function () {
                         //     reCargar(parte[1]);
@@ -610,7 +598,7 @@
     function cargarCarrusel (idO) {
         $.ajax({
             type    : "POST",
-            url     : "${createLink(action: 'carrusel_ajax')}",
+            url     : "${createLink(controller: 'base', action: 'carrusel_ajax')}",
             data:{
                 id: idO
             },

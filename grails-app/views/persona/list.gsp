@@ -79,7 +79,6 @@
                         <a href="#" class="a" data-tipo="inactivo">
                             <i class="fa fa-user text-muted"></i> Inactivo
                         </a>
-                        </a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -103,36 +102,14 @@
             <g:select name="perfil" from="${Prfl.list([sort: 'nombre'])}" optionKey="id" optionValue="nombre"
                       class="form-control input-sm perfiles" noSelection="['': 'Todos los perfiles']" value="${params.perfil}"/>
         </th>
-        %{--<th>Autoridad</th>--}%
     </tr>
     </thead>
     <tbody>
     <g:each in="${personaInstanceList}" status="i" var="personaInstance">
         <g:set var="del" value="${true}"/>
-    %{--<g:if test="${Tramite.countByDe(personaInstance) > 0}">--}%
-    %{--<g:set var="del" value="${false}"/>--}%
-    %{--</g:if>--}%
-    %{--<g:if test="${PersonaDocumentoTramite.countByPersona(personaInstance) > 0}">--}%
-    %{--<g:set var="del" value="${false}"/>--}%
-    %{--</g:if>--}%
-    %{--<g:if test="${ObservacionTramite.countByPersona(personaInstance) > 0}">--}%
-    %{--<g:set var="del" value="${false}"/>--}%
-    %{--</g:if>--}%
-    %{--<g:if test="${Accs.countByUsuarioOrAsignadoPor(personaInstance, personaInstance) > 0}">--}%
-    %{--<g:set var="del" value="${false}"/>--}%
-    %{--</g:if>--}%
         <g:if test="${Sesn.countByUsuario(personaInstance) > 0}">
             <g:set var="del" value="${false}"/>
         </g:if>
-    %{--<g:if test="${PermisoUsuario.countByPersonaOrAsignadoPor(personaInstance, personaInstance) > 0}">--}%
-    %{--<g:set var="del" value="${false}"/>--}%
-    %{--</g:if>--}%
-
-    %{--<g:set var="rolPara" value="${RolPersonaTramite.findByCodigo('R001')}"/>--}%
-    %{--<g:set var="rolCopia" value="${RolPersonaTramite.findByCodigo('R002')}"/>--}%
-    %{--<g:set var="rolImprimir" value="${RolPersonaTramite.findByCodigo('I005')}"/>--}%
-
-
         <g:set var="perfiles" value="${Sesn.withCriteria {
             eq("usuario", personaInstance)
             or {
@@ -148,16 +125,10 @@
             }
         }}"/>
 
-    %{--<tr data-id="${personaInstance.id}" data-tramites="${tramites.size()}"--}%
         <tr data-id="${personaInstance.id}" data-tramites="0"
             class="${personaInstance.activo == 1 ? 'activo' : 'inactivo'} ${del ? 'eliminar' : ''}" id="trPersona">
             <td class="text-center">
-                %{--<g:if test="${personaInstance.puedeAdmin}">--}%
-                %{--<i class="fa fa-user text-${!personaInstance.estaActivo ? 'muted' : 'success'}"></i>--}%
-                %{--</g:if>--}%
-                %{--<g:else>--}%
                 <i class="fa fa-user text-${!personaInstance.estaActivo ? 'muted' : 'info'}"></i>
-                %{--</g:else>--}%
             </td>
             <td><elm:textoBusqueda texto='${fieldValue(bean: personaInstance, field: "login")}' search='${params.search}'/></td>
             <td><elm:textoBusqueda texto='${fieldValue(bean: personaInstance, field: "nombre")}' search='${params.search}'/></td>
@@ -188,11 +159,8 @@
         var idPersona = $("#trPersona").data("id");
         if ($form.valid()) {
             // $btn.replaceWith(spinner);
-            // openLoader("Grabando");
-            var dialog = bootbox.dialog({
-                message: '<p class="text-center mb-0" style="font-size: 14px"><i class="fa fa-3x fa-spin fa-cog"></i> Guardando...</p>',
-                closeButton: false
-            });
+
+           var dialog = cargarLoader("Guardando...");
 
             $.ajax({
                 type    : "POST",
@@ -203,10 +171,10 @@
                     if (parts[0] != "INFO") {
                         log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                         if (parts[0] == "SUCCESS") {
-                            // setTimeout(function () {
-                                // location.reload(true);
-                                dialog.modal('hide');
-                            // }, 800);
+                            dialog.modal('hide');
+                            setTimeout(function () {
+                            location.reload(true);
+                            }, 1000);
                         } else {
                             spinner.replaceWith($btn);
                             dialog.modal('hide');
@@ -343,95 +311,11 @@
                 }
             });
         } else {
-
             clase = "danger";
             icon = "${iconDesactivar}";
             textBtn = "Desactivar";
             textLoader = "Desactivando";
             url = "${createLink(action:'desactivar_ajax')}";
-
-            if (tramites == 0) {
-                textMsg = "<p>¿Está seguro que desea desactivar la persona seleccionada?</p>"
-                textMsg += "<p>No tiene trámites en su bandeja de entrada personal.</p>"
-                bootbox.dialog({
-                    title   : "Alerta",
-                    message : "<i class='fa " + icon + " fa-3x pull-left text-" + clase + " text-shadow'></i>" + textMsg,
-                    buttons : {
-                        cancelar : {
-                            label     : "Cancelar",
-                            className : "btn-primary",
-                            callback  : function () {
-                            }
-                        },
-                        eliminar : {
-                            label     : "<i class='fa " + icon + "'></i> " + textBtn,
-                            className : "btn-" + clase,
-                            callback  : function () {
-                                openLoader(textLoader);
-                                $.ajax({
-                                    type    : "POST",
-                                    url     : url,
-                                    data    : {
-                                        id : itemId
-                                    },
-                                    success : function (msg) {
-                                        var parts = msg.split("_");
-                                        log(parts[1], parts[0] == "OK" ? "success" : "error"); // log(msg, type, title, hide)
-                                        if (parts[0] == "OK") {
-                                            location.reload(true);
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
-                });
-            } else {
-                $.ajax({
-                    type    : "POST",
-                    url     : "${createLink(action:'verDesactivar_ajax')}",
-                    data    : {
-                        id       : itemId,
-                        tramites : tramites
-                    },
-                    success : function (msg) {
-                        bootbox.dialog({
-                            title   : "Alerta",
-                            message : msg,
-                            buttons : {
-                                cancelar : {
-                                    label     : "Cancelar",
-                                    className : "btn-primary",
-                                    callback  : function () {
-                                    }
-                                },
-                                eliminar : {
-                                    label     : "<i class='fa " + icon + "'></i> " + textBtn,
-                                    className : "btn-" + clase,
-                                    callback  : function () {
-                                        openLoader(textLoader);
-                                        $.ajax({
-                                            type    : "POST",
-                                            url     : url,
-                                            data    : {
-                                                id    : itemId,
-                                                quien : $("#cmbRedirect").val()
-                                            },
-                                            success : function (msg) {
-                                                var parts = msg.split("_");
-                                                log(parts[1], parts[0] == "OK" ? "success" : "error"); // log(msg, type, title, hide)
-                                                if (parts[0] == "OK") {
-                                                    location.reload(true);
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            }
-                        });
-                    }
-                });
-            }
         }
     }
     function createEditRow(id, tipo) {
@@ -496,8 +380,8 @@
 
         var estaActivo = $tr.hasClass("activo");
         var estaInactivo = $tr.hasClass("inactivo");
-
         var puedeEliminar = $tr.hasClass("eliminar");
+
         puedeEliminar = true;
 
         var ver = {
@@ -544,36 +428,6 @@
             url             : "${createLink(action: 'config')}/" + id
         };
 
-
-        %{-- var ausentismo = {--}%
-        %{-- label           : 'Ausentismo',--}%
-        %{-- icon            : "fa fa-gears",--}%
-        %{-- separator_after : true,--}%
-        %{-- // url             : "--}%
-        %{--${createLink(action: 'ausentismo')}/" + id--}%
-        %{-- };--}%
-
-
-
-        %{-- var desactivar = {--}%
-        %{-- label  : 'Desactivar',--}%
-        %{-- icon   : "fa--}%
-        %{--${iconDesactivar}'",--}%
-        %{-- action : function (e) {--}%
-        %{-- cambiarEstadoRow(id, false, tramites);--}%
-        %{-- }--}%
-        %{-- };--}%
-
-        %{-- var activar = {--}%
-        %{-- label  : 'Activar',--}%
-        %{-- icon   : "fa--}%
-        %{--${iconActivar}",--}%
-        %{-- action : function (e) {--}%
-        %{-- cambiarEstadoRow(id, true, tramites);--}%
-        %{-- }--}%
-        %{-- };--}%
-        %{-- --}%
-
         var eliminar = {
             label            : 'Eliminar Persona',
             icon             : "fa fa-times-circle",
@@ -587,18 +441,11 @@
         items.editar = editar;
         if (estaActivo) {
             items.config = config;
-//                    items.ausentismo = ausentismo;
-//                    items.desactivar = desactivar;
         }
-        /*
-         if (estaInactivo) {
-         items.activar = activar;
-         }
-         */
+
         if (puedeEliminar) {
             items.eliminar = eliminar;
         }
-//                items.eliminar = eliminarUsu
 
         return items;
     }

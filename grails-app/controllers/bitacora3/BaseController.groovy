@@ -6,6 +6,13 @@ import bitacora.Tema
 import groovy.json.JsonBuilder
 import seguridad.Persona
 
+import grails.config.Config
+import grails.core.support.GrailsConfigurationAware
+import groovy.transform.CompileStatic
+
+import grails.core.GrailsApplication
+
+
 class BaseController extends seguridad.Shield {
 
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]
@@ -194,24 +201,59 @@ class BaseController extends seguridad.Shield {
 
     def carrusel_ajax () {
 
-//        println("params carrusel " + params)
+        println("params carrusel " + params)
 
         def base = Base.get(params.id)
         def listaImagenes = Imagen.findAllByBase(base)
+//        def directorio = '/home/fabricio/imas/' + base?.id + "/"
+        def directorio = '/static/imagenes/' + base?.id + "/"
 
-        return [listaImagenes: listaImagenes]
 
+//        def f = this.class.classLoader.getProperties()
+
+        println("directorio " + directorio)
+        println(" - " + '/grails-app/')
+
+        return [listaImagenes: listaImagenes, directorio: directorio]
+
+    }
+
+    void setConfiguration(Config co) {
+        def cdnFolder = co.getRequiredProperty('grails.guides.cdnFolder')
+        def cdnRootUrl = co.getRequiredProperty('grails.guides.cdnRootUrl')
     }
 
     def subirImagen () {
 
-//        println("params subir imagen " + params)
+        println("params subir imagen " + params)
 
         def base = Base.get(params.id)
 
         def anio = new Date().format("yyyy")
-        def path = servletContext.getRealPath("/") + "/imagenes/"
-//        new File(path).mkdirs()
+//        def path = servletContext.getRealPath("/") + "/imagenes/"
+//        def path = servletContext.getRealPath("/")
+
+//        String folderPath = "${cdnFolder}/pointOfInterest/${params.id}"
+
+
+        GrailsApplication grailsApplication
+//        Config config = grailsApplication.config
+
+//        def cdnFolder = config.getRequiredProperty("grails.guides.cdnFolder")
+//        def cdnFolder = grailsApplication.config.getProperty("grails.guides.cdnFolder")
+//        def cdnFolder = "/home/fabricio/imas"
+        def cdnFolder = '/static/imagenes'
+        def path = "${cdnFolder}/${params.id}/"
+
+
+//        File folder = new File(folderPath)
+        File folder = new File(path)
+
+        if ( !folder.exists() ) {
+            folder.mkdirs()
+        }
+
+
         def f = request.getFile('file')  //archivo = name del input type file
 
 
@@ -253,12 +295,12 @@ class BaseController extends seguridad.Shield {
                 try {
                     f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
                 } catch (e) {
-                    println "????????\n" + e + "\n???????????"
+                    println "----Error\n" + e + "\n-----"
                 }
 
                 def imagen = new Imagen([
                         base: base,
-                        descripcion  : params.descripcion,
+                        descripcion  : params.descripcion.toString(),
                         ruta      : nombre
                 ])
                 def data
@@ -267,7 +309,6 @@ class BaseController extends seguridad.Shield {
                             files: [
                                     [
                                             name: nombre,
-//                                            url : resource(dir: "anexos/estacion_${eva?.detalleAuditoria?.auditoria?.preauditoria?.estacion?.id}/" + "periodo_${eva?.detalleAuditoria?.auditoria?.preauditoria?.periodo?.id}" + "/" + "eva-${eva?.id}", file: nombre),
                                             size: f.getSize(),
                                             url : pathFile
                                     ]
@@ -287,13 +328,57 @@ class BaseController extends seguridad.Shield {
                 }
                 def json = new JsonBuilder(data)
                 render json
-                return
+
         } //f && !f.empty
 
 
 
 
     }
+
+
+
+
+
+//
+//    @SuppressWarnings('GrailsStatelessService')
+//    @CompileStatic
+//    class UploadPointOfInterestFeaturedImageService implements GrailsConfigurationAware {
+//
+//        Imagen pointOfInterestDataService
+//
+//        String cdnFolder
+//        String cdnRootUrl
+//
+//        @Override
+//        void setConfiguration(Config co) {
+//            cdnFolder = co.getRequiredProperty('grails.guides.cdnFolder')
+//            cdnRootUrl = co.getRequiredProperty('grails.guides.cdnRootUrl')
+//        }
+//
+//        @SuppressWarnings('JavaIoPackageAccess')
+//        Imagen uploadFeatureImage(FeaturedImageCommand cmd) {
+//
+//            String filename = cmd.featuredImageFile.originalFilename
+//            String folderPath = "${cdnFolder}/pointOfInterest/${cmd.id}"
+//            File folder = new File(folderPath)
+//            if ( !folder.exists() ) {
+//                folder.mkdirs()
+//            }
+//            String path = "${folderPath}/${filename}"
+//            cmd.featuredImageFile.transferTo(new File(path))
+//
+//            String featuredImageUrl = "${cdnRootUrl}//pointOfInterest/${cmd.id}/${filename}"
+//            Imagen poi = pointOfInterestDataService.updateFeaturedImageUrl(cmd.id, cmd.version, featuredImageUrl)
+//
+//            if ( !poi || poi.hasErrors() ) {
+//                File f = new File(path)
+//                f.delete()
+//            }
+//            poi
+//        }
+//    }
+
 
 
 }

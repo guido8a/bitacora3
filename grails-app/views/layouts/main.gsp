@@ -16,6 +16,7 @@
     <asset:javascript src="/apli/bootstrap.js"/>
 
     <asset:javascript src="/apli/funciones.js"/>
+    <asset:javascript src="/apli/functions.js.js"/>
     <asset:javascript src="/apli/loader.js"/>
     <asset:javascript src="/apli/bootbox.js"/>
     <asset:javascript src="/apli/lzm.context-0.5.js"/>
