@@ -205,14 +205,14 @@ class BaseController extends seguridad.Shield {
 
         def base = Base.get(params.id)
         def listaImagenes = Imagen.findAllByBase(base)
-//        def directorio = '/home/fabricio/imas/' + base?.id + "/"
-        def directorio = '/static/imagenes/' + base?.id + "/"
+        def directorio = '/home/fabricio/imas/' + base?.id + "/"
+//        def directorio = '/static/imagenes/' + base?.id + "/"
 
 
 //        def f = this.class.classLoader.getProperties()
 
         println("directorio " + directorio)
-        println(" - " + '/grails-app/')
+//        println(" - " + '/grails-app/')
 
         return [listaImagenes: listaImagenes, directorio: directorio]
 
@@ -241,8 +241,8 @@ class BaseController extends seguridad.Shield {
 
 //        def cdnFolder = config.getRequiredProperty("grails.guides.cdnFolder")
 //        def cdnFolder = grailsApplication.config.getProperty("grails.guides.cdnFolder")
-//        def cdnFolder = "/home/fabricio/imas"
-        def cdnFolder = '/static/imagenes'
+        def cdnFolder = "/home/fabricio/imas"
+//        def cdnFolder = '/static/imagenes'
         def path = "${cdnFolder}/${params.id}/"
 
 
