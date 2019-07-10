@@ -4,6 +4,7 @@ import bitacora.Base
 import bitacora.Imagen
 import bitacora.Tema
 import groovy.json.JsonBuilder
+import org.grails.core.io.ResourceLocator
 import seguridad.Persona
 
 import grails.config.Config
@@ -209,7 +210,8 @@ class BaseController extends seguridad.Shield {
 //        def directorio = '/static/imagenes/' + base?.id + "/"
 
         Config config = grailsApplication.config
-        def p = config.getProperty("grails.nuevoPath.nuevo")
+//        def p = config.getProperty("grails.nuevoPath.nuevo")
+        def p = "/var/bitacora/"
 
         def directorio = p + base?.id + "/"
 
@@ -243,10 +245,11 @@ class BaseController extends seguridad.Shield {
 
 
 
-        def cdnFolder = "/home/fabricio/IdeaProjects/bitacora3/grails-app/assets/images/apli"
-        def path = "${cdnFolder}/${params.id}/"
+//        def cdnFolder = "/home/fabricio/IdeaProjects/bitacora3/grails-app/assets/images/apli"
+        def cdnFolder = "/var/bitacora"
+        def path = cdnFolder + "/${params.id}/"
 
-        println("folder " + cdnFolder)
+        println "folder : $path"
 //        File folder = new File(folderPath)
         File folder = new File(path)
 
