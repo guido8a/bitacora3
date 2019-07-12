@@ -60,18 +60,18 @@ class BaseController extends seguridad.Shield {
         return [baseInstanceList: baseInstanceList, baseInstanceCount: baseInstanceCount, params: params]
     } //list
 
-    def show_ajax() {
-        if (params.id) {
-            def baseInstance = Base.get(params.id)
-            if (!baseInstance) {
-                notFound_ajax()
-                return
-            }
-            return [baseInstance: baseInstance]
-        } else {
-            notFound_ajax()
-        }
-    } //show para cargar con ajax en un dialog
+//    def show_ajax() {
+//        if (params.id) {
+//            def baseInstance = Base.get(params.id)
+//            if (!baseInstance) {
+//                notFound_ajax()
+//                return
+//            }
+//            return [baseInstance: baseInstance]
+//        } else {
+//            notFound_ajax()
+//        }
+//    } //show para cargar con ajax en un dialog
 
     def form_ajax() {
         def baseInstance = new Base(params)
@@ -129,17 +129,15 @@ class BaseController extends seguridad.Shield {
     def base () {
         def base = Base.get(params.id)
 
-//        def list = []
-//        def dir = new File("/var/bitacora/1")
-//        dir.eachFileRecurse (FileType.FILES) { file ->
-//            list << file
-//        }
-//
-//        println("list " + list)
+        def list = []
+        def dir = new File("/var/bitacora/${base?.id}")
+        if(dir.size() > 0 ){
+            dir.eachFileRecurse (FileType.FILES) { file ->
+                list << file
+            }
+        }
 
-
-
-        return [base: base]
+        return [base: base, lista: list]
     }
 
     def guardarProblema_ajax () {
@@ -210,9 +208,21 @@ class BaseController extends seguridad.Shield {
         }
     }
 
-    def ver_ajax() {
-        println "ver ajax: params: $params"
-        render view: 'show_ajax', model: [baseInstance: Base.get(params.id)]
+//    def ver_ajax() {
+//        println "ver ajax: params: $params"
+//        render view: 'show_ajax', model: [baseInstance: Base.get(params.id, lista: )]
+//    }
+
+    def show_ajax () {
+        def base = Base.get(params.id)
+        def list = []
+        def dir = new File("/var/bitacora/${base?.id}")
+        if(dir.size() > 0 ){
+            dir.eachFileRecurse (FileType.FILES) { file ->
+                list << file
+            }
+        }
+        return [baseInstance: base, lista: list]
     }
 
 
@@ -378,10 +388,6 @@ class BaseController extends seguridad.Shield {
             render json
 
         } //f && !f.empty
-
-
-
-
     }
 
 

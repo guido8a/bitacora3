@@ -121,27 +121,23 @@
 
     <div class="panel-heading">
 
-        <h3 class="panel-title" style="margin-left: 480px" title="${base?.problema ?: ''}">
+        <h3 class="panel-title" style="margin-left: 420px" title="${base?.problema ?: ''}">
             <i class="fa fa-pen"></i> Artículo:
-        "${base?.problema?.size() < 55 ? base?.problema : base?.problema[0..54]+"..."}"
+        "${base?.problema?.size() < 65 ? base?.problema : base?.problema[0..64]+"..."}"
         </h3>
 
         <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarr"
            class="btn btn-sm btn-warning sobrepuesto" title="Consultar artículo">
             <i class="fa fa-chevron-circle-left"></i> Consultar
         </a>
-        <a href="#" id="btnGuardar" class="btn btn-sm btn-success sobrepuesto" style="margin-left: 103px" title="Guardar información">
+        <a href="#" id="btnGuardar" class="btn btn-sm btn-success sobrepuesto" style="margin-left: 105px" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
-        <a href="#" id="btnImprimir" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 196px" title="Imrpimir artículo">
-            <i class="fa fa-print"></i> Imprimir
-        </a>
-
         <a href="#" id="btnBase" class="btn btn-sm btn-warning sobrepuesto"
-           style="margin-left: 291px" title="Crear nuevo registro">
+           style="margin-left: 200px" title="Crear nuevo registro">
             <i class="fa fa-check"></i> Crear Nuevo
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 414px" title="Ver registro">
+        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 325px" title="Ver registro">
             <i class="fa fa-search"></i> Ver
         </a>
     </div>
@@ -587,13 +583,14 @@
 
     $("#btnVer").click(function () {
         var id_base = ${base?.id}
-            console.log('id:', id_base);
         $("#dialog-body").html(spinner);
         $.ajax({
             type: 'POST',
-            url: '${createLink(controller: 'base', action: 'ver_ajax')}',
+            %{--url: '${createLink(controller: 'base', action: 'ver_ajax')}',--}%
+            url: '${createLink(controller: 'base', action: 'show_ajax')}',
             data: {
-                id: id_base
+                id: id_base,
+                archivos: '${lista.size()}'
             },
             success: function (msg) {
                 $("#dialog-body").html(msg)

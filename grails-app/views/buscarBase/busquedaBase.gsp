@@ -168,7 +168,7 @@
                 $("#dialog-body").html(spinner);
                 $.ajax({
                     type: 'POST',
-                    url: '${createLink(controller: 'base', action: 'ver_ajax')}',
+                    url: '${createLink(controller: 'base', action: 'show_ajax')}',
                     data: {
                         id: id
                     },

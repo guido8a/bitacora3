@@ -31,6 +31,12 @@
         </div>
     </g:if>
 
+    <g:if test="${lista.size() > 0}">
+        <div class="alert alert-dismissible alert-warning" style="font-size: 15px;">
+            <i class="fa fa-2x fa-exclamation-triangle"></i>  Este tema contiene <strong>${lista.size()}</strong> imágenes o archivos asociados.
+        </div>
+    </g:if>
+
 
     <div class="row" style="margin-bottom: 10px">
         <strong style="margin-left: 15px">Algoritmo:</strong>
