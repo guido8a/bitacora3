@@ -267,7 +267,7 @@ class LoginController {
                 perfiles.add(p)
             }
         }
-        return [perfilesUsr: perfiles]
+        return [perfilesUsr: perfiles.sort{it.perfil.descripcion}]
     }
 
     def savePer() {
