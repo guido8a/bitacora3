@@ -286,6 +286,9 @@
                             </div>
                         </g:uploadForm>
                     </g:if>
+
+                    <div id="tablaArchivos" style="margin-top: 40px"></div>
+
                 </div>
             </div>
         </div>
@@ -313,6 +316,25 @@
 
 
 <script type="text/javascript">
+
+    cargarArchivos();
+
+    function cargarArchivos () {
+
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'base', action: 'tablaArchivos')}',
+            data:{
+                id: '${base?.id}',
+                lista: '${lista}'
+            },
+            success: function (msg) {
+                $("#tablaArchivos").html(msg)
+            }
+
+        });
+
+    }
 
     var okContents = {
         'image/png'  : "png",

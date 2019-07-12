@@ -462,72 +462,32 @@ class BaseController extends seguridad.Shield {
         println("params retornar" + params)
 
         String profileImagePath = "/var/bitacora/${params.id.trim()}/"
-//        def parts = params.nombre.toString().split("\\.")
         String filename = params.nombre
         File fileToReturn = new File(profileImagePath+filename)
         byte [] byteOutput = fileToReturn.readBytes()
         response.setHeader("Content-disposition", "attachment; filename=\"${filename}\"");
         response.outputStream << byteOutput
-
-
-
-
-//        File imageFile =new File(profileImagePath+image);
-//        BufferedImage originalImage=ImageIO.read(imageFile);
-//        ByteArrayOutputStream baos=new ByteArrayOutputStream();
-//        ImageIO.write(originalImage, "${parts[1]}", baos );
-//
-//        byte[] imageInByte=baos.toByteArray();
-//
-//        response.setHeader('Content-length', imageInByte.length.toString())
-//        response.contentType = 'image/' + parts[1] // or the appropriate image content type
-//        response.outputStream << imageInByte
-//        response.outputStream.flush()
     }
 
+    def tablaArchivos () {
+
+        def base = Base.get(params.id)
+        def list = []
+        def dir = new File("/var/bitacora/${base?.id}")
+        if(dir.size() > 0 ){
+
+            dir.eachFileRecurse (FileType.FILES) { file ->
+                list << file.canonicalFile
+            }
+        }
 
 
-
-
-//
-//    @SuppressWarnings('GrailsStatelessService')
-//    @CompileStatic
-//    class UploadPointOfInterestFeaturedImageService implements GrailsConfigurationAware {
-//
-//        Imagen pointOfInterestDataService
-//
-//        String cdnFolder
-//        String cdnRootUrl
-//
-//        @Override
-//        void setConfiguration(Config co) {
-//            cdnFolder = co.getRequiredProperty('grails.guides.cdnFolder')
-//            cdnRootUrl = co.getRequiredProperty('grails.guides.cdnRootUrl')
+//        list.each {
+//            println it.name
 //        }
-//
-//        @SuppressWarnings('JavaIoPackageAccess')
-//        Imagen uploadFeatureImage(FeaturedImageCommand cmd) {
-//
-//            String filename = cmd.featuredImageFile.originalFilename
-//            String folderPath = "${cdnFolder}/pointOfInterest/${cmd.id}"
-//            File folder = new File(folderPath)
-//            if ( !folder.exists() ) {
-//                folder.mkdirs()
-//            }
-//            String path = "${folderPath}/${filename}"
-//            cmd.featuredImageFile.transferTo(new File(path))
-//
-//            String featuredImageUrl = "${cdnRootUrl}//pointOfInterest/${cmd.id}/${filename}"
-//            Imagen poi = pointOfInterestDataService.updateFeaturedImageUrl(cmd.id, cmd.version, featuredImageUrl)
-//
-//            if ( !poi || poi.hasErrors() ) {
-//                File f = new File(path)
-//                f.delete()
-//            }
-//            poi
-//        }
-//    }
 
+        return[lista: list]
+    }
 
 
 }
