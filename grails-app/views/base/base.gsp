@@ -152,7 +152,7 @@
             <ul class="nav nav-tabs">
                 <li class="active col-md-4"><a data-toggle="tab" href="#home"><h4>Problema</h4></a></li>
                 <li class="col-md-4"><a data-toggle="tab" href="#imagenes"><h4>Imágenes</h4></a></li>
-                <li class="col-md-4"><a data-toggle="tab" href="#videos"><h4>Videos</h4></a></li>
+                <li class="col-md-4"><a data-toggle="tab" href="#archivos"><h4>Archivos</h4></a></li>
             </ul>
 
             <div class="tab-content">
@@ -269,13 +269,27 @@
 
 
                     <div id="divCarrusel"></div>
-
-
                 </div>
 
-
-                <div id="videos" class="tab-pane fade">
-                    <h4></h4>
+                <div id="archivos" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label text-info" style="font-size: 14px">
+                                Archivos referentes al tema: <strong>'${base?.problema}"</strong>
+                            </label>
+                        </div>
+                    </div>
+                    <g:if test="${base?.id}">
+                        <g:uploadForm controller="base" action="subirArchivo">
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-6">
+                                    <input type="file" name="archivo" id="archivo" title="Buscar pdf" class="file btn btn-info" multiple accept=".pdf, .xls">
+                                </div>
+                               <input type="submit" class="btn btn-success" value="Subir Archivo"/>
+                            </div>
+                        </g:uploadForm>
+                    </g:if>
                 </div>
             </div>
         </div>

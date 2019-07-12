@@ -24,32 +24,35 @@
     </ol>
     <div class="carousel-inner" role="listbox">
         <g:each in="${listaImagenes}" var="imagen" status="k">
-            <g:if test="${k == 0}">
-                <div class="item active">
-                    <a href="#" class="btn btn-danger btnEliminarImagen btn-sm" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 50%">
+%{--            <g:if test="${k == 0}">--}%
+                <div class="${k == 0 ? 'item active' : 'item'}">
+                    <a href="#" class="btn btn-danger btnEliminarImagen btn-sm" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 45%">
                         <i class="fa fa-times-circle"></i>
                     </a>
 %{--                    <asset:image src="${'apli/' + base?.id + "/" + imagen?.ruta}" style="padding: 10px; width: 400px"/>--}%
-                    <asset:image src="${directorio + imagen?.ruta}" style="padding: 10px; width: 400px"/>
-%{--                    <g:img dir="assets/apli/1/" file="${imagen?.ruta}" width="400px"/>--}%
-%{--                    <g:img dir="home/fabricio/imas/1/" file="${imagen?.ruta}" width="400px"/>--}%
-                    <span>
+%{--                    <asset:image src="${directorio + imagen?.ruta}" style="padding: 10px; width: 400px; margin-left: 100px"/>--}%
+%{--                    <g:img dir="${directorio}" file="${imagen?.ruta}" width="400px"/>--}%
+                    <img src="${createLink(controller: 'Base', action:  'renderImage')}?id=${base?.id} + &nombre=${imagen?.ruta}"  style="padding: 10px; width: 400px; margin-left: 120px"/>
+
+%{--                    <img src="${resource(dir: directorio, file: imagen?.ruta)}" style="padding: 10px; height: 400px" alt="N"/>--}%
+                    <span style="font-size: 14px">
                         <strong>Descripcion:</strong>  ${imagen?.descripcion}
                     </span>
                 </div>
-            </g:if>
-            <g:else>
-                <div class="item">
-                    <a href="#" class="btn btn-danger btnEliminarImagen btn-xs" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 50%">
-                        <i class="fa fa-times-circle"></i>
-                    </a>
+%{--            </g:if>--}%
+%{--            <g:else>--}%
+%{--                <div class="item">--}%
+%{--                    <a href="#" class="btn btn-danger btnEliminarImagen btn-sm" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 40%">--}%
+%{--                        <i class="fa fa-times-circle"></i>--}%
+%{--                    </a>--}%
 %{--                    <img src="${resource(dir: directorio, file: imagen?.ruta)}" style="padding: 10px; height: 400px"/>--}%
-                    <asset:image src="${directorio + imagen?.ruta}" style="padding: 10px; width: 400px"/>
-                    <span>
-                        <strong>Descripcion:</strong> ${imagen?.descripcion}
-                    </span>
-                </div>
-            </g:else>
+%{--                    <asset:image src="${directorio + imagen?.ruta}" style="padding: 10px; width: 400px;margin-left: 100px"/>--}%
+%{--                    <img src="${createLink(controller: 'Base', action:  'renderImage')}?id=${base?.id} + &nombre=${imagen?.ruta}"  style="padding: 10px; width: 400px; margin-left: 120px"/>--}%
+%{--                    <span style="font-size: 14px">--}%
+%{--                        <strong>Descripcion:</strong> ${imagen?.descripcion}--}%
+%{--                    </span>--}%
+%{--                </div>--}%
+%{--            </g:else>--}%
 
         </g:each>
 
@@ -75,11 +78,11 @@
 
     <!-- Controls -->
     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="fa fa-2x fa-chevron-circle-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
     <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="fa fa-2x fa-chevron-circle-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
 </div>

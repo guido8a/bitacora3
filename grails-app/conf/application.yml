@@ -4,7 +4,8 @@ grails:
         pattern: '/**'
     nuevoPath:
         nuevo: 'apli/'
-        nuevo2: '/home/fabricio/imas/'
+        nuevo2: '/home/fabricio/IdeaProjects/bitacora3/grails-app/assets/images/apli'
+        nuevo3: '/var/bitacora'
     profile: web
     codegen:
         defaultPackage: bitacora3

@@ -13,6 +13,11 @@ import groovy.transform.CompileStatic
 
 import grails.core.GrailsApplication
 
+import javax.imageio.ImageIO
+import java.awt.image.BufferedImage;
+
+import groovy.io.FileType
+
 
 class BaseController extends seguridad.Shield {
 
@@ -123,6 +128,17 @@ class BaseController extends seguridad.Shield {
 
     def base () {
         def base = Base.get(params.id)
+
+        def list = []
+        def dir = new File("/var/bitacora/1")
+        dir.eachFileRecurse (FileType.FILES) { file ->
+            list << file
+        }
+
+        println("list " + list)
+
+
+
         return [base: base]
     }
 
@@ -174,7 +190,7 @@ class BaseController extends seguridad.Shield {
         def problema = params.problema
 
         if(problema.size() < 15){
-           render false
+            render false
             return
         }else{
             render true
@@ -200,9 +216,39 @@ class BaseController extends seguridad.Shield {
     }
 
 
+//    def renderImage = {
+    def renderImage () {
+
+//        println("params render" + params)
+
+        String profileImagePath = "/var/bitacora/${params.id.trim()}/"
+
+//        println("path " + profileImagePath)
+
+        def parts = params.nombre.toString().split("\\.")
+
+        //String profileImagePath = grailsApplication.grails.profile.images.path
+
+//        String image  = 'gatos.jpeg' // or whatever name you saved in your db
+        String image  = params.nombre
+        File imageFile =new File(profileImagePath+image);
+        BufferedImage originalImage=ImageIO.read(imageFile);
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        ImageIO.write(originalImage, "${parts[1]}", baos );
+
+        byte[] imageInByte=baos.toByteArray();
+
+        response.setHeader('Content-length', imageInByte.length.toString())
+        response.contentType = 'image/' + parts[1] // or the appropriate image content type
+        response.outputStream << imageInByte
+        response.outputStream.flush()
+    }
+
+
+
     def carrusel_ajax () {
 
-        println("params carrusel " + params)
+//        println("params carrusel " + params)
 
         def base = Base.get(params.id)
         def listaImagenes = Imagen.findAllByBase(base)
@@ -211,24 +257,21 @@ class BaseController extends seguridad.Shield {
 
         Config config = grailsApplication.config
 //        def p = config.getProperty("grails.nuevoPath.nuevo")
-        def p = "/var/bitacora/"
-
+        def p = config.getProperty("grails.nuevoPath.nuevo3")
+//        def p = "/var/bitacora/"
         def directorio = p + base?.id + "/"
+//        def directorio = p + base?.id
 
-        println("directorio " + directorio)
+//        println("directorio " + directorio)
 
         return [listaImagenes: listaImagenes, directorio: directorio, base: base]
 
     }
 
-    void setConfiguration(Config co) {
-        def cdnFolder = co.getRequiredProperty('grails.guides.cdnFolder')
-        def cdnRootUrl = co.getRequiredProperty('grails.guides.cdnRootUrl')
-    }
 
     def subirImagen () {
 
-        println("params subir imagen " + params)
+//        println("params subir imagen " + params)
 
         def base = Base.get(params.id)
 
@@ -249,7 +292,7 @@ class BaseController extends seguridad.Shield {
         def cdnFolder = "/var/bitacora"
         def path = cdnFolder + "/${params.id}/"
 
-        println "folder : $path"
+//        println "folder : $path"
 //        File folder = new File(folderPath)
         File folder = new File(path)
 
@@ -281,64 +324,159 @@ class BaseController extends seguridad.Shield {
             }
 
 //            if (okContents.containsKey(f.getContentType())) {
-                ext = okContents[f.getContentType()]
-                fileName = fileName.size() < 40 ? fileName : fileName[0..39]
-                fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+            ext = okContents[f.getContentType()]
+            fileName = fileName.size() < 40 ? fileName : fileName[0..39]
+            fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
 
-                def nombre = fileName + "." + ext
-                def pathFile = path + nombre
-                println("---->" + pathFile)
-                def fn = fileName
-                def src = new File(pathFile)
-                def i = 1
-                while (src.exists()) {
-                    nombre = fn + "_" + i + "." + ext
-                    pathFile = path + nombre
-                    src = new File(pathFile)
-                    i++
-                }
-                try {
-                    f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
-                } catch (e) {
-                    println "----Error\n" + e + "\n-----"
-                }
+            def nombre = fileName + "." + ext
+            def pathFile = path + nombre
+            println("---->" + pathFile)
+            def fn = fileName
+            def src = new File(pathFile)
+            def i = 1
+            while (src.exists()) {
+                nombre = fn + "_" + i + "." + ext
+                pathFile = path + nombre
+                src = new File(pathFile)
+                i++
+            }
+            try {
+                f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+            } catch (e) {
+                println "----Error\n" + e + "\n-----"
+            }
 
-                def imagen = new Imagen([
-                        base: base,
-                        descripcion  : params.descripcion.toString(),
-                        ruta      : nombre
-                ])
-                def data
-                if (imagen.save(flush: true)) {
-                    data = [
-                            files: [
-                                    [
-                                            name: nombre,
-                                            size: f.getSize(),
-                                            url : pathFile
-                                    ]
-                            ]
-                    ]
-                } else {
-                    println "error al guardar: " + imagen.errors
-                    data = [
-                            files: [
-                                    [
-                                            name : nombre,
-                                            size : f.getSize(),
-                                            error: "Ha ocurrido un error al guardar: " + renderErrors(bean: imagen)
-                                    ]
-                            ]
-                    ]
-                }
-                def json = new JsonBuilder(data)
-                render json
+            def imagen = new Imagen([
+                    base: base,
+                    descripcion  : params.descripcion.toString(),
+                    ruta      : nombre
+            ])
+            def data
+            if (imagen.save(flush: true)) {
+                data = [
+                        files: [
+                                [
+                                        name: nombre,
+                                        size: f.getSize(),
+                                        url : pathFile
+                                ]
+                        ]
+                ]
+            } else {
+                println "error al guardar: " + imagen.errors
+                data = [
+                        files: [
+                                [
+                                        name : nombre,
+                                        size : f.getSize(),
+                                        error: "Ha ocurrido un error al guardar: " + renderErrors(bean: imagen)
+                                ]
+                        ]
+                ]
+            }
+            def json = new JsonBuilder(data)
+            render json
 
         } //f && !f.empty
 
 
 
 
+    }
+
+
+    def subirArchivo () {
+
+//        println("--->" + params)
+
+
+        def path = "/var/bitacora/1"   //web-app/archivos
+        new File(path).mkdirs()
+
+        def f = request.getFile('archivo')  //archivo = name del input type file
+
+        if(!f && path){
+            println("no existe documento")
+        }else{
+
+            //        println("---> " + f?.getOriginalFilename())
+            if (f && !f.empty && f.getOriginalFilename() != '') {
+                def fileName = f.getOriginalFilename() //nombre original del archivo
+
+                def accepted = ["jpg", 'png', "pdf"]
+                def ext = ''
+                def parts = fileName.split("\\.")
+                fileName = ""
+                parts.eachWithIndex { obj, i ->
+                    if (i < parts.size() - 1) {
+                        fileName += obj
+                    } else {
+                        ext = obj
+                    }
+                }
+
+                if (!accepted.contains(ext)) {
+                    flash.message = "El archivo tiene que ser de tipo jpg, png o pdf"
+                    flash.clase = "alert-error"
+                    redirect(action: 'list', id: params.concurso.id)
+                    return
+                }
+
+                fileName = fileName.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+                def archivo = fileName
+                fileName = fileName + "." + ext
+
+                def i = 0
+                def pathFile = path + File.separatorChar + fileName
+                def src = new File(pathFile)
+
+                while (src.exists()) { // verifica si existe un archivo con el mismo nombre
+                    fileName = archivo + "_" + i + "." + ext
+                    pathFile = path + File.separatorChar + fileName
+                    src = new File(pathFile)
+                    i++
+                }
+
+                f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
+
+                redirect(action: 'base', id: 1)
+
+            }else{
+                flash.clase = "alert-error"
+                flash.message = "Error al guardar el documento. No se ha cargado ningún archivo!"
+                redirect(action: 'base', id: 1)
+            }
+        }
+
+
+    }
+
+    def retornarArchivo () {
+
+        println("params retornar" + params)
+
+        String profileImagePath = "/var/bitacora/${params.id.trim()}/"
+//        def parts = params.nombre.toString().split("\\.")
+        String filename = params.nombre
+        File fileToReturn = new File(profileImagePath+filename)
+        byte [] byteOutput = fileToReturn.readBytes()
+        response.setHeader("Content-disposition", "attachment; filename=\"${filename}\"");
+        response.outputStream << byteOutput
+
+
+
+
+//        File imageFile =new File(profileImagePath+image);
+//        BufferedImage originalImage=ImageIO.read(imageFile);
+//        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+//        ImageIO.write(originalImage, "${parts[1]}", baos );
+//
+//        byte[] imageInByte=baos.toByteArray();
+//
+//        response.setHeader('Content-length', imageInByte.length.toString())
+//        response.contentType = 'image/' + parts[1] // or the appropriate image content type
+//        response.outputStream << imageInByte
+//        response.outputStream.flush()
     }
 
 
