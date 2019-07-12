@@ -129,13 +129,13 @@ class BaseController extends seguridad.Shield {
     def base () {
         def base = Base.get(params.id)
 
-        def list = []
-        def dir = new File("/var/bitacora/1")
-        dir.eachFileRecurse (FileType.FILES) { file ->
-            list << file
-        }
-
-        println("list " + list)
+//        def list = []
+//        def dir = new File("/var/bitacora/1")
+//        dir.eachFileRecurse (FileType.FILES) { file ->
+//            list << file
+//        }
+//
+//        println("list " + list)
 
 
 
