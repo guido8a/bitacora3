@@ -15,25 +15,6 @@
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-image.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/css/jquery.fileupload.css"/>
 
-    %{--    <asset:javascript src="/jquery/jquery.validate.min.js"/>--}%
-    %{--    <asset:javascript src="/jquery/jquery.validate.js"/>--}%
-    %{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
-    %{--    <asset:javascript src="/jquery/messages_es.js"/>--}%
-
-    %{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.min.js"/>--}%
-    %{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>--}%
-    %{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
-    %{--    <asset:javascript src="/jquery-validation-1.11.1/localization/messages_es.js"/>--}%
-
-    %{--    <asset:javascript src="/jquery-validation-1.19.1/dist/jquery.validate.js"/>--}%
-    %{--    <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>--}%
-    %{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
-    %{--    <asset:javascript src="/jquery-validation-1.19.1/dist/localization/messages_es.js"/>--}%
-
-
-
-
-
     <style type="text/css">
     .mediano {
         margin-top: 5px;
@@ -59,9 +40,7 @@
         border: medium none;
         border-radius: 0;
         color:#fff;
-        /*color:#475563 !important;;*/
     }
-
 
     .progress-bar-svt {
         border     : 1px solid #e5e5e5;
@@ -145,10 +124,10 @@
 
     <div class="panel-group" style="height: 730px">
         <div class="col-md-12" style="margin-top: 10px">
-            <ul class="nav nav-tabs">
-                <li class="active col-md-4"><a data-toggle="tab" href="#home"><h4>Problema</h4></a></li>
-                <li class="col-md-4"><a data-toggle="tab" href="#imagenes"><h4>Imágenes</h4></a></li>
-                <li class="col-md-4"><a data-toggle="tab" href="#archivos"><h4>Archivos</h4></a></li>
+            <ul class="nav nav-pills">
+                <li class="show active col-md-5"><a data-toggle="tab" href="#home"><h4><i class="fa fa-atlas"></i> Problema</h4></a></li>
+                <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes</h4></a></li>
+                <li class="col-md-3"><a data-toggle="tab" href="#archivos"><h4><i class="fa fa-folder-open"></i> Archivos</h4></a></li>
             </ul>
 
             <div class="tab-content">
@@ -171,7 +150,7 @@
                                 <span class="col-md-2 label label-primary text-info mediano">Problema</span>
                                 <div class="col-md-10">
                                     <span class="grupo">
-                                        <g:textArea name="problema" id="prbl"  class="form-control required" maxlength="255"
+                                        <g:textArea name="problema" id="prbl" class="form-control required" maxlength="255"
                                                     style="height: 60px; resize: none" value="${base?.problema}"/>
                                     </span>
                                 </div>
@@ -187,7 +166,6 @@
                                                          maxlength="127"  value="${base?.clave}" />
                                         </span>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -227,11 +205,7 @@
                                 </div>
                             </div>
                         </div>
-
                     </g:form>
-
-
-
                 </div>
                 %{--//tab imágenes--}%
                 <div id="imagenes" class="tab-pane fade">
@@ -277,6 +251,7 @@
                     </div>
                     <g:if test="${base?.id}">
                         <g:uploadForm controller="base" action="subirArchivo">
+                            <g:hiddenField name="idBase" value="${base?.id}"/>
                             <div class="row">
                                 <div class="col-md-4"></div>
                                 <div class="col-md-6">
@@ -317,16 +292,15 @@
 
 <script type="text/javascript">
 
-    cargarArchivos();
+    cargarArchivos('${base?.id}', '${lista}');
 
-    function cargarArchivos () {
-
+    function cargarArchivos (id, lista) {
         $.ajax({
             type: 'POST',
             url: '${createLink(controller: 'base', action: 'tablaArchivos')}',
             data:{
-                id: '${base?.id}',
-                lista: '${lista}'
+                id: id,
+                lista: lista
             },
             success: function (msg) {
                 $("#tablaArchivos").html(msg)
@@ -474,10 +448,10 @@
         var row1 = $("<div class='row resumen'>");
         var row3 = $("<div class='row botones'  style='text-align: center'>");
         var row4 = $("<div class='row'>");
-        row1.append("<div class='col-md-1 etiqueta'>Descripción</div>");
+        row1.append("<div class='col-md-2 etiqueta' style='font-size: 14px'>Descripción</div>");
         row1.append("<div class='col-md-5'><textarea maxlength='254' style='resize: none' class='form-control " + next + "' required id='descripcion' name='descripcion' cols='5' rows='5'></textarea></div>");
-        row3.append(" <a href='#' class='btn btn-azul subir' style='margin-right: 15px;' clase='" + next + "'><i class='fa fa-upload'></i> Guardar Imagen</a>");
-        div.append("<div class='row' style='margin-top: 0px'><div class='titulo-archivo col-md-10'><span style='color: #327BBA'>Archivo:</span> " + ar.name + "</div></div>");
+        row3.append(" <a href='#' class='btn btn-azul subir' style='margin-left: 200px; margin-bottom: 10px' clase='" + next + "'><i class='fa fa-upload'></i> Guardar Imagen</a>");
+        div.append("<div class='row' style='margin-top: 10px; font-size: 14px'><div class='titulo-archivo col-md-10'><span style='color: #327BBA'>Archivo:</span> " + ar.name + "</div></div>");
         div.append(row1);
         div.append(row3);
         $("#files").append(div);
@@ -578,7 +552,7 @@
                             $("#titulo-arch").hide();
                             $("#linea-arch").hide();
                         }
-                        $(".rs-" + rs).html("<i class='fa fa-check' style='color:#327BBA;margin-right: 10px'></i> " + $(".rs-" + rs).find(".titulo-archivo").html() + " subido exitosamente").css({
+                        $(".rs-" + rs).html("<div class='alert alert-success'> <i class='fa fa-check' style='color:#327BBA;margin-right: 10px'></i>" + $(".rs-" + rs).find(".titulo-archivo").html() + " subido exitosamente" + '</div>').css({
                             height     : 50,
                             fontWeight : "bold"
                         }).removeClass("subiendo");
@@ -608,7 +582,6 @@
         $("#dialog-body").html(spinner);
         $.ajax({
             type: 'POST',
-            %{--url: '${createLink(controller: 'base', action: 'ver_ajax')}',--}%
             url: '${createLink(controller: 'base', action: 'show_ajax')}',
             data: {
                 id: id_base,
@@ -621,12 +594,9 @@
         $("#dialog").modal("show");
     });
 
-
-
     <g:if test="${base?.id}">
     cargarCarrusel(${base?.id});
     </g:if>
-
 
     function cargarCarrusel (idO) {
         $.ajax({
@@ -636,6 +606,7 @@
                 id: idO
             },
             success : function (msg) {
+                cargarArchivos('${base?.id}', '${lista}');
                 $("#divCarrusel").html(msg);
             }
         });

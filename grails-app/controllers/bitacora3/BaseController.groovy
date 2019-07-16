@@ -284,21 +284,10 @@ class BaseController extends seguridad.Shield {
 //        println("params subir imagen " + params)
 
         def base = Base.get(params.id)
-
         def anio = new Date().format("yyyy")
 //        def path = servletContext.getRealPath("/") + "/imagenes/"
 //        def path = servletContext.getRealPath("/")
-
-//        String folderPath = "${cdnFolder}/pointOfInterest/${params.id}"
-
-//        def cdnFolder = config.getRequiredProperty("grails.guides.cdnFolder")
 //        def cdnFolder = grailsApplication.config.getProperty("grails.guides.cdnFolder")
-//        def cdnFolder = grailsApplication.config.getProperty("grails.nuevoPath")
-//        def cdnFolder = '/grails-app/images/assets/apli'
-
-
-
-//        def cdnFolder = "/home/fabricio/IdeaProjects/bitacora3/grails-app/assets/images/apli"
         def cdnFolder = "/var/bitacora"
         def path = cdnFolder + "/${params.id}/"
 
@@ -395,8 +384,8 @@ class BaseController extends seguridad.Shield {
 
 //        println("--->" + params)
 
-
-        def path = "/var/bitacora/1"   //web-app/archivos
+        def base = Base.get(params.idBase)
+        def path = "/var/bitacora/${base?.id}"   //web-app/archivos
         new File(path).mkdirs()
 
         def f = request.getFile('archivo')  //archivo = name del input type file
@@ -445,12 +434,14 @@ class BaseController extends seguridad.Shield {
 
                 f.transferTo(new File(pathFile)) // guarda el archivo subido al nuevo path
 
-                redirect(action: 'base', id: 1)
+                flash.clase = "alert-success"
+                flash.message = "Guardado correctamente"
+                redirect(action: 'base', id: base?.id)
 
             }else{
                 flash.clase = "alert-error"
                 flash.message = "Error al guardar el documento. No se ha cargado ningún archivo!"
-                redirect(action: 'base', id: 1)
+                redirect(action: 'base', id: base?.id)
             }
         }
 
@@ -459,7 +450,7 @@ class BaseController extends seguridad.Shield {
 
     def retornarArchivo () {
 
-        println("params retornar" + params)
+//        println("params retornar" + params)
 
         String profileImagePath = "/var/bitacora/${params.id.trim()}/"
         String filename = params.nombre
@@ -480,13 +471,32 @@ class BaseController extends seguridad.Shield {
                 list << file.canonicalFile
             }
         }
+        return[lista: list, base: base]
+    }
 
+    def borrarArchivo () {
+//        println("params borrar " + params)
+        String profileImagePath = "/var/bitacora/${params.id.trim()}/"
+        String filename = params.nombre
+        def parts = filename.split("\\.")
 
-//        list.each {
-//            println it.name
-//        }
+        if(parts[1] in ['jpeg', 'png', 'jpg']){
+            def imagen = Imagen.findByBaseAndRuta(Base.get(params.id.trim()),params.nombre)
+            try{
+               imagen.delete(flush: true)
+            }catch(e){
+                render "no"
+            }
+        }
 
-        return[lista: list]
+        File fileToReturn = new File(profileImagePath+filename)
+        if(fileToReturn.delete()){
+            render "ok"
+        }
+        else{
+            render "no"
+        }
+
     }
 
 

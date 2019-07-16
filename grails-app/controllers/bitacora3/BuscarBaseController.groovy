@@ -47,7 +47,7 @@ class BuscarBaseController extends seguridad.Shield {
         if(base?.size() > 20){
             base = base[0..19]
             msg = "<div class='alert-danger' style='margin-top:-20px; diplay:block; height:25px;margin-bottom: 20px;'>" +
-                    " <i class='fa fa-warning fa-2x pull-left'></i> Su búsqueda ha generado más de 20 resultados. " +
+                    " <i class='fa fa-exclamation-triangle fa-2x pull-left'></i> Su búsqueda ha generado más de 20 resultados. " +
                     "Use más palabras para especificar mejor la búsqueda.</div>"
         }
 

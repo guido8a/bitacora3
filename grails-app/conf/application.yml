@@ -14,6 +14,10 @@ grails:
             # Whether to translate GORM events into Reactor events
             # Disabled by default for performance reasons
             events: false
+    controllers:
+        upload:
+            maxFileSize: 6000000
+            maxRequestSize: 6000000
 info:
     app:
         name: '@info.app.name@'
@@ -25,6 +29,11 @@ spring:
     groovy:
         template:
             check-template-location: false
+    http:
+        multipart:
+            enabled: true
+            max-file-size: 50MB
+            max-request-size: 50MB
 
 # Spring Actuator Endpoints are Disabled by Default
 endpoints:
@@ -68,7 +77,7 @@ grails:
               - application/xml
     urlmapping:
         cache:
-            maxsize: 1000
+            maxsize: 5000
     controllers:
         defaultScope: singleton
     converters:

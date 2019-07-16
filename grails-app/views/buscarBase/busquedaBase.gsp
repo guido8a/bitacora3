@@ -41,13 +41,11 @@
             Buscar en la base de conocimiento por:
             <div class="btn-group">
                 <input id="buscar" type="search" class="form-control">
-                %{--                <span id="limpiaBuscar" class="glyphicon glyphicon-remove-circle"--}%
-                %{--                      title="Limpiar texto de búsqueda"></span>--}%
             </div>
             <a href="#" name="busqueda" class="btn btn-info btnBusqueda btn-ajax"><i
                     class="fas fa-search"></i> Buscar</a>
             <a href="#" id="actualizarPlbr" class="btn btn-success btnActualizar"><i
-                    class="fa fa"></i> Actualiza Buscador</a>
+                    class="fa fa-redo"></i> Actualiza Buscador</a>
             <a href="#" id="btnBase" class="btn btn-warning sobrepuesto"
                title="Crear nuevo registro">
                 <i class="fa fa-check"></i> Crear Nuevo
@@ -104,28 +102,20 @@
     <div class="loading-footer">Espere por favor</div>
 </div>
 
-
 <script>
     $(function () {
-
         $("#limpiaBuscar").click(function () {
             $("#buscar").val('');
         });
-
     });
 </script>
 
 <script type="text/javascript">
 
-
-
     $(".btnBusqueda").click(function () {
-        // $("#bandeja").html("").append($("<div style='width:100%; text-align: center;'/>").append(spinnerSquare64));
 
         $("#bandeja").append($("#cargando").removeClass('hidden'));
-
         var buscar = $("#buscar").val();
-
         var datos = "buscar=" + buscar;
 
         $.ajax({
@@ -147,7 +137,6 @@
             $(".btnBusqueda").click();
         }
     });
-
 
     function createContextMenu(node) {
         var $tr = $(node);
@@ -204,12 +193,8 @@
             }
         };
 
-
         items.ver = ver;
-//                items.administrar = administrar;
-//         items.anexos = anexos;
         items.editar = editar;
-        // items.aprobar = aprobar;
 
         return items
     }
@@ -224,8 +209,6 @@
     $("#actualizarPlbr").click(function () {
         location.href = '${createLink(controller: 'buscarBase', action: 'actualizarPlbr')}'
     });
-
-
 
 </script>
 

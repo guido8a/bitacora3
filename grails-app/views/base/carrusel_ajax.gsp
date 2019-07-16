@@ -26,9 +26,9 @@
         <g:each in="${listaImagenes}" var="imagen" status="k">
 %{--            <g:if test="${k == 0}">--}%
                 <div class="${k == 0 ? 'item active' : 'item'}">
-                    <a href="#" class="btn btn-danger btnEliminarImagen btn-sm" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 45%">
-                        <i class="fa fa-times-circle"></i>
-                    </a>
+%{--                    <a href="#" class="btn btn-danger btnEliminarImagen btn-sm" title="Eliminar imagen" data-id="${imagen?.id}" style="margin-left: 45%">--}%
+%{--                        <i class="fa fa-times-circle"></i>--}%
+%{--                    </a>--}%
 %{--                    <asset:image src="${'apli/' + base?.id + "/" + imagen?.ruta}" style="padding: 10px; width: 400px"/>--}%
 %{--                    <asset:image src="${directorio + imagen?.ruta}" style="padding: 10px; width: 400px; margin-left: 100px"/>--}%
 %{--                    <g:img dir="${directorio}" file="${imagen?.ruta}" width="400px"/>--}%
