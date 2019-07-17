@@ -2,8 +2,9 @@ package bitacora3
 
 import bitacora.Base
 import groovy.time.TimeCategory
+import seguridad.Shield
 
-class BuscarBaseController extends seguridad.Shield {
+class BuscarBaseController extends Shield {
 
 
     def dbConnectionService

@@ -9,7 +9,7 @@ class Shield {
      */
     def auth() {
 //        println "acción: " + actionName + " controlador: " + controllerName + " params: $params"
-//        println "shield sesión: " + session.usuario
+        println "shield sesión: " + session.usuario
         session.an = actionName
         session.cn = controllerName
         session.pr = params
@@ -18,11 +18,11 @@ class Shield {
 
         /** **************************************************************************/
 
-        if(session.an == 'saveTramite' && session.cn == 'tramite'){
-            println("entro")
-            return true
-
-        } else {
+//        if(session.an == 'saveTramite' && session.cn == 'tramite'){
+//            println("entro")
+//            return true
+//
+//        } else {
             if (!session.usuario || !session.perfil) {
                 if(controllerName != "inicio" && actionName != "index") {
                     flash.message = "Usted ha superado el tiempo de inactividad máximo de la sesión"
@@ -91,7 +91,7 @@ class Shield {
                 }
             }
             /*************************************************************************** */
-        }
+//        }
 
 
 
