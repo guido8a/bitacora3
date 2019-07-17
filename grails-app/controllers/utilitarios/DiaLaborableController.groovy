@@ -3,7 +3,7 @@ package utilitarios
 import groovy.json.JsonBuilder
 import org.springframework.dao.DataIntegrityViolationException
 
-class DiaLaborableController extends seguridad.Shield {
+class DiaLaborableController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 

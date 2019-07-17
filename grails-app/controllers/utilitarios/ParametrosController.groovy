@@ -1,7 +1,7 @@
 package utilitarios
 
 
-class ParametrosController extends seguridad.Shield {
+class ParametrosController {
 
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]
 

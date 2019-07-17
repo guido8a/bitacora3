@@ -1,6 +1,6 @@
 package bitacora3
 
-class BuscarActividadController extends seguridad.Shield {
+class BuscarActividadController {
 
 
     def dbConnectionService

@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage
 import static java.awt.RenderingHints.KEY_INTERPOLATION
 import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
 
-class PersonaController extends seguridad.Shield {
+class PersonaController {
 
     def tramitesService
 

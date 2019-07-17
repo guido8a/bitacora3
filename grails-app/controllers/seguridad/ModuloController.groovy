@@ -1,6 +1,6 @@
 package seguridad
 
-class ModuloController extends seguridad.Shield  {
+class ModuloController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "GET"]
 

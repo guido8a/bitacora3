@@ -3,7 +3,7 @@ package bitacora3
 import bitacora.Tema
 
 
-class TemaController extends seguridad.Shield {
+class TemaController {
 
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]
 

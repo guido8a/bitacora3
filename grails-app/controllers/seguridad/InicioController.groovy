@@ -1,6 +1,7 @@
 package seguridad
 
-class InicioController extends seguridad.Shield {
+class InicioController {
+
     def dbConnectionService
     def diasLaborablesService
 

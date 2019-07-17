@@ -165,7 +165,7 @@ class LoginController {
                 return
             } else {
                 session.usuario = user
-                session.usuarioKerberos = user.login
+//                session.usuarioKerberos = user.login
                 session.time = new Date()
                 session.departamento = user.departamento
 
@@ -267,6 +267,7 @@ class LoginController {
                 perfiles.add(p)
             }
         }
+        println "---- perfiles ----"
         return [perfilesUsr: perfiles.sort{it.perfil.descripcion}]
     }
 

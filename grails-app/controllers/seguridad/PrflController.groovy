@@ -1,6 +1,6 @@
 package seguridad
 
-class PrflController extends seguridad.Shield {
+class PrflController {
 
     def dbConnectionService
     def loginService

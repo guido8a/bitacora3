@@ -3,7 +3,7 @@ package bitacora3
 import bitacora.Prioridad
 
 
-class PrioridadController extends seguridad.Shield {
+class PrioridadController {
 
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]
 

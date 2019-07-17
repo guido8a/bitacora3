@@ -3,7 +3,6 @@ package bitacora3
 import bitacora.Documento
 import org.springframework.dao.DataIntegrityViolationException
 import seguridad.Departamento
-import seguridad.Shield
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
@@ -14,7 +13,7 @@ import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
 /**
  * Controlador que muestra las pantallas de manejo de Documento
  */
-class DocumentoController extends Shield {
+class DocumentoController {
 
     static allowedMethods = [save_ajax: "POST", delete_ajax: "POST"]
 

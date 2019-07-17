@@ -5,7 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException
 /**
  * Controlador que muestra las pantallas de manejo de Departamento
  */
-class DepartamentoController extends Shield {
+class DepartamentoController {
 
     static allowedMethods = [save_ajax: "POST", delete_ajax: "POST"]
 

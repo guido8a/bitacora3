@@ -3,7 +3,7 @@ package bitacora3
 import bitacora.Actividad
 
 
-class ActividadController extends seguridad.Shield {
+class ActividadController {
 
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]
 

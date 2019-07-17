@@ -2,13 +2,19 @@ package bitacora3
 
 import bitacora.Base
 import groovy.time.TimeCategory
-import seguridad.Shield
+import seguridad.WardInterceptor
 
-class BuscarBaseController extends Shield {
+//class BuscarBaseController extends Shield {
+class BuscarBaseController {
 
 
     def dbConnectionService
     def tramitesService
+
+    def beforeInterceptor = {
+        println "Tracing action ${actionUri}"
+    }
+
 
     def busquedaBase() {
 //        println "busqueda "
@@ -16,7 +22,7 @@ class BuscarBaseController extends Shield {
 
     def tablaBusquedaBase() {
 //        println "buscar .... $params"
-        def persona = session.usuario.id
+        def persona = session.usuario?.id
         def data = []
         def base = []
         def cn = dbConnectionService.getConnection()

@@ -1,6 +1,6 @@
 package seguridad
 
-class AccionesController extends seguridad.Shield {
+class AccionesController {
 
     def dbConnectionService
 

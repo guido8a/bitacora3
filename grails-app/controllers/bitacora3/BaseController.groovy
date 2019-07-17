@@ -12,7 +12,6 @@ import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
 
 import grails.core.GrailsApplication
-import seguridad.Shield
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage;
@@ -20,7 +19,7 @@ import java.awt.image.BufferedImage;
 import groovy.io.FileType
 
 
-class BaseController extends Shield {
+class BaseController {
 
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]
 
