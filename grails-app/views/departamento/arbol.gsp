@@ -4,9 +4,12 @@
         <meta name="layout" content="main">
         <title>Estructura de la Empresa</title>
 
-        <script src="${resource(dir: 'js/plugins/jstree-3.0.8/dist', file: 'jstree.min.js')}"></script>
-        <link href="${resource(dir: 'js/plugins/jstree-3.0.8/dist/themes/default', file: 'style.min.css')}" rel="stylesheet">
-        <link href="${resource(dir: 'css/custom', file: 'jstree-context.css')}" rel="stylesheet">
+%{--        <script src="${resource(dir: 'js/plugins/jstree-3.0.8/dist', file: 'jstree.min.js')}"></script>--}%
+%{--        <link href="${resource(dir: 'js/plugins/jstree-3.0.8/dist/themes/default', file: 'style.min.css')}" rel="stylesheet">--}%
+%{--        <link href="${resource(dir: 'css/custom', file: 'jstree-context.css')}" rel="stylesheet">--}%
+
+        <asset:javascript src="/jstree-3.0.8/dist/jstree.min.js"/>
+        <asset:stylesheet src="/jstree-3.0.8/dist/themes/default/style.min.css"/>
 
         <style type="text/css">
         #tree {

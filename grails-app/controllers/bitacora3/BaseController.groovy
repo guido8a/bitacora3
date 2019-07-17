@@ -18,6 +18,33 @@ import java.awt.image.BufferedImage;
 
 import groovy.io.FileType
 
+//import com.itextpdf.text.BaseColor
+//import com.lowagie.text.Document
+//import com.lowagie.text.Element
+//import com.lowagie.text.Font
+//import com.lowagie.text.Image
+//import com.lowagie.text.PageSize
+//import com.lowagie.text.Paragraph
+//import com.lowagie.text.pdf.PdfContentByte
+//import com.lowagie.text.pdf.PdfImportedPage
+//import com.lowagie.text.pdf.PdfPCell
+//import com.lowagie.text.pdf.PdfPTable
+//import com.lowagie.text.pdf.PdfReader
+//import com.lowagie.text.pdf.PdfWriter
+//import com.lowagie.text.Rectangle
+//
+//import java.awt.Color
+//import java.text.DecimalFormat
+//
+//
+//import com.lowagie.text.Phrase
+//import com.lowagie.text.pdf.PdfPageEventHelper
+//import com.lowagie.text.pdf.ColumnText
+
+
+
+
+
 
 class BaseController {
 
@@ -126,29 +153,44 @@ class BaseController {
         render "NO_No se encontró Base."
     } //notFound para ajax
 
-    def base () {
+    def base() {
         def base = Base.get(params.id)
 
         def list = []
         def dir = new File("/var/bitacora/${base?.id}")
-        if(dir.size() > 0 ){
-            dir.eachFileRecurse (FileType.FILES) { file ->
+        if (dir.size() > 0) {
+            dir.eachFileRecurse(FileType.FILES) { file ->
                 list << file
             }
         }
 
-        return [base: base, lista: list]
+        def partes = []
+        def contadorImas = 0
+        def contadorOtros = 0
+
+        list.each {
+
+            partes = it.name.split("\\.")
+            if (partes[1] in ['jpeg', 'png', 'jpg']) {
+                contadorImas++
+            } else {
+                contadorOtros++
+            }
+
+        }
+
+        return [base: base, lista: list, contadorImas: contadorImas, contadorOtros: contadorOtros]
     }
 
-    def guardarProblema_ajax () {
+    def guardarProblema_ajax() {
 //        println("guardarProblema params: " + params)
 
         def tema = Tema.get(params.tema)
         def usuario = Persona.get(session.usuario.id)
         def baseInstance
-        def edita = params.id? params.id : 0
+        def edita = params.id ? params.id : 0
 
-        if(params.id){
+        if (params.id) {
             baseInstance = Base.get(params.id)
         } else {
             baseInstance = new Base()
@@ -160,7 +202,7 @@ class BaseController {
         baseInstance.tema = tema
 
 //        println "edita: $edita"
-        try{
+        try {
             println "...1"
             baseInstance.save(flush: true)
 //            println "guardado ----- "
@@ -184,25 +226,25 @@ class BaseController {
     }
 
 
-    def validarProblema_ajax () {
+    def validarProblema_ajax() {
         def problema = params.problema
 
-        if(problema.size() < 15){
+        if (problema.size() < 15) {
             render false
             return
-        }else{
+        } else {
             render true
             return
         }
     }
 
-    def validarClave_ajax () {
+    def validarClave_ajax() {
         def clave = params.clave
 
-        if(clave.size() < 3){
+        if (clave.size() < 3) {
             render false
             return
-        }else{
+        } else {
             render true
             return
         }
@@ -213,12 +255,12 @@ class BaseController {
 //        render view: 'show_ajax', model: [baseInstance: Base.get(params.id, lista: )]
 //    }
 
-    def show_ajax () {
+    def show_ajax() {
         def base = Base.get(params.id)
         def list = []
         def dir = new File("/var/bitacora/${base?.id}")
-        if(dir.size() > 0 ){
-            dir.eachFileRecurse (FileType.FILES) { file ->
+        if (dir.size() > 0) {
+            dir.eachFileRecurse(FileType.FILES) { file ->
                 list << file
             }
         }
@@ -227,7 +269,7 @@ class BaseController {
 
 
 //    def renderImage = {
-    def renderImage () {
+    def renderImage() {
 
 //        println("params render" + params)
 
@@ -240,13 +282,13 @@ class BaseController {
         //String profileImagePath = grailsApplication.grails.profile.images.path
 
 //        String image  = 'gatos.jpeg' // or whatever name you saved in your db
-        String image  = params.nombre
-        File imageFile =new File(profileImagePath+image);
-        BufferedImage originalImage=ImageIO.read(imageFile);
-        ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        ImageIO.write(originalImage, "${parts[1]}", baos );
+        String image = params.nombre
+        File imageFile = new File(profileImagePath + image);
+        BufferedImage originalImage = ImageIO.read(imageFile);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(originalImage, "${parts[1]}", baos);
 
-        byte[] imageInByte=baos.toByteArray();
+        byte[] imageInByte = baos.toByteArray();
 
         response.setHeader('Content-length', imageInByte.length.toString())
         response.contentType = 'image/' + parts[1] // or the appropriate image content type
@@ -255,8 +297,7 @@ class BaseController {
     }
 
 
-
-    def carrusel_ajax () {
+    def carrusel_ajax() {
 
 //        println("params carrusel " + params)
 
@@ -279,7 +320,7 @@ class BaseController {
     }
 
 
-    def subirImagen () {
+    def subirImagen() {
 
 //        println("params subir imagen " + params)
 
@@ -295,7 +336,7 @@ class BaseController {
 //        File folder = new File(folderPath)
         File folder = new File(path)
 
-        if ( !folder.exists() ) {
+        if (!folder.exists()) {
             folder.mkdirs()
         }
 
@@ -305,9 +346,9 @@ class BaseController {
 
 //        def imageContent = ['image/png': "png", 'image/jpeg': "jpeg", 'image/jpg': "jpg"]
         def okContents = [
-                'image/png'                                                                : "png",
-                'image/jpeg'                                                               : "jpeg",
-                'image/jpg'                                                                : "jpg"
+                'image/png' : "png",
+                'image/jpeg': "jpeg",
+                'image/jpg' : "jpg"
         ]
 
         if (f && !f.empty) {
@@ -346,9 +387,9 @@ class BaseController {
             }
 
             def imagen = new Imagen([
-                    base: base,
-                    descripcion  : params.descripcion.toString(),
-                    ruta      : nombre
+                    base       : base,
+                    descripcion: params.descripcion.toString(),
+                    ruta       : nombre
             ])
             def data
             if (imagen.save(flush: true)) {
@@ -380,7 +421,7 @@ class BaseController {
     }
 
 
-    def subirArchivo () {
+    def subirArchivo() {
 
 //        println("--->" + params)
 
@@ -390,9 +431,9 @@ class BaseController {
 
         def f = request.getFile('archivo')  //archivo = name del input type file
 
-        if(!f && path){
+        if (!f && path) {
             println("no existe documento")
-        }else{
+        } else {
 
             //        println("---> " + f?.getOriginalFilename())
             if (f && !f.empty && f.getOriginalFilename() != '') {
@@ -438,7 +479,7 @@ class BaseController {
                 flash.message = "Guardado correctamente"
                 redirect(action: 'base', id: base?.id)
 
-            }else{
+            } else {
                 flash.clase = "alert-error"
                 flash.message = "Error al guardar el documento. No se ha cargado ningún archivo!"
                 redirect(action: 'base', id: base?.id)
@@ -448,52 +489,51 @@ class BaseController {
 
     }
 
-    def retornarArchivo () {
+    def retornarArchivo() {
 
 //        println("params retornar" + params)
 
         String profileImagePath = "/var/bitacora/${params.id.trim()}/"
         String filename = params.nombre
-        File fileToReturn = new File(profileImagePath+filename)
-        byte [] byteOutput = fileToReturn.readBytes()
+        File fileToReturn = new File(profileImagePath + filename)
+        byte[] byteOutput = fileToReturn.readBytes()
         response.setHeader("Content-disposition", "attachment; filename=\"${filename}\"");
         response.outputStream << byteOutput
     }
 
-    def tablaArchivos () {
+    def tablaArchivos() {
 
         def base = Base.get(params.id)
         def list = []
         def dir = new File("/var/bitacora/${base?.id}")
-        if(dir.size() > 0 ){
+        if (dir.size() > 0) {
 
-            dir.eachFileRecurse (FileType.FILES) { file ->
+            dir.eachFileRecurse(FileType.FILES) { file ->
                 list << file.canonicalFile
             }
         }
-        return[lista: list, base: base]
+        return [lista: list, base: base]
     }
 
-    def borrarArchivo () {
+    def borrarArchivo() {
 //        println("params borrar " + params)
         String profileImagePath = "/var/bitacora/${params.id.trim()}/"
         String filename = params.nombre
         def parts = filename.split("\\.")
 
-        if(parts[1] in ['jpeg', 'png', 'jpg']){
-            def imagen = Imagen.findByBaseAndRuta(Base.get(params.id.trim()),params.nombre)
-            try{
-               imagen.delete(flush: true)
-            }catch(e){
+        if (parts[1] in ['jpeg', 'png', 'jpg']) {
+            def imagen = Imagen.findByBaseAndRuta(Base.get(params.id.trim()), params.nombre)
+            try {
+                imagen.delete(flush: true)
+            } catch (e) {
                 render "no"
             }
         }
 
-        File fileToReturn = new File(profileImagePath+filename)
-        if(fileToReturn.delete()){
+        File fileToReturn = new File(profileImagePath + filename)
+        if (fileToReturn.delete()) {
             render "ok"
-        }
-        else{
+        } else {
             render "no"
         }
 

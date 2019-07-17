@@ -91,6 +91,7 @@ th, td {
                                 setTimeout(function () {
                                     cargarArchivos('${base?.id}', '${lista}');
                                     cargarCarrusel(${base?.id})
+                                    location.reload();
                                 }, 800);
                             }else{
                                 log("Error al eliminar el archivo", "error")

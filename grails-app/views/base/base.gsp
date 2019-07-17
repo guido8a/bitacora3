@@ -126,8 +126,8 @@
         <div class="col-md-12" style="margin-top: 10px">
             <ul class="nav nav-pills">
                 <li class="show active col-md-5"><a data-toggle="tab" href="#home"><h4><i class="fa fa-atlas"></i> Problema</h4></a></li>
-                <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes</h4></a></li>
-                <li class="col-md-3"><a data-toggle="tab" href="#archivos"><h4><i class="fa fa-folder-open"></i> Archivos</h4></a></li>
+                <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes (${contadorImas})</h4></a></li>
+                <li class="col-md-3"><a data-toggle="tab" href="#archivos"><h4><i class="fa fa-folder-open"></i> Archivos (${contadorOtros})</h4></a></li>
             </ul>
 
             <div class="tab-content">
@@ -275,7 +275,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                Problema y Solución..
+                Problema y Solución
             </div>
 
             <div class="modal-body" id="dialog-body" style="padding: 15px">
