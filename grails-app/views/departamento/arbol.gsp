@@ -67,7 +67,7 @@
             <div class="col-md-1">
                 <div class="btn-group">
                     <a href="#" class="btn btn-xs btn-default" id="btnCollapseAll" title="Cerrar todos los nodos">
-                        <i class="fa fa-minus-square-o"></i>&nbsp;
+                        <i class="fa fa-minus-square"></i>&nbsp;
                     </a>
                     <a href="#" class="btn btn-xs btn-default" id="btnExpandAll" title="Abrir todos los nodos">
                         <i class="fa fa-plus-square"></i>&nbsp;
@@ -96,12 +96,14 @@
                 var $btn = $("#dlgCreateEdit").find("#btnSave");
                 if ($form.valid()) {
                     $btn.replaceWith(spinner);
-                    openLoader("Guardando Entidad");
+                    // openLoader("Guardando Entidad");
+                    var dialog = cargarLoader("Guardando...");
                     $.ajax({
                         type    : "POST",
                         url     : $form.attr("action"),
                         data    : $form.serialize(),
                         success : function (msg) {
+                            dialog.modal('hide');
                             var parts = msg.split("*");
                             log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                             setTimeout(function () {
@@ -171,19 +173,21 @@
                         data += $(this).data("id") + "_";
                     });
                     $btn.replaceWith(spinner);
-                    openLoader("Guardando Persona");
+                    // openLoader("Guardando Persona");
+                    var dialog = cargarLoader("Guardando...");
                     $.ajax({
                         type    : "POST",
                         url     : $form.attr("action"),
                         data    : data,
                         success : function (msg) {
+                            dialog.modal('hide');
                             var parts = msg.split("*");
                             log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                             setTimeout(function () {
                                 if (parts[0] == "SUCCESS") {
                                     location.reload(true);
                                 } else {
-                                    closeLoader();
+                                    // closeLoader();
                                     spinner.replaceWith($btn);
                                     return false;
                                 }
@@ -209,9 +213,7 @@
                         var b = bootbox.dialog({
                             id    : "dlgCreateEdit",
                             title : title + " Usuario",
-
                             class : "modal-lg",
-
                             message : msg,
                             buttons : {
                                 cancelar : {
@@ -242,7 +244,8 @@
 
                 var submitFormPass = function () {
                     if ($form.validate()) {
-                        openLoader("Guardando");
+                        // openLoader("Guardando");
+                        var dialog = cargarLoader("Guardando...");
                         $.ajax({
                             type    : "POST",
                             url     : '${createLink(controller: 'persona', action:'savePass_ajax')}',
@@ -256,11 +259,12 @@
                             success : function (msg) {
                                 var parts = msg.split("*");
                                 log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                closeLoader();
+                                // closeLoader();
+                                dialog.modal('hide');
                             }
                         });
                     } else {
-                        console.log('no valida');
+                        // console.log('no valida');
                         return false;
                     }
                 };
@@ -423,7 +427,7 @@
 
                 var docsEntidad = {
                     label           : "Documentos área de gestión",
-                    icon            : "fa fa-files-o",
+                    icon            : "fa fa-file-word",
                     separator_after : true,
                     action          : function () {
                         $.ajax({
@@ -490,7 +494,7 @@
 
                 var editarEntidad = {
                     label  : "Editar datos del área de gestión",
-                    icon   : "fa fa-pencil text-info",
+                    icon   : "fa fa-pen text-info",
                     action : function () {
                         createEditUnidad(nodeId, null);
                     }
@@ -527,7 +531,7 @@
                 };
                 var editarUsuario = {
                     label            : "Editar datos del usuario",
-                    icon             : "fa fa-pencil text-info",
+                    icon             : "fa fa-pen text-info",
                     separator_before : true,
                     action           : function () {
                         createEditPersona(nodeId, null);
@@ -614,7 +618,7 @@
                         },
                         data           : {
                             async : false,
-                            url   : '${createLink(action:"loadTreePart_ajax")}',
+                            url   : '${createLink(controller: 'departamento' , action:"loadTreePart_ajax")}',
                             data  : function (node) {
                                 return {
                                     id    : node.id,
@@ -635,7 +639,7 @@
                         fuzzy             : false,
                         show_only_matches : false,
                         ajax              : {
-                            url     : "${createLink(action:'arbolSearch_ajax')}",
+                            url     : "${createLink(controller: 'departamento', action:'arbolSearch_ajax')}",
                             success : function (msg) {
                                 var json = $.parseJSON(msg);
                                 $.each(json, function (i, obj) {

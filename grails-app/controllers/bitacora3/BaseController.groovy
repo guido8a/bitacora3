@@ -18,34 +18,6 @@ import java.awt.image.BufferedImage;
 
 import groovy.io.FileType
 
-//import com.itextpdf.text.BaseColor
-//import com.lowagie.text.Document
-//import com.lowagie.text.Element
-//import com.lowagie.text.Font
-//import com.lowagie.text.Image
-//import com.lowagie.text.PageSize
-//import com.lowagie.text.Paragraph
-//import com.lowagie.text.pdf.PdfContentByte
-//import com.lowagie.text.pdf.PdfImportedPage
-//import com.lowagie.text.pdf.PdfPCell
-//import com.lowagie.text.pdf.PdfPTable
-//import com.lowagie.text.pdf.PdfReader
-//import com.lowagie.text.pdf.PdfWriter
-//import com.lowagie.text.Rectangle
-//
-//import java.awt.Color
-//import java.text.DecimalFormat
-//
-//
-//import com.lowagie.text.Phrase
-//import com.lowagie.text.pdf.PdfPageEventHelper
-//import com.lowagie.text.pdf.ColumnText
-
-
-
-
-
-
 class BaseController {
 
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]

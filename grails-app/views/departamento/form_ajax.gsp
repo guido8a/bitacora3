@@ -1,6 +1,7 @@
 <%@ page import="seguridad.Departamento" %>
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
+
 <g:if test="${!departamentoInstance}">
     <elm:notFound elem="Departamento" genero="o"/>
 </g:if>
@@ -28,10 +29,10 @@
                         Depende de
                     </label>
 
-                    <div class="col-md-6" style="width: 530px">
+                    <div class="col-md-4">
                         <g:select id="padre" name="padre.id" from="${seguridad.Departamento.list()}" optionKey="id"
                                   value="${departamentoInstance?.padre?.id}" class="many-to-one form-control input-sm"
-                                  noSelection="['null': '']" style="width: 530px"/>
+                                  noSelection="['null': '']"/>
                     </div>
 
                 </span>
@@ -55,7 +56,7 @@
 
                     <div class="col-md-10">
                         <g:textArea name="direccion" maxlength="127" class="form-control input-sm" value="${departamentoInstance?.direccion}"
-                                    style="height: 40px;"/>
+                                    style="height: 40px; resize: none"/>
                     </div>
 
                 </span>
@@ -107,14 +108,15 @@
                 <div class="col-md-6">
                     <span class="grupo">
                         <label for="activo" class="col-md-4 control-label">
-                        Activo
-                    </label>
+                            Activo
+                        </label>
 
-                    <div class="col-md-3">
-                        <g:select name="activo" value="${departamentoInstance.activo}"
-                                  class="form-control input-sm required" required=""
-                          from="${[1: 'Sí', 0: 'No']}" optionKey="key" optionValue="value"/>
-                    </div>
+                        <div class="col-md-3">
+                            <g:select name="activo" value="${departamentoInstance.activo}"
+                                      class="form-control input-sm required" required=""
+                                      from="${[1: 'Sí', 0: 'No']}" optionKey="key" optionValue="value"/>
+                        </div>
+                    </span>
                 </div>
             </div>
 

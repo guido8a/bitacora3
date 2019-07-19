@@ -23,6 +23,8 @@ apply plugin:"org.grails.grails-gsp"
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+    maven {url "https://mvnrepository.com/artifact/org.grails/grails-docs"}
+    maven {url "https://mvnrepository.com/artifact/com.itextpdf/itextpdf"}
 }
 
 dependencies {
@@ -47,6 +49,11 @@ dependencies {
     compile "org.hibernate:hibernate-core:5.1.16.Final"
     compile "org.grails.plugins:gsp"
     compile fileTree(dir: 'lib', include: '*.jar')
+//    compile fileTree(dir: 'lib/', include: '*.jar')
+    compile files('iText-2.0.8.jar')
+//    runtime 'com.lowagie:itext:2.0.8'
+    runtime group: 'com.lowagie', name: 'itext', version: '2.0.8'
+
 //    compile 'org.grails.plugins:postgresql-extensions:4.8.0'
     runtime "org.postgresql:postgresql:42.2.5"
 //    compile 'org.postgresql:postgresql:42.2.5.jre8'
@@ -65,7 +72,9 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-c" +
             "hrome-driver:2.47.1"
     compile 'org.grails.plugins:audita:1.0'
-    compile 'com.lowagie:itext:2.0.8'
+//    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.0.6'
+
+
 }
 
 bootRun {

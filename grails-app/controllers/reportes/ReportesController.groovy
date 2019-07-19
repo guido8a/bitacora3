@@ -160,42 +160,42 @@ class ReportesController {
     }
 
 
-    def setTitulos(XSSFSheet sheet, estilos, int iniRow, int iniCol, String titulo, String subtitulo) {
-        CellStyle styleYachay = estilos.styleYachay
-        CellStyle styleTitulo = estilos.styleTitulo
-        CellStyle styleSubtitulo = estilos.styleSubtitulo
-        CellStyle styleFecha = estilos.styleFecha
-
-        def curRow = iniRow
-
-        XSSFRow rowYachay = sheet.createRow((short) curRow)
-        XSSFCell cellYachay = rowYachay.createCell((short) iniCol)
-        cellYachay.setCellValue("BITÁCORA")
-        cellYachay.setCellStyle(styleYachay)
-        curRow++
-
-        XSSFRow rowTitulo = sheet.createRow((short) curRow)
-        XSSFCell cellTitulo = rowTitulo.createCell((short) iniCol)
-        cellTitulo.setCellValue(titulo)
-        cellTitulo.setCellStyle(styleTitulo)
-        curRow++
-
-        if (subtitulo && subtitulo != "") {
-            XSSFRow rowSubtitulo = sheet.createRow((short) curRow)
-            XSSFCell cellSubtitulo = rowSubtitulo.createCell((short) iniCol + 3)
-            cellSubtitulo.setCellValue(subtitulo)
-            cellSubtitulo.setCellStyle(styleTitulo)
-            curRow++
-        }
-
-        XSSFRow rowFecha = sheet.createRow((short) curRow)
-        XSSFCell cellFecha = rowFecha.createCell((short) iniCol + 1)
-        cellFecha.setCellValue("Fecha del reporte: " + new Date().format("dd-MM-yyyy HH:mm"))
-        cellFecha.setCellStyle(styleFecha)
-        curRow++
-
-        return curRow
-    }
+//    def setTitulos(XSSFSheet sheet, estilos, int iniRow, int iniCol, String titulo, String subtitulo) {
+//        CellStyle styleYachay = estilos.styleYachay
+//        CellStyle styleTitulo = estilos.styleTitulo
+//        CellStyle styleSubtitulo = estilos.styleSubtitulo
+//        CellStyle styleFecha = estilos.styleFecha
+//
+//        def curRow = iniRow
+//
+//        XSSFRow rowYachay = sheet.createRow((short) curRow)
+//        XSSFCell cellYachay = rowYachay.createCell((short) iniCol)
+//        cellYachay.setCellValue("BITÁCORA")
+//        cellYachay.setCellStyle(styleYachay)
+//        curRow++
+//
+//        XSSFRow rowTitulo = sheet.createRow((short) curRow)
+//        XSSFCell cellTitulo = rowTitulo.createCell((short) iniCol)
+//        cellTitulo.setCellValue(titulo)
+//        cellTitulo.setCellStyle(styleTitulo)
+//        curRow++
+//
+//        if (subtitulo && subtitulo != "") {
+//            XSSFRow rowSubtitulo = sheet.createRow((short) curRow)
+//            XSSFCell cellSubtitulo = rowSubtitulo.createCell((short) iniCol + 3)
+//            cellSubtitulo.setCellValue(subtitulo)
+//            cellSubtitulo.setCellStyle(styleTitulo)
+//            curRow++
+//        }
+//
+//        XSSFRow rowFecha = sheet.createRow((short) curRow)
+//        XSSFCell cellFecha = rowFecha.createCell((short) iniCol + 1)
+//        cellFecha.setCellValue("Fecha del reporte: " + new Date().format("dd-MM-yyyy HH:mm"))
+//        cellFecha.setCellStyle(styleFecha)
+//        curRow++
+//
+//        return curRow
+//    }
 
 /*
     public static joinTitulos(Sheet sheet, int iniRow, int iniCol, int totalCols) {
@@ -204,161 +204,161 @@ class ReportesController {
 */
 
 //    public static joinTitulos(Sheet sheet, int iniRow, int iniCol, int totalCols, boolean subtitulo) {
-    def joinTitulos(XSSFSheet sheet, int iniRow, int iniCol, int totalCols, boolean subtitulo) {
-        sheet.addMergedRegion(new CellRangeAddress(
-                iniRow, //first row (0-based)
-                iniRow, //last row  (0-based)
-                iniCol, //first column (0-based)
-                totalCols  //last column  (0-based)
-        ))
-        sheet.addMergedRegion(new CellRangeAddress(
-                iniRow + 1, //first row (0-based)
-                iniRow + 1, //last row  (0-based)
-                iniCol, //first column (0-based)
-                totalCols   //last column  (0-based)
-        ))
-        if (subtitulo) {
-            sheet.addMergedRegion(new CellRangeAddress(
-                    iniRow + 2, //first row (0-based)
-                    iniRow + 2, //last row  (0-based)
-                    iniCol, //first column (0-based)
-                    totalCols   //last column  (0-based)
-            ))
-            sheet.addMergedRegion(new CellRangeAddress(
-                    iniRow + 3, //first row (0-based)
-                    iniRow + 3, //last row  (0-based)
-                    iniCol + 1, //first column (0-based)
-                    iniCol + 2   //last column  (0-based)
-            ))
-        } else {
-            sheet.addMergedRegion(new CellRangeAddress(
-                    iniRow + 2, //first row (0-based)
-                    iniRow + 2, //last row  (0-based)
-                    iniCol + 1, //first column (0-based)
-                    iniCol + 2   //last column  (0-based)
-            ))
-        }
-    }
+//    def joinTitulos(XSSFSheet sheet, int iniRow, int iniCol, int totalCols, boolean subtitulo) {
+//        sheet.addMergedRegion(new CellRangeAddress(
+//                iniRow, //first row (0-based)
+//                iniRow, //last row  (0-based)
+//                iniCol, //first column (0-based)
+//                totalCols  //last column  (0-based)
+//        ))
+//        sheet.addMergedRegion(new CellRangeAddress(
+//                iniRow + 1, //first row (0-based)
+//                iniRow + 1, //last row  (0-based)
+//                iniCol, //first column (0-based)
+//                totalCols   //last column  (0-based)
+//        ))
+//        if (subtitulo) {
+//            sheet.addMergedRegion(new CellRangeAddress(
+//                    iniRow + 2, //first row (0-based)
+//                    iniRow + 2, //last row  (0-based)
+//                    iniCol, //first column (0-based)
+//                    totalCols   //last column  (0-based)
+//            ))
+//            sheet.addMergedRegion(new CellRangeAddress(
+//                    iniRow + 3, //first row (0-based)
+//                    iniRow + 3, //last row  (0-based)
+//                    iniCol + 1, //first column (0-based)
+//                    iniCol + 2   //last column  (0-based)
+//            ))
+//        } else {
+//            sheet.addMergedRegion(new CellRangeAddress(
+//                    iniRow + 2, //first row (0-based)
+//                    iniRow + 2, //last row  (0-based)
+//                    iniCol + 1, //first column (0-based)
+//                    iniCol + 2   //last column  (0-based)
+//            ))
+//        }
+//    }
 
 
-    def getEstilos(XSSFWorkbook wb) {
-
-        XSSFCreationHelper createHelper = wb.getCreationHelper();
-        def numberFormat = createHelper.createDataFormat().getFormat('#,##0.00')
-        def dateFormat = createHelper.createDataFormat().getFormat("dd-MM-yyyy")
-
-        Font fontYachay = wb.createFont()
-        fontYachay.setFontHeightInPoints((short) 12)
-        fontYachay.setBold(true)
-
-        Font fontTitulo = wb.createFont()
-        fontTitulo.setFontHeightInPoints((short) 12)
-        fontTitulo.setBold(true)
-
-        Font fontSubtitulo = wb.createFont()
-        fontSubtitulo.setFontHeightInPoints((short) 12)
-        fontSubtitulo.setBold(true)
-
-        Font fontHeader = wb.createFont()
-        fontHeader.setFontHeightInPoints((short) 9)
-        fontHeader.setColor(new XSSFColor(new java.awt.Color(255, 255, 255)))
-        fontHeader.setBold(true)
-
-        Font fontTabla = wb.createFont()
-        fontTabla.setFontHeightInPoints((short) 9)
-
-        Font fontSubtotal = wb.createFont()
-        fontSubtotal.setFontHeightInPoints((short) 9)
-        fontSubtotal.setBold(true)
-
-        Font fontFecha = wb.createFont()
-        fontFecha.setFontHeightInPoints((short) 9)
-
-        Font fontFooter = wb.createFont()
-        fontFooter.setFontHeightInPoints((short) 9)
-        fontFooter.setBold(true)
-
-        CellStyle styleYachay = wb.createCellStyle()
-        styleYachay.setFont(fontYachay)
-        styleYachay.setAlignment(CellStyle.ALIGN_CENTER)
-        styleYachay.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-
-        CellStyle styleTitulo = wb.createCellStyle()
-        styleTitulo.setFont(fontTitulo)
-        styleTitulo.setAlignment(CellStyle.ALIGN_CENTER)
-        styleTitulo.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-
-        CellStyle styleSubtitulo = wb.createCellStyle()
-        styleSubtitulo.setFont(fontSubtitulo)
-        styleSubtitulo.setAlignment(CellStyle.ALIGN_CENTER)
-        styleSubtitulo.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-
-        CellStyle styleHeader = wb.createCellStyle()
-        styleHeader.setFont(fontHeader)
-        styleHeader.setAlignment(CellStyle.ALIGN_CENTER)
-        styleHeader.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-        styleHeader.setFillForegroundColor(new XSSFColor(new java.awt.Color(50, 96, 144)));
-        styleHeader.setFillPattern(CellStyle.SOLID_FOREGROUND)
-        styleHeader.setWrapText(true);
-        styleHeader.setBorderBottom(CellStyle.BORDER_THIN);
-        styleHeader.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        styleHeader.setBorderLeft(CellStyle.BORDER_THIN);
-        styleHeader.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-        styleHeader.setBorderRight(CellStyle.BORDER_THIN);
-        styleHeader.setRightBorderColor(IndexedColors.BLACK.getIndex());
-        styleHeader.setBorderTop(CellStyle.BORDER_THIN);
-        styleHeader.setTopBorderColor(IndexedColors.BLACK.getIndex());
-
-        CellStyle styleFecha = wb.createCellStyle()
-        styleFecha.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-        styleFecha.setFont(fontFecha)
-        styleFecha.setWrapText(true);
-
-        CellStyle styleTabla = wb.createCellStyle()
-        styleTabla.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-        styleTabla.setFont(fontTabla)
-        styleTabla.setWrapText(true);
-        styleTabla.setBorderBottom(CellStyle.BORDER_THIN);
-        styleTabla.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        styleTabla.setBorderLeft(CellStyle.BORDER_THIN);
-        styleTabla.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-        styleTabla.setBorderRight(CellStyle.BORDER_THIN);
-        styleTabla.setRightBorderColor(IndexedColors.BLACK.getIndex());
-        styleTabla.setBorderTop(CellStyle.BORDER_THIN);
-        styleTabla.setTopBorderColor(IndexedColors.BLACK.getIndex());
-
-        CellStyle styleDate = styleTabla.clone()
-        styleDate.setDataFormat(dateFormat);
-
-        CellStyle styleNumber = styleTabla.clone()
-        styleNumber.setDataFormat(numberFormat);
-
-        CellStyle styleSubtotal = styleTabla.clone()
-        styleSubtotal.setFont(fontSubtotal)
-        styleSubtotal.setAlignment(CellStyle.ALIGN_CENTER)
-        styleSubtotal.setFillForegroundColor(new XSSFColor(new java.awt.Color(111, 169, 237)));
-        styleSubtotal.setFillPattern(CellStyle.SOLID_FOREGROUND)
-
-        CellStyle styleSubtotalNumber = styleSubtotal.clone()
-        styleSubtotalNumber.setAlignment(CellStyle.ALIGN_RIGHT)
-        styleSubtotalNumber.setDataFormat(numberFormat);
-
-        CellStyle styleFooterText = styleTabla.clone()
-        styleFooterText.setFont(fontFooter)
-        styleFooterText.setFillForegroundColor(new XSSFColor(new java.awt.Color(200, 200, 200)));
-        styleFooterText.setFillPattern(CellStyle.SOLID_FOREGROUND)
-
-        CellStyle styleFooterCenter = styleFooterText.clone()
-        styleFooterCenter.setAlignment(CellStyle.ALIGN_RIGHT)
-
-        CellStyle styleFooter = styleFooterText.clone()
-        styleFooter.setDataFormat(numberFormat);
-
-        return [styleYachay    : styleYachay, styleTitulo: styleTitulo, styleSubtitulo: styleSubtitulo, styleHeader: styleHeader,
-                styleNumber    : styleNumber, styleFooter: styleFooter, styleDate: styleDate,
-                styleSubtotal  : styleSubtotal, styleSubtotalNumber: styleSubtotalNumber, styleTabla: styleTabla,
-                styleFooterText: styleFooterText, styleFooterCenter: styleFooterCenter, styleFecha: styleFecha]
-    }
+//    def getEstilos(XSSFWorkbook wb) {
+//
+//        XSSFCreationHelper createHelper = wb.getCreationHelper();
+//        def numberFormat = createHelper.createDataFormat().getFormat('#,##0.00')
+//        def dateFormat = createHelper.createDataFormat().getFormat("dd-MM-yyyy")
+//
+//        Font fontYachay = wb.createFont()
+//        fontYachay.setFontHeightInPoints((short) 12)
+//        fontYachay.setBold(true)
+//
+//        Font fontTitulo = wb.createFont()
+//        fontTitulo.setFontHeightInPoints((short) 12)
+//        fontTitulo.setBold(true)
+//
+//        Font fontSubtitulo = wb.createFont()
+//        fontSubtitulo.setFontHeightInPoints((short) 12)
+//        fontSubtitulo.setBold(true)
+//
+//        Font fontHeader = wb.createFont()
+//        fontHeader.setFontHeightInPoints((short) 9)
+//        fontHeader.setColor(new XSSFColor(new java.awt.Color(255, 255, 255)))
+//        fontHeader.setBold(true)
+//
+//        Font fontTabla = wb.createFont()
+//        fontTabla.setFontHeightInPoints((short) 9)
+//
+//        Font fontSubtotal = wb.createFont()
+//        fontSubtotal.setFontHeightInPoints((short) 9)
+//        fontSubtotal.setBold(true)
+//
+//        Font fontFecha = wb.createFont()
+//        fontFecha.setFontHeightInPoints((short) 9)
+//
+//        Font fontFooter = wb.createFont()
+//        fontFooter.setFontHeightInPoints((short) 9)
+//        fontFooter.setBold(true)
+//
+//        CellStyle styleYachay = wb.createCellStyle()
+//        styleYachay.setFont(fontYachay)
+//        styleYachay.setAlignment(CellStyle.ALIGN_CENTER)
+//        styleYachay.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
+//
+//        CellStyle styleTitulo = wb.createCellStyle()
+//        styleTitulo.setFont(fontTitulo)
+//        styleTitulo.setAlignment(CellStyle.ALIGN_CENTER)
+//        styleTitulo.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
+//
+//        CellStyle styleSubtitulo = wb.createCellStyle()
+//        styleSubtitulo.setFont(fontSubtitulo)
+//        styleSubtitulo.setAlignment(CellStyle.ALIGN_CENTER)
+//        styleSubtitulo.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
+//
+//        CellStyle styleHeader = wb.createCellStyle()
+//        styleHeader.setFont(fontHeader)
+//        styleHeader.setAlignment(CellStyle.ALIGN_CENTER)
+//        styleHeader.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
+//        styleHeader.setFillForegroundColor(new XSSFColor(new java.awt.Color(50, 96, 144)));
+//        styleHeader.setFillPattern(CellStyle.SOLID_FOREGROUND)
+//        styleHeader.setWrapText(true);
+//        styleHeader.setBorderBottom(CellStyle.BORDER_THIN);
+//        styleHeader.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+//        styleHeader.setBorderLeft(CellStyle.BORDER_THIN);
+//        styleHeader.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+//        styleHeader.setBorderRight(CellStyle.BORDER_THIN);
+//        styleHeader.setRightBorderColor(IndexedColors.BLACK.getIndex());
+//        styleHeader.setBorderTop(CellStyle.BORDER_THIN);
+//        styleHeader.setTopBorderColor(IndexedColors.BLACK.getIndex());
+//
+//        CellStyle styleFecha = wb.createCellStyle()
+//        styleFecha.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
+//        styleFecha.setFont(fontFecha)
+//        styleFecha.setWrapText(true);
+//
+//        CellStyle styleTabla = wb.createCellStyle()
+//        styleTabla.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
+//        styleTabla.setFont(fontTabla)
+//        styleTabla.setWrapText(true);
+//        styleTabla.setBorderBottom(CellStyle.BORDER_THIN);
+//        styleTabla.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+//        styleTabla.setBorderLeft(CellStyle.BORDER_THIN);
+//        styleTabla.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+//        styleTabla.setBorderRight(CellStyle.BORDER_THIN);
+//        styleTabla.setRightBorderColor(IndexedColors.BLACK.getIndex());
+//        styleTabla.setBorderTop(CellStyle.BORDER_THIN);
+//        styleTabla.setTopBorderColor(IndexedColors.BLACK.getIndex());
+//
+//        CellStyle styleDate = styleTabla.clone()
+//        styleDate.setDataFormat(dateFormat);
+//
+//        CellStyle styleNumber = styleTabla.clone()
+//        styleNumber.setDataFormat(numberFormat);
+//
+//        CellStyle styleSubtotal = styleTabla.clone()
+//        styleSubtotal.setFont(fontSubtotal)
+//        styleSubtotal.setAlignment(CellStyle.ALIGN_CENTER)
+//        styleSubtotal.setFillForegroundColor(new XSSFColor(new java.awt.Color(111, 169, 237)));
+//        styleSubtotal.setFillPattern(CellStyle.SOLID_FOREGROUND)
+//
+//        CellStyle styleSubtotalNumber = styleSubtotal.clone()
+//        styleSubtotalNumber.setAlignment(CellStyle.ALIGN_RIGHT)
+//        styleSubtotalNumber.setDataFormat(numberFormat);
+//
+//        CellStyle styleFooterText = styleTabla.clone()
+//        styleFooterText.setFont(fontFooter)
+//        styleFooterText.setFillForegroundColor(new XSSFColor(new java.awt.Color(200, 200, 200)));
+//        styleFooterText.setFillPattern(CellStyle.SOLID_FOREGROUND)
+//
+//        CellStyle styleFooterCenter = styleFooterText.clone()
+//        styleFooterCenter.setAlignment(CellStyle.ALIGN_RIGHT)
+//
+//        CellStyle styleFooter = styleFooterText.clone()
+//        styleFooter.setDataFormat(numberFormat);
+//
+//        return [styleYachay    : styleYachay, styleTitulo: styleTitulo, styleSubtitulo: styleSubtitulo, styleHeader: styleHeader,
+//                styleNumber    : styleNumber, styleFooter: styleFooter, styleDate: styleDate,
+//                styleSubtotal  : styleSubtotal, styleSubtotalNumber: styleSubtotalNumber, styleTabla: styleTabla,
+//                styleFooterText: styleFooterText, styleFooterCenter: styleFooterCenter, styleFecha: styleFecha]
+//    }
 
 
 }

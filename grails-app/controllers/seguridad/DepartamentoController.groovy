@@ -248,7 +248,7 @@ class DepartamentoController {
      * @return String
      */
     def makeTreeNode(params) {
-        println "makeTreeNode.. $params"
+//        println "makeTreeNode.. $params"
         def id = params.id
         if (!params.sort) {
             params.sort = "apellido"
@@ -262,19 +262,20 @@ class DepartamentoController {
 
         if (id == "#") {
             //root
-            def hh = Departamento.countByPadreIsNull([sort: "nombre"])
+//            def hh = Departamento.countByPadreIsNull([sort: "nombre"])
+            def hh = Departamento.countByPadreIsNull()
             if (hh > 0) {
                 clase = "hasChildren jstree-closed"
             }
 
             tree = "<li id='root' class='root ${clase}' data-jstree='{\"type\":\"root\"}' data-level='0' >" +
-                    "<a href='#' class='label_arbol'>Estructura de la Empresa</a>" +
+                    "<a href='#' class='label_arbol'>Estructura Principal</a>" +
                     "</li>"
             if (clase == "") {
                 tree = ""
             }
         } else if (id == "root") {
-            hijos = Departamento.findAllByPadreIsNull([sort: 'orden'])
+            hijos = Departamento.findAllByPadreIsNull()
         } else {
             def parts = id.split("_")
             def node_id = parts[1].toLong()
@@ -296,9 +297,9 @@ class DepartamentoController {
                 def ico = ""
                 if (hijo instanceof Departamento) {
                     lbl = hijo.nombre
-                    if (hijo.codigo) {
-                        lbl += " (${hijo.codigo})"
-                    }
+//                    if (hijo.codigo) {
+//                        lbl += " (${hijo.codigo})"
+//                    }
                     tp = "dep"
                     def hijosH = Departamento.findAllByPadre(hijo, [sort: "nombre"])
                     if (hijo.padre) {

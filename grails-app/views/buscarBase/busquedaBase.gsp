@@ -50,6 +50,10 @@
                title="Crear nuevo registro">
                 <i class="fa fa-check"></i> Crear Nuevo
             </a>
+            <g:link controller="buscarBase" action="reporteTablas"
+                    class="btn btnPrint btn-info btn-sm" rel="tooltip" title="Imprimir">
+                <i class="fa fa-print"></i>
+            </g:link>
         </div>
     </div>
 </div>
