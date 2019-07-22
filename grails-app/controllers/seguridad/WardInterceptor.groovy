@@ -8,7 +8,7 @@ class WardInterceptor {
 //        matchAll().excludes(controller: 'login')
         matchAll().excludes(controller:'login')
                 .excludes(controller:'shield')
-                .excludes(controller:'prfl')
+                .excludes(controller:'prfl')  /** todo: poner acciones base para incluir prfl **/
     }
 
     boolean before() {
