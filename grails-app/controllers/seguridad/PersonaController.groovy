@@ -812,6 +812,10 @@ class PersonaController {
     } //show para cargar con ajax en un dialog
 
     def form_ajax() {
+        def departamento = null
+        if(params.unidad){
+            departamento = Departamento.get(params.unidad)
+        }
         def personaInstance = new Persona(params)
         def perfiles = []
         if (params.id) {
@@ -828,7 +832,7 @@ class PersonaController {
             }
         }
         personaInstance.properties = params
-        return [personaInstance: personaInstance, perfiles: perfiles]
+        return [personaInstance: personaInstance, perfiles: perfiles, departamento: departamento]
     } //form para cargar con ajax en un dialog
 
     def activar_ajax() {

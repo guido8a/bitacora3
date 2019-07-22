@@ -39,7 +39,8 @@
             var $frm = $("#frmLogin");
             function doLogin() {
                 if ($frm.valid()) {
-                    $("#cargando").removeClass('hidden');
+                    // $("#cargando").removeClass('hidden');
+                    var dialog = cargarLoader("Cargando...");
                     $(".btn-login").replaceWith($("#cargando"));
                     $("#frmLogin").submit();
                 }

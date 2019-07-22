@@ -35,10 +35,6 @@
                     </span>
                 </div>
             </div>
-
-
-
-
             <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'nombre', 'error')} ${hasErrors(bean: personaInstance, field: 'apellido', 'error')} required">
                 <div class="col-md-6">
                     <span class="grupo">
@@ -102,7 +98,7 @@
                         </label>
 
                         <div class="col-md-10">
-                            <g:select id="departamento" name="departamento.id" from="${Departamento.list([sort:'nombre'])}" optionKey="id" value="${personaInstance?.departamento?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                            <g:select id="departamento" name="departamento.id" from="${Departamento.list([sort:'nombre'])}" optionKey="id" value="${departamento ? departamento?.id : personaInstance?.departamento?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                         </div>
 
                     </span>
