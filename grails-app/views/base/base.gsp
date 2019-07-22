@@ -106,7 +106,7 @@
         </h3>
 
         <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarr"
-           class="btn btn-sm btn-warning sobrepuesto" title="Consultar artículo">
+           class="btn btn-sm btn-info sobrepuesto" title="Consultar artículo">
             <i class="fa fa-chevron-circle-left"></i> Consultar
         </a>
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success sobrepuesto" style="margin-left: 105px" title="Guardar información">
@@ -129,6 +129,7 @@
                 <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes (${contadorImas})</h4></a></li>
                 <li class="col-md-3"><a data-toggle="tab" href="#archivos"><h4><i class="fa fa-folder-open"></i> Archivos (${contadorOtros})</h4></a></li>
             </ul>
+            <div style="height: 3px; background-color: #CEDDE6"></div>
 
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">

@@ -1,5 +1,7 @@
 package seguridad
 
+import grails.web.Action
+
 class AccionesController {
 
     def dbConnectionService
@@ -13,8 +15,8 @@ class AccionesController {
      */
     def acciones = {
 
-            def modulos = Modulo.list([sort: 'orden'])
-            return [modulos: modulos]
+        def modulos = Modulo.list([sort: 'orden'])
+        return [modulos: modulos]
     }
 
     def ajaxAcciones = {
@@ -241,47 +243,34 @@ class AccionesController {
     }
 
     def cargarAcciones = {
-            def ac = []
-            def accs = [:]
-            def i = 0
-            def ignore = ["afterInterceptor", "beforeInterceptor"]
-            grailsApplication.controllerClasses.each { ct ->
-                def t = []
-                ct.getURIs().each {
-                    def s = it.split("/")
-                    println "* cargarAcciones   " + s
-                    if (s.size() > 2)
-                        if (!t.contains(s[2]))
-                            if (!ignore.contains(s[2]))
-                                if (!(s[2] =~ "Service")) {
+        def i = 0
+        grailsApplication.controllerClasses.each { ct ->
+            def acciones = ct.clazz.methods.findAll { it.getAnnotation(Action) }*.name
+//            println "acciones: $acciones"
+            acciones.each { ac ->
+                def accn = Accn.findByAccnNombreAndControl(ac, Ctrl.findByCtrlNombre(ct.getName()))
 
-                                    def accn = Accn.findByAccnNombreAndControl(s[2], Ctrl.findByCtrlNombre(ct.getName()))
-
-                                    if (accn == null) {
-                                        accn = new Accn()
-                                        accn.accnNombre = s[2]
-                                        accn.control = Ctrl.findByCtrlNombre(ct.getName())
-                                        accn.accnDescripcion = s[2]
-                                        accn.accnAuditable = 1
-                                        if (s[2] =~ "save" || s[2] =~ "update" || s[2] =~ "delete" || s[2] =~ "guardar")
-                                            accn.tipo = Tpac.get(2)
-                                        else
-                                            accn.tipo = Tpac.get(1)
-                                        accn.modulo = Modulo.findByDescripcionIlike("no%asignado")
-                                        if (!accn.save(flush: true)) {
-                                            println "errores accn" + accn.errors
-                                        } else {
-                                            i++
-                                        }
-                                    }
-                                    t.add(s.getAt(2))
-                                }
-
+                if (accn == null) {
+                    accn = new Accn()
+                    accn.accnNombre = ac
+                    accn.control = Ctrl.findByCtrlNombre(ct.getName())
+                    accn.accnDescripcion = ac
+                    accn.accnAuditable = 1
+                    if (ac =~ "save" || ac =~ "update" || ac =~ "delete" || ac =~ "guardar")
+                        accn.tipo = Tpac.get(2)
+                    else
+                        accn.tipo = Tpac.get(1)
+                    accn.modulo = Modulo.findByDescripcionIlike("no%asignado")
+                    if (!accn.save(flush: true)) {
+                        println "errores accn" + accn.errors
+                    } else {
+                        i++
+                    }
                 }
-                accs.put(ct.getName(), t)
-                t = null
+
             }
-            render("Se han agregado ${i} acciones")
+        }
+        render("Se han agregado ${i} acciones")
     }
 
     def poneSQL(tipo, mdlo) {

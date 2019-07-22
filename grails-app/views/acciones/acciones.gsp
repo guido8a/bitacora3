@@ -22,7 +22,7 @@
 
             <div class="btn-group">
                 <g:link controller="prfl" action="modulos" id="1" class="aPrfl btn btn-primary">
-                    Gestionar Permisos y M&oacute;dulos (Menú)
+                    Gestionar Permisos y Módulos (Menú)
                 </g:link>
             </div>
             <div class="btn-group">

@@ -52,7 +52,7 @@ dependencies {
 //    compile fileTree(dir: 'lib/', include: '*.jar')
     compile files('iText-2.0.8.jar')
 //    runtime 'com.lowagie:itext:2.0.8'
-    runtime group: 'com.lowagie', name: 'itext', version: '2.0.8'
+//    runtime group: 'com.lowagie', name: 'itext', version: '2.0.8'
 
 //    compile 'org.grails.plugins:postgresql-extensions:4.8.0'
     runtime "org.postgresql:postgresql:42.2.5"

@@ -1,10 +1,14 @@
 package seguridad
 
+import seguridad.ShieldController
 
 class WardInterceptor {
 
     WardInterceptor () {
-        matchAll().excludes(controller: 'login')
+//        matchAll().excludes(controller: 'login')
+        matchAll().excludes(controller:'login')
+                .excludes(controller:'shield')
+                .excludes(controller:'prfl')
     }
 
     boolean before() {
@@ -14,6 +18,10 @@ class WardInterceptor {
         session.an = actionName
         session.cn = controllerName
         session.pr = params
+        def usro
+        if(session) {
+            usro = session.usuario
+        }
 
         if(session.an == 'saveTramite' && session.cn == 'tramite'){
             println("entro")
@@ -28,15 +36,17 @@ class WardInterceptor {
                 session.finalize()
                 return false
             } else {
-                def usu = Persona.get(session.usuario.id)
-                if (usu.estaActivo) {
+//                def usu = Persona.get(session.usuario.id)
+                println "session válida: ${usro.id}"
+                if (usro.estaActivo) {
                     session.departamento = Departamento.get(session.departamento.id).refresh()
                     def perms = session.usuario.permisos
-                    session.usuario = Persona.get(session.usuario.id).refresh()
+//                    session.usuario = Persona.get(session.usuario.id).refresh()
                     session.usuario.permisos = perms
 
                     if (!isAllowed()) {
-                        redirect(controller: 'shield', action: 'unauthorized')
+                        println "no permitido"
+                        redirect(controller: 'shield', action: 'ataques')
                         return false
                     }
 
@@ -79,28 +89,32 @@ class WardInterceptor {
 
 
     boolean isAllowed() {
-//        try {
-//            if (request.method == "POST") {
-////                println "es post no audit"
-//                return true
-//            }
-////            println "is allowed Accion: ${actionName.toLowerCase()} ---  Controlador: ${controllerName.toLowerCase()} --- Permisos de ese controlador: "+session.permisos[controllerName.toLowerCase()]
-//            if (!session.permisos[controllerName.toLowerCase()]) {
-//                return false
-//            } else {
-//                if (session.permisos[controllerName.toLowerCase()].contains(actionName.toLowerCase())) {
-//                    return true
-//                } else {
-//                    return false
-//                }
-//            }
-//
-//        } catch (e) {
-//            println "Shield execption e: " + e
-//            return false
-//        }
-//            return false
-        return true
+        println "--> ${session.permisos[controllerName.toLowerCase()]} --> ${actionName}"
+
+        try {
+            if (request.method == "POST") {
+                println "es post no audit"
+                return true
+            }
+            println "is allowed Accion: ${actionName.toLowerCase()} ---  Controlador: ${controllerName.toLowerCase()} --- Permisos de ese controlador: "+session.permisos[controllerName.toLowerCase()]
+            if (!session.permisos[controllerName.toLowerCase()]) {
+                return false
+            } else {
+                if (session.permisos[controllerName.toLowerCase()].contains(actionName.toLowerCase())) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+
+        } catch (e) {
+            println "Shield execption e: " + e
+            return false
+        }
+            return false
+
+
+//        return true
 
     }
 

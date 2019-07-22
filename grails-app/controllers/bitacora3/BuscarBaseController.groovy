@@ -5,7 +5,7 @@ import groovy.time.TimeCategory
 import seguridad.WardInterceptor
 
 
-import com.itextpdf.text.BaseColor
+//import com.itextpdf.text.BaseColor
 import com.lowagie.text.Document
 import com.lowagie.text.Element
 import com.lowagie.text.Font
