@@ -92,7 +92,7 @@ class WardInterceptor {
         println "--> ${session.permisos[controllerName.toLowerCase()]} --> ${actionName}"
 
         try {
-            if (request.method == "POST") {
+            if((request.method == "POST") || (actionName.toLowerCase() =~ 'ajax')) {
                 println "es post no audit"
                 return true
             }
