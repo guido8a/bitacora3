@@ -477,7 +477,6 @@ class DocumentoController {
         def inicio = new Date()
 //        println "buscar .. ${buscar}"
 
-        def resultado = []
         buscar.each {pl ->
             sql = "select base__id, sum(plbrvlor) valor from plbr where plbrplbr like '%${pl}%' group by base__id " +
                     "order by 2"
@@ -522,7 +521,7 @@ class DocumentoController {
 
             list.each {
                 partes = it.name.split("\\.")
-                if (partes[1] in ['jpeg', 'png', 'jpg']) {
+                if (partes.last() in ['jpeg', 'png', 'jpg']) {
                     contadorImas++
                 } else {
                     contadorOtros++
@@ -530,16 +529,13 @@ class DocumentoController {
 
             }
 
-            resultado += Base.get(it.id)
-
-//            bases.put(Base.get(it.id), contadorImas)
             bases.put(Base.get(it.id), [contadorImas, contadorOtros])
         }
 
         cn.close()
 //        println "resultado: ${resultado.id}"
 
-        return [bases: resultado, persona: persona, msg: msg, b: bases]
+        return [persona: persona, msg: msg, arch: bases]
     }
 
 

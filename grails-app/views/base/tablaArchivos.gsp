@@ -51,7 +51,7 @@ th, td {
                     </g:if>
 
                     <td width="30px" class="text-info" style="text-align: center">
-                        <g:link controller="base" action="retornarArchivo" params="[nombre: registro]" id="${base?.id}"
+                        <g:link controller="base" action="retornarArchivo" params="[nombre: registro]" id="${base}"
                                 class="btn btnDescargar  btn-info btn-sm" title="Descargar archivo">
                             <i class="fa fa-download"></i>
                         </g:link>
@@ -69,7 +69,7 @@ th, td {
 <script type="text/javascript">
 
     $(".btnBorrarArchivo").click(function () {
-        var id = '${base?.id}';
+        var id = '${base}';
         var nombre = $(this).data("nombre");
 
         bootbox.confirm({
@@ -97,8 +97,8 @@ th, td {
                             if(msg == 'ok'){
                                 log("Archivo eliminado correctamente","success");
                                 setTimeout(function () {
-                                    cargarArchivos('${base?.id}', '${lista}');
-                                    cargarCarrusel(${base?.id})
+                                    cargarArchivos('${base}', '${lista}');
+                                    cargarCarrusel(${base})
                                     location.reload();
                                 }, 800);
                             }else{

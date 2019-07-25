@@ -477,9 +477,9 @@ class BaseController {
 
         println("params ta " + params)
 
-        def base = Base.get(params.id)
+        def base = params.id
         def list = []
-        def dir = new File("/var/bitacora/${base?.id}")
+        def dir = new File("/var/bitacora/${base}")
         if (dir.size() > 0) {
 
             dir.eachFileRecurse(FileType.FILES) { file ->
@@ -495,7 +495,7 @@ class BaseController {
         String filename = params.nombre
         def parts = filename.split("\\.")
 
-        if (parts[1] in ['jpeg', 'png', 'jpg']) {
+        if (parts.last() in ['jpeg', 'png', 'jpg']) {
             def imagen = Imagen.findByBaseAndRuta(Base.get(params.id.trim()), params.nombre)
             try {
                 imagen.delete(flush: true)

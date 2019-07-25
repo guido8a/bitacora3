@@ -26,7 +26,7 @@ th, td {
 
 <div class="" style="width: 99.7%;height: ${msg == '' ? 600 : 585}px; overflow-y: auto;float: right; margin-top: -20px">
     <table class="table-bordered table-condensed table-hover" width="1060px">
-        <g:each in="${b}" var="dato" status="z">
+        <g:each in="${arch}" var="dato" status="z">
 
             <tr id="${dato.key.id}" data-id="${dato.key.id}" class="${clase}">
                 <td width="120px">
