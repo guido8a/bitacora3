@@ -1,179 +1,191 @@
 <%@ page import="bitacora.Documento" %>
+
+<%@ page import="seguridad.Persona" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="layout" content="main">
-        <title>Biblioteca de Documentos</title>
-    </head>
+<head>
+    <meta name="layout" content="main">
+    <title>Búsqueda en Documentos</title>
 
-    <body>
+    <style type="text/css">
 
-        <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
+    .alinear {
+        text-align: center !important;
+    }
 
-        <!-- botones -->
-        <div class="btn-toolbar toolbar">
-            %{--<div class="btn-group">--}%
-            %{--<a href="#" class="btn btn-default btnCrear">--}%
-            %{--<i class="fa fa-file-o"></i> Crear--}%
-            %{--</a>--}%
-            %{--</div>--}%
+    #buscar {
+        width: 400px;
+        border-color: #0c6cc2;
+    }
 
-            <div class="btn-group pull-right col-md-3">
-                <div class="input-group">
-                    <input type="text" class="form-control input-search" placeholder="Buscar" value="${params.search}">
-                    <span class="input-group-btn">
-                        <g:link controller="documento" action="list" class="btn btn-default btn-search">
-                            <i class="fa fa-search"></i>&nbsp;
-                        </g:link>
-                    </span>
-                </div><!-- /input-group -->
+    #limpiaBuscar {
+        position: absolute;
+        right: 5px;
+        top: 0;
+        bottom: 0;
+        height: 14px;
+        margin: auto;
+        font-size: 14px;
+        cursor: pointer;
+        color: #ccc;
+    }
+    </style>
+
+</head>
+
+<body>
+<div style="margin-top: 0px; min-height: 60px" class="vertical-container">
+    <p class="css-vertical-text"></p>
+
+    <div class="linea"></div>
+
+    <div>
+        <div class="col-md-12">
+            Buscar documentos en la base de conocimiento por tema:
+            <div class="btn-group">
+                <input id="buscar" type="search" class="form-control">
             </div>
+            <a href="#" name="busqueda" class="btn btn-success btnBusqueda btn-ajax"><i
+                    class="fas fa-search"></i> Buscar</a>
+            <a href="#" name="lB" class="limpiaBuscar btn btn-info"><i class="fa fa-eraser"></i> Limpiar</a>
+
         </div>
+    </div>
+</div>
 
-        <table class="table table-condensed table-bordered table-striped table-hover">
-            <thead>
-                <tr>
-                    %{--<th>CUP</th>--}%
-                    %{--<g:sortableColumn property="proyecto" title="Proyecto"/>--}%
-                    %{--<g:sortableColumn property="grupoProcesos" title="Grupo de procesos"/>--}%
-                    <g:sortableColumn property="descripcion" title="Descripción"/>
-                    <g:sortableColumn property="clave" title="Palabras Clave"/>
-                    <g:sortableColumn property="resumen" title="Resumen"/>
-                </tr>
-            </thead>
-            <tbody>
-                <g:if test="${documentoInstanceCount > 0}">
-                    <g:each in="${documentoInstanceList}" status="i" var="documentoInstance">
-                        <tr data-id="${documentoInstance.id}">
-%{--
-                            <td>
-                                <elm:textoBusqueda busca="${params.search}">
-                                    ${documentoInstance?.proyecto?.codigoProyecto}
-                                </elm:textoBusqueda>
-                            </td>
---}%
-%{--
-                            <td>
-                                <elm:textoBusqueda busca="${params.search}">
-                                    ${documentoInstance.proyecto?.nombre}
-                                </elm:textoBusqueda>
-                            </td>
---}%
-%{--
-                            <td>
-                                <elm:textoBusqueda busca="${params.search}">
-                                    <g:fieldValue bean="${documentoInstance}" field="grupoProcesos"/>
-                                </elm:textoBusqueda>
-                            </td>
---}%
-                            <td>
-                                <elm:textoBusqueda busca="${params.search}">
-                                    <g:fieldValue bean="${documentoInstance}" field="descripcion"/>
-                                </elm:textoBusqueda>
-                            </td>
-                            <td>
-                                <elm:textoBusqueda busca="${params.search}">
-                                    <g:fieldValue bean="${documentoInstance}" field="clave"/>
-                                </elm:textoBusqueda>
-                            </td>
-                            <td>
-                                <elm:textoBusqueda busca="${params.search}">
-                                    <g:fieldValue bean="${documentoInstance}" field="resumen"/>
-                                </elm:textoBusqueda>
-                            </td>
-                        </tr>
-                    </g:each>
-                </g:if>
-                <g:else>
-                    <tr class="danger">
-                        <td class="text-center" colspan="7">
-                            <g:if test="${params.search && params.search != ''}">
-                                No se encontraron resultados para su búsqueda
-                            </g:if>
-                            <g:else>
-                                No se encontraron registros que mostrar
-                            </g:else>
-                        </td>
-                    </tr>
-                </g:else>
-            </tbody>
-        </table>
+<div style="margin-top: 30px; min-height: 650px" class="vertical-container">
+    <p class="css-vertical-text">Resultado - Documentos</p>
 
-        <elm:pagination total="${documentoInstanceCount}" params="${params}"/>
+    <div class="linea"></div>
+    <table class="table table-bordered table-hover table-condensed" style="width: 1070px;background-color: #a39e9e">
+        <thead>
+        <tr>
+            <th class="alinear" style="width: 120px">Tema</th>
+            <th class="alinear" style="width: 500px">Problema</th>
+            <th class="alinear" style="width: 100px">Imágenes</th>
+            <th class="alinear" style="width: 100px">Otro tipo de documento</th>
+        </tr>
+        </thead>
+    </table>
 
-        <script type="text/javascript">
+    <div id="bandejaDocumentos">
+    </div>
+</div>
 
-            function downloadDocumento(id) {
-                $.ajax({
-                    type    : "POST",
-                    url     : "${createLink(controller:'documento', action:'existeDoc_ajax')}",
-                    data    : {
-                        id : id
-                    },
-                    success : function (msg) {
-                        if (msg == "OK") {
-                            location.href = "${createLink(controller: 'documento', action: 'downloadDoc')}/" + id;
-                        } else {
-                            log("El documento solicitado no se encontró en el servidor", "error"); // log(msg, type, title, hide)
-                        }
-                    }
-                });
+<div><strong>Nota</strong>: Si existen muchos registros que coinciden con el criterio de búsqueda, se retorna como máximo 20 <span
+        class="text-info" style="margin-left: 40px">Se ordena por grado de relevancia</span>
+</div>
+
+%{--<div class="modal fade " id="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--}%
+%{--    <div class="modal-dialog modal-lg">--}%
+%{--        <div class="modal-content">--}%
+%{--            <div class="modal-header">--}%
+%{--                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>--}%
+%{--                <h4 class="modal-title">Documentos</h4>--}%
+%{--            </div>--}%
+
+%{--            <div class="modal-body" id="dialog-body" style="padding: 15px">--}%
+
+%{--            </div>--}%
+
+%{--            <div class="modal-footer">--}%
+%{--                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>--}%
+%{--            </div>--}%
+%{--        </div><!-- /.modal-content -->--}%
+%{--    </div><!-- /.modal-dialog -->--}%
+%{--</div>--}%
+
+<div id="cargando" class="text-center hidden">
+    <asset:image src="apli/spinner32.gif" style="padding: 40px;"/>
+    <div class="loading-footer">Espere por favor</div>
+</div>
+
+<script type="text/javascript">
+
+    $(".btnBusqueda").click(function () {
+
+        $("#bandejaDocumentos").append($("#cargando").removeClass('hidden'));
+        var buscar = $("#buscar").val();
+        var datos = "buscar=" + buscar;
+
+        $.ajax({
+            type: "POST",
+            url: "${g.createLink(controller: 'documento', action: 'tablaDocumentos')}",
+            data: datos,
+            success: function (msg) {
+                $("#bandejaDocumentos").html(msg);
+            },
+            error: function (msg) {
+                $("#bandejaDocumentos").html("Ha ocurrido un error");
             }
+        });
 
-            $(function () {
+    });
 
-                $("tbody>tr").contextMenu({
-                    items  : {
-                        header   : {
-                            label  : "Acciones",
-                            header : true
-                        },
-                        ver      : {
-                            label  : "Ver",
-                            icon   : "fa fa-search",
-                            action : function ($element) {
-                                var id = $element.data("id");
-                                $.ajax({
-                                    type    : "POST",
-                                    url     : "${createLink(controller:'documento', action:'show_ajax')}",
-                                    data    : {
-                                        id : id
-                                    },
-                                    success : function (msg) {
-                                        bootbox.dialog({
-                                            title   : "Ver Documento",
-                                            message : msg,
-                                            buttons : {
-                                                ok : {
-                                                    label     : "Aceptar",
-                                                    className : "btn-primary",
-                                                    callback  : function () {
-                                                    }
-                                                }
-                                            }
-                                        });
+    $("input").keyup(function (ev) {
+        if (ev.keyCode == 13) {
+            $(".btnBusqueda").click();
+        }
+    });
+
+    function createContextMenu(node) {
+        var $tr = $(node);
+        var items = {
+            header: {
+                label: "Acciones",
+                header: true
+            }
+        };
+
+        var id = $tr.data("id");
+
+        var ver = {
+            label: 'Ver Documentos',
+            icon: "fa fa-search",
+            action: function (e) {
+                // $("#dialog-body").html(spinner);
+                $.ajax({
+                    type: 'POST',
+                    url: '${createLink(controller: 'base', action: 'tablaArchivos')}',
+                    data:{
+                        id: id,
+                        band: 1
+                    },
+                    success: function (msg) {
+                        var b = bootbox.dialog({
+                            id      : "dlgVerDocs",
+                            title   : "Ver documentos",
+                            message : msg,
+                            buttons : {
+                                cancelar : {
+                                    label     : "Cancelar",
+                                    className : "btn-primary",
+                                    callback  : function () {
                                     }
-                                });
-                            }
-                        },
-                        download : {
-                            label  : "Descargar",
-                            icon   : "fa fa-download",
-                            action : function ($element) {
-                                var id = $element.data("id");
-                                downloadDocumento(id);
-                            }
-                        }
-                    },
-                    onShow : function ($element) {
-                        $element.addClass("success");
-                    },
-                    onHide : function ($element) {
-                        $(".success").removeClass("success");
+                                }
+                            } //buttons
+                        }); //dialog
+                        // $("#dialog-body").html(msg)
                     }
                 });
-            });
-        </script>
+                // $("#dialog").modal("show");
+            }
+        };
 
-    </body>
+        items.ver = ver;
+
+        return items
+    }
+
+    $(".limpiaBuscar").click(function () {
+        $("#buscar").val("");
+    });
+
+
+</script>
+
+</body>
 </html>
+
+
+

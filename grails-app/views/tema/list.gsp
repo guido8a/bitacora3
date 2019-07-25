@@ -11,22 +11,22 @@
         <elm:flashMessage tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:flashMessage>
 
     <!-- botones -->
-        <div class="btn-toolbar toolbar">
+        <div class="btn-toolbar toolbar" style="margin-bottom: 15px">
             <div class="btn-group">
                 <g:link action="form" class="btn btn-default btnCrear">
-                    <i class="fa fa-file-o"></i> Nuevo Tema
+                    <i class="fa fa-file"></i> Nuevo Tema
                 </g:link>
             </div>
-            <div class="btn-group pull-right col-md-3">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Buscar" value="${params.search}">
-                    <span class="input-group-btn">
-                        <g:link action="list" class="btn btn-default btn-search" type="button">
-                            <i class="fa fa-search"></i>&nbsp;
-                        </g:link>
-                    </span>
-                </div><!-- /input-group -->
-            </div>
+%{--            <div class="btn-group pull-right col-md-3">--}%
+%{--                <div class="input-group">--}%
+%{--                    <input type="text" class="form-control" placeholder="Buscar" value="${params.search}">--}%
+%{--                    <span class="input-group-btn">--}%
+%{--                        <g:link action="list" class="btn btn-default btn-search" type="button">--}%
+%{--                            <i class="fa fa-search"></i>&nbsp;--}%
+%{--                        </g:link>--}%
+%{--                    </span>--}%
+%{--                </div><!-- /input-group -->--}%
+%{--            </div>--}%
         </div>
 
         <table class="table table-condensed table-bordered table-striped">
@@ -59,7 +59,7 @@
                 $btn.replaceWith(spinner);
                     $.ajax({
                         type    : "POST",
-                        url     : '${createLink(action:'save_ajax')}',
+                        url     : '${createLink(controller: 'tema', action:'save_ajax')}',
                         data    : $form.serialize(),
                             success : function (msg) {
                         var parts = msg.split("_");
@@ -79,7 +79,7 @@
             function deleteRow(itemId) {
                 bootbox.dialog({
                     title   : "Alerta",
-                    message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>¿Está seguro que desea eliminar el Tema seleccionado? Esta acción no se puede deshacer.</p>",
+                    message : "<i class='fa fa-trash fa-2x pull-left text-danger text-shadow'></i><p>¿Está seguro que desea eliminar el Tema seleccionado? Esta acción no se puede deshacer.</p>",
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
@@ -88,7 +88,7 @@
                             }
                         },
                         eliminar : {
-                            label     : "<i class='fa fa-trash-o'></i> Eliminar",
+                            label     : "<i class='fa fa-trash'></i> Eliminar",
                             className : "btn-danger",
                             callback  : function () {
                                 $.ajax({
@@ -115,7 +115,7 @@
                 var data = id ? { id: id } : {};
                 $.ajax({
                     type    : "POST",
-                    url     : "${createLink(action:'form_ajax')}",
+                    url     : "${createLink(controller: 'tema', action:'form_ajax')}",
                     data    : data,
                     success : function (msg) {
                         var b = bootbox.dialog({
@@ -189,7 +189,7 @@
                         },
                         editar   : {
                             label  : "Editar",
-                            icon   : "fa fa-pencil",
+                            icon   : "fa fa-pen",
                             action : function ($element) {
                                 var id = $element.data("id");
                                 createEditRow(id);
@@ -197,7 +197,7 @@
                         },
                         eliminar : {
                             label            : "Eliminar",
-                            icon             : "fa fa-trash-o",
+                            icon             : "fa fa-trash",
                             separator_before : true,
                             action           : function ($element) {
                                 var id = $element.data("id");

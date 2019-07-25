@@ -50,10 +50,10 @@
                title="Crear nuevo registro">
                 <i class="fa fa-check"></i> Crear Nuevo
             </a>
-            <g:link controller="buscarBase" action="reporteTablas"
-                    class="btn btnPrint btn-info btn-sm" rel="tooltip" title="Imprimir">
-                <i class="fa fa-print"></i>
-            </g:link>
+%{--            <g:link controller="buscarBase" action="reporteTablas"--}%
+%{--                    class="btn btnPrint btn-info btn-sm" rel="tooltip" title="Imprimir">--}%
+%{--                <i class="fa fa-print"></i>--}%
+%{--            </g:link>--}%
         </div>
     </div>
 </div>
@@ -62,7 +62,7 @@
     <p class="css-vertical-text">Resultado - Buscar en la Base de Conocimiento</p>
 
     <div class="linea"></div>
-    <table class="table table-bordered table-hover table-condensed" style="width: 1070px">
+    <table class="table table-bordered table-hover table-condensed" style="width: 1070px;background-color: #a39e9e">
         <thead>
         <tr>
             <th class="alinear" style="width: 120px">Tema</th>

@@ -43,16 +43,16 @@
         </g:if>
     </div>
 
-    <g:if test="${parametrosInstance?.imagenes}">
-        <div class="row">
-            <div class="col-md-2 text-info">
-                Imágenes
-            </div>
-            
-            <div class="col-md-3">
-                <g:fieldValue bean="${parametrosInstance}" field="imagenes"/>
-            </div>
-        </div>
-    </g:if>
+%{--    <g:if test="${parametrosInstance?.imagenes}">--}%
+%{--        <div class="row">--}%
+%{--            <div class="col-md-2 text-info">--}%
+%{--                Imágenes--}%
+%{--            </div>--}%
+%{--            --}%
+%{--            <div class="col-md-3">--}%
+%{--                <g:fieldValue bean="${parametrosInstance}" field="imagenes"/>--}%
+%{--            </div>--}%
+%{--        </div>--}%
+%{--    </g:if>--}%
 
 </g:else>

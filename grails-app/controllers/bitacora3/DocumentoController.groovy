@@ -1,6 +1,9 @@
 package bitacora3
 
+import bitacora.Base
 import bitacora.Documento
+import groovy.io.FileType
+import groovy.time.TimeCategory
 import org.springframework.dao.DataIntegrityViolationException
 import seguridad.Departamento
 
@@ -14,6 +17,8 @@ import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
  * Controlador que muestra las pantallas de manejo de Documento
  */
 class DocumentoController {
+
+    def dbConnectionService
 
     static allowedMethods = [save_ajax: "POST", delete_ajax: "POST"]
 
@@ -61,9 +66,7 @@ class DocumentoController {
      * Acción que muestra una lista de todos los documentos de todos los proyectos
      */
     def list() {
-        def documentoInstanceList = getList(params, false)
-        def documentoInstanceCount = getList(params, true).size()
-        return [documentoInstanceList: documentoInstanceList, documentoInstanceCount: documentoInstanceCount]
+
     }
 
     /**
@@ -461,5 +464,84 @@ class DocumentoController {
             response.sendError(404)
         }
     }
+
+
+    def tablaDocumentos () {
+//        println "buscar .... $params"
+        def persona = session.usuario?.id
+        def data = []
+        def base = []
+        def cn = dbConnectionService.getConnection()
+        def buscar = params.buscar.split(' ').toList()
+        def sql = ""
+        def inicio = new Date()
+//        println "buscar .. ${buscar}"
+
+        def resultado = []
+        buscar.each {pl ->
+            sql = "select base__id, sum(plbrvlor) valor from plbr where plbrplbr like '%${pl}%' group by base__id " +
+                    "order by 2"
+//            println "sql: $sql"
+            cn.eachRow(sql.toString()){d ->
+//                println "id: ${d.base__id} ${d.valor}"
+                if(data.find{ it.id == d.base__id}){
+                    data.find{it.id == d.base__id}.valor += d.valor
+                } else {
+                    data.add([id: d.base__id, valor: d.valor])
+                }
+            }
+        }
+
+        base = data.sort{ it.valor}.reverse()
+
+//        println "base: ${base}"
+
+        def msg = ""
+        if(base?.size() > 20){
+            base = base[0..19]
+            msg = "<div class='alert-danger' style='margin-top:-20px; diplay:block; height:25px;margin-bottom: 20px;'>" +
+                    " <i class='fa fa-exclamation-triangle fa-2x pull-left'></i> Su búsqueda ha generado más de 20 resultados. " +
+                    "Use más palabras para especificar mejor la búsqueda.</div>"
+        }
+
+        def bases = [:]
+
+        base.each {
+
+            def list = []
+            def dir = new File("/var/bitacora/${it?.id}")
+            if (dir.size() > 0) {
+                dir.eachFileRecurse(FileType.FILES) { file ->
+                    list << file
+                }
+            }
+
+            def partes = []
+            def contadorImas = 0
+            def contadorOtros = 0
+
+            list.each {
+                partes = it.name.split("\\.")
+                if (partes[1] in ['jpeg', 'png', 'jpg']) {
+                    contadorImas++
+                } else {
+                    contadorOtros++
+                }
+
+            }
+
+            resultado += Base.get(it.id)
+
+//            bases.put(Base.get(it.id), contadorImas)
+            bases.put(Base.get(it.id), [contadorImas, contadorOtros])
+        }
+
+        cn.close()
+//        println "resultado: ${resultado.id}"
+
+        return [bases: resultado, persona: persona, msg: msg, b: bases]
+    }
+
+
 
 }

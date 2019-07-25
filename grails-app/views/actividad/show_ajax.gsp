@@ -34,7 +34,7 @@
     
     <g:if test="${actividadInstance?.fechaInicio}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Fecha de Inicio
             </div>
             
@@ -47,7 +47,7 @@
     
     <g:if test="${actividadInstance?.fechaFin}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Fecha de Fin
             </div>
             
@@ -60,7 +60,7 @@
     
     <g:if test="${actividadInstance?.horas}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Horas
             </div>
             
@@ -73,7 +73,7 @@
     
     <g:if test="${actividadInstance?.tiempo}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Tiempo real
             </div>
             
@@ -86,7 +86,7 @@
     
     <g:if test="${actividadInstance?.ingresa}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Ingresado por
             </div>
             
@@ -99,7 +99,7 @@
     
     <g:if test="${actividadInstance?.responsable}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Responsable
             </div>
             
@@ -112,7 +112,7 @@
     
     <g:if test="${actividadInstance?.prioridad}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Prioridad
             </div>
             
@@ -125,7 +125,7 @@
     
     <g:if test="${actividadInstance?.como}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Como realizar
             </div>
             
@@ -138,7 +138,7 @@
     
     <g:if test="${actividadInstance?.avance}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Avance actual
             </div>
             
@@ -151,7 +151,7 @@
 
     <g:if test="${actividadInstance?.fechaRegistro}">
         <div class="row">
-            <div class="col-md-3 text-info">
+            <div class="col-md-2 text-info">
                 Fecha de Registro
             </div>
 

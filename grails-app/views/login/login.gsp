@@ -101,7 +101,7 @@
     function doLogin() {
         if ($frm.valid()) {
             // $("#cargando").removeClass('hidden');
-            var dialog = cargarLoader("Cargando...");
+            cargarLoader("Cargando...");
             $(".btn-login").replaceWith($("#cargando"));
             $("#frmLogin").submit();
         }

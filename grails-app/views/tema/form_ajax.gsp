@@ -1,6 +1,6 @@
 <%@ page import="bitacora.Tema" %>
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 <g:if test="${!temaInstance}">
     <elm:notFound elem="Tema" genero="o" />
 </g:if>
