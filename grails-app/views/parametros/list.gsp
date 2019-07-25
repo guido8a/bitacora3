@@ -7,13 +7,13 @@
     </head>
     <body>
 
-    <div class="btn-toolbar toolbar">
-        <div class="btn-group">
-            <g:link controller="inicio" action="parametros" class="btn btn-primary">
-                <i class="fa fa-arrow-left"></i> Regresar
-            </g:link>
-        </div>
-    </div>
+%{--    <div class="btn-toolbar toolbar">--}%
+%{--        <div class="btn-group">--}%
+%{--            <g:link controller="inicio" action="parametros" class="btn btn-primary">--}%
+%{--                <i class="fa fa-arrow-left"></i> Regresar--}%
+%{--            </g:link>--}%
+%{--        </div>--}%
+%{--    </div>--}%
 
     <h3> Parámetros del Sistema</h3>
 
@@ -23,13 +23,13 @@
             <thead>
                 <tr>
                     
-                    <g:sortableColumn property="horaInicio" title="Hora Inicio" />
+                    <g:sortableColumn property="horaInicio" title="Hora Inicio jornada " />
                     
-                    <g:sortableColumn property="horaFin" title="Hora Fin" />
+                    <g:sortableColumn property="horaFin" title="Hora Fin jornada" />
 
                     <g:sortableColumn property="institución" title="Institución o empresa" />
                     
-                    <g:sortableColumn property="ouPrincipal" title="Imágenes" />
+%{--                    <g:sortableColumn property="ouPrincipal" title="Imágenes" />--}%
                     
                 </tr>
             </thead>
@@ -42,7 +42,7 @@
                         
                         <td>${fieldValue(bean: parametrosInstance, field: "institucion")}</td>
                         
-                        <td>${fieldValue(bean: parametrosInstance, field: "imagenes")}</td>
+%{--                        <td>${fieldValue(bean: parametrosInstance, field: "imagenes")}</td>--}%
                         
                     </tr>
                 </g:each>
@@ -190,7 +190,7 @@
                         },
                         editar   : {
                             label  : "Editar",
-                            icon   : "fa fa-pencil",
+                            icon   : "fa fa-pen",
                             action : function ($element) {
                                 var id = $element.data("id");
                                 createEditRow(id);

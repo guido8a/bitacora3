@@ -14,23 +14,23 @@
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
         <g:link action="form" class="btn btn-default btnCrear">
-            <i class="fa fa-file-o"></i> Crear Actividad
+            <i class="fa fa-file"></i> Crear Actividad
         </g:link>
     </div>
 
-    <div class="btn-group pull-right col-md-3">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Buscar" value="${params.search}">
-            <span class="input-group-btn">
-                <g:link action="list" class="btn btn-default btn-search" type="button">
-                    <i class="fa fa-search"></i>&nbsp;
-                </g:link>
-            </span>
-        </div><!-- /input-group -->
-    </div>
+%{--    <div class="btn-group pull-right col-md-3">--}%
+%{--        <div class="input-group">--}%
+%{--            <input type="text" class="form-control" placeholder="Buscar" value="${params.search}">--}%
+%{--            <span class="input-group-btn">--}%
+%{--                <g:link action="list" class="btn btn-default btn-search" type="button">--}%
+%{--                    <i class="fa fa-search"></i>&nbsp;--}%
+%{--                </g:link>--}%
+%{--            </span>--}%
+%{--        </div><!-- /input-group -->--}%
+%{--    </div>--}%
 </div>
 
-<table class="table table-condensed table-bordered table-striped">
+<table class="table table-condensed table-bordered table-striped" style="margin-top: 15px">
     <thead>
     <tr>
 

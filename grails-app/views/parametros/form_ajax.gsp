@@ -1,6 +1,6 @@
 <%@ page import="utilitarios.Parametros" %>
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 <g:if test="${!parametrosInstance}">
     <elm:notFound elem="Parametros" genero="o"/>
 </g:if>
@@ -52,19 +52,19 @@
             </div>
 
 
-        <div class="form-group ${hasErrors(bean: parametrosInstance, field: 'imagenes', 'error')} required">
-            <span class="grupo">
-                <label for="imagenes" class="col-md-2 control-label text-info">
-                    Ruta de Imágenes
-                </label>
+%{--        <div class="form-group ${hasErrors(bean: parametrosInstance, field: 'imagenes', 'error')} required">--}%
+%{--            <span class="grupo">--}%
+%{--                <label for="imagenes" class="col-md-2 control-label text-info">--}%
+%{--                    Ruta de Imágenes--}%
+%{--                </label>--}%
 
-                <div class="col-md-6">
-                    <g:textField name="imagenes" required="" class="form-control required"
-                                 value="${parametrosInstance?.imagenes}" style="width:400px;" maxlength="255"/>
-                </div>
-                *
-            </span>
-        </div>
+%{--                <div class="col-md-6">--}%
+%{--                    <g:textField name="imagenes" required="" class="form-control required"--}%
+%{--                                 value="${parametrosInstance?.imagenes}" style="width:400px;" maxlength="255"/>--}%
+%{--                </div>--}%
+%{--                *--}%
+%{--            </span>--}%
+%{--        </div>--}%
 
     </g:form>
 

@@ -20,41 +20,49 @@ th, td {
 
 
 
-<div class="" style="width: 99.7%;height: 585px; overflow-y: auto;float: right; margin-top: -20px">
+<div class="" style="width: 99.7%;height: ${lista ? (bandera ? '350px' : '585px') : '100px'}; overflow-y: auto;float: right; margin-top: -20px">
     <table class="table-bordered table-condensed table-hover" width="100%">
 
-        <g:each in="${lista.name}" var="registro">
-            <tr>
-                <td width="240px" style="font-size: 14px">
-                    ${registro}
-                </td>
+        <g:if test="${lista}">
+            <g:each in="${lista.name}" var="registro">
+                <tr>
+                    <td width="240px" style="font-size: 14px">
+                        ${registro}
+                    </td>
 
-                <td width="120px">
-                    <g:if test="${registro.split("\\.")[1] == 'pdf'}">
-                        PDF
-                    </g:if>
-                    <g:else>
-                        <g:if test="${registro.split("\\.")[1] in ['jpeg', 'jpg', 'png']}">
-                            Imagen
+                    <td width="120px">
+                        <g:if test="${registro.split("\\.")[1] == 'pdf'}">
+                            PDF
                         </g:if>
                         <g:else>
-                            Otro
+                            <g:if test="${registro.split("\\.")[1] in ['jpeg', 'jpg', 'png']}">
+                                Imagen
+                            </g:if>
+                            <g:else>
+                                Otro
+                            </g:else>
                         </g:else>
-                    </g:else>
-                </td>
+                    </td>
 
-                <td width="30px" class="text-info" style="text-align: center">
-                    <a href="#" class="btn btn-danger btn-sm btnBorrarArchivo" data-nombre="${registro}" title="Eliminar archivo"><i class="fa fa-times-circle"></i></a>
-                </td>
+                    <g:if test="${!bandera}">
+                        <td width="30px" class="text-info" style="text-align: center">
+                            <a href="#" class="btn btn-danger btn-sm btnBorrarArchivo" data-nombre="${registro}" title="Eliminar archivo"><i class="fa fa-times-circle"></i></a>
+                        </td>
+                    </g:if>
 
-                <td width="30px" class="text-info" style="text-align: center">
-                    <g:link controller="base" action="retornarArchivo" params="[nombre: registro]" id="${base?.id}"
-                            class="btn btnDescargar  btn-info btn-sm" title="Descargar archivo">
-                        <i class="fa fa-download"></i>
-                    </g:link>
-                </td>
-            </tr>
-        </g:each>
+                    <td width="30px" class="text-info" style="text-align: center">
+                        <g:link controller="base" action="retornarArchivo" params="[nombre: registro]" id="${base?.id}"
+                                class="btn btnDescargar  btn-info btn-sm" title="Descargar archivo">
+                            <i class="fa fa-download"></i>
+                        </g:link>
+                    </td>
+                </tr>
+            </g:each>
+        </g:if>
+        <g:else>
+            <div class="alert alert-info">No tiene documentos adjuntos</div>
+        </g:else>
+
     </table>
 </div>
 

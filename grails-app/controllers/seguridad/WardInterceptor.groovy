@@ -78,12 +78,12 @@ class WardInterceptor {
     }
 
     boolean after() {
-        println "+++++después"
+//        println "+++++después"
         true
     }
 
     void afterView() {
-        println "+++++afterview"
+//        println "+++++afterview"
         // no-op
     }
 

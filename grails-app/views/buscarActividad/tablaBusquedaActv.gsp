@@ -15,8 +15,8 @@ th, td {
 
 <g:set var="clase" value="${'principal'}"/>
 
-<div class="" style="width: 99.7%;height: ${msg == '' ? 600 : 585}px; overflow-y: auto;float: right; margin-top: -20px">
-        <table class="table-bordered table-condensed table-hover" width="1060px">
+<div class="" style="width: 99.7%;height: ${msg == '' ? 630 : 585}px; overflow-y: auto;float: right; margin-top: -20px">
+        <table class="table-bordered table-condensed table-hover" width="100%">
                 <g:each in="${actividades}" var="dato" status="z">
 
                     <tr id="${dato.id}" data-id="${dato.id}" class="${clase}">
@@ -25,7 +25,7 @@ th, td {
                         </td>
 
                         <td class="codigo" style="width: 270px">
-                            ${dato?.padre}
+                            ${dato?.padre ?: ' - Sin actividad padre -'}
                         </td>
 
                         <td class="asunto" style="width: 350px">
@@ -53,7 +53,6 @@ th, td {
         </table>
 </div>
 
-
 <script type="text/javascript">
     $(function () {
         $("tr").contextMenu({
@@ -64,10 +63,6 @@ th, td {
             onHide : function ($element) {
                 $(".trHighlight").removeClass("trHighlight");
             }
-        });
-
-        $('.table').fixedHeaderTable({
-            height : ${msg == '' ? 350 : 300}
         });
     });
 </script>

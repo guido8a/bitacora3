@@ -1,6 +1,6 @@
 <%@ page import="bitacora.Actividad" %>
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 <g:if test="${!actividadInstance}">
     <elm:notFound elem="Actividad" genero="o" />
 </g:if>

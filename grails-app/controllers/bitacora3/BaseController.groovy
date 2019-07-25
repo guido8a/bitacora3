@@ -475,6 +475,8 @@ class BaseController {
 
     def tablaArchivos() {
 
+        println("params ta " + params)
+
         def base = Base.get(params.id)
         def list = []
         def dir = new File("/var/bitacora/${base?.id}")
@@ -484,7 +486,7 @@ class BaseController {
                 list << file.canonicalFile
             }
         }
-        return [lista: list, base: base]
+        return [lista: list, base: base, bandera: params.band]
     }
 
     def borrarArchivo() {
