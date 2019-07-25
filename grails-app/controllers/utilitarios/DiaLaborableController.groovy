@@ -153,27 +153,73 @@ class DiaLaborableController {
             }
 
             // ******************************** RESETEA NUMERACIONES **************************************************** //
-            Numero.list().each { num ->
-                num.valor = 0
-                if (!num.save(flush: true)) {
-                    println "error: " + num.errors
-                }
-            }
+//            Numero.list().each { num ->
+//                num.valor = 0
+//                if (!num.save(flush: true)) {
+//                    println "error: " + num.errors
+//                }
+//            }
         }
         redirect(action: "calendario", params: [anio: anioRedirect])
     }
 
+//    def error() {
+//        println params
+//        def js = ""
+//        if (params.anio) {
+//            def anio = Anio.get(params.anio)
+//            js = "<script type=\"text/javascript\">\n" +
+//                    "        \$(function () {\n" +
+//                    "            \$(\"#btnDesactivar\").click(function () {\n" +
+//                    "                bootbox.dialog({\n" +
+//                    "                    title  : \"Alerta\",\n" +
+//                    "                    message: \"<i class='fa fa-pen fa-3x pull-left text-shadow'></i>\" +\n" +
+//                    "                    \"<p>¿Está seguro que desea cerrar el año de proceso: ${anio.numero}?</p>\" +\n" +
+//                    "                    \"<p>Esta acción no se puede deshacer y consiste de:</p>\" +\n" +
+//                    "                    \"<ul>\" +\n" +
+//                    "                    \"<li>Cerrar el año de proceso ${anio.numero}, por lo que no se podrá crear nuevos trámites este año</li>\" +\n" +
+//                    "                    \"<li>Reiniciar la numeración de los trámites</li>\" +\n" +
+//                    "                    \"<li>Crear el nuevo año ${anio.numero.toInteger() + 1}</li>\" +\n" +
+//                    "                    \"<li>Inicializar el calendario laborable y definir los días festivos y el horario de trabajo</li>\" +\n" +
+//                    "                    \"</ul>\",\n" +
+//                    "                    buttons: {\n" +
+//                    "                        cancelar  : {\n" +
+//                    "                            label    : \"Cancelar\",\n" +
+//                    "                            className: \"btn-primary\",\n" +
+//                    "                            callback : function () {\n" +
+//                    "                            }\n" +
+//                    "                        },\n" +
+//                    "                        desactivar: {\n" +
+//                    "                            label    : \"<i class='fa fa-power-off'></i> Desactivar\",\n" +
+//                    "                            className: \"btn-default\",\n" +
+//                    "                            callback : function () {\n" +
+//                    "                                openLoader();\n" +
+//                    "                                location.href = \"${createLink(action: 'desactivar')}/${anio.id}\";\n" +
+//                    "                            }\n" +
+//                    "                        }\n" +
+//                    "                    }\n" +
+//                    "                });\n" +
+//                    "                return false;\n" +
+//                    "            });\n" +
+//                    "        });\n" +
+//                    "    </script>"
+//        }
+//        return [params: params, js: js]
+//    }
+
+
     def error() {
-        println params
-        def js = ""
+        println ( "error" + params)
+        def anio
+        def js = ''
         if (params.anio) {
-            def anio = Anio.get(params.anio)
+            anio = Anio.get(params.anio)
             js = "<script type=\"text/javascript\">\n" +
                     "        \$(function () {\n" +
                     "            \$(\"#btnDesactivar\").click(function () {\n" +
                     "                bootbox.dialog({\n" +
                     "                    title  : \"Alerta\",\n" +
-                    "                    message: \"<i class='fa fa-power-off fa-3x pull-left text-shadow'></i>\" +\n" +
+                    "                    message: \"<i class='fa fa-pen fa-3x pull-left text-shadow'></i>\" +\n" +
                     "                    \"<p>¿Está seguro que desea cerrar el año de proceso: ${anio.numero}?</p>\" +\n" +
                     "                    \"<p>Esta acción no se puede deshacer y consiste de:</p>\" +\n" +
                     "                    \"<ul>\" +\n" +
