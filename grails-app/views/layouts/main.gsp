@@ -38,6 +38,7 @@
     <asset:stylesheet src="/apli/jquery.pnotify.default.css"/>
     <asset:stylesheet src="/apli/font-awesome.min.css"/>
     <asset:stylesheet src="/apli/CustomSvt.css"/>
+    <asset:stylesheet src="/apli/tulpen/stylesheet.css"/>
 %{--    <asset:stylesheet src="/fontawesome-5.9.0/css/fontawesome.css"/>--}%
 %{--    <asset:stylesheet src="/fontawesome-5.9.0/css/brands.css"/>--}%
 %{--    <asset:stylesheet src="/fontawesome-5.9.0/css/solid.css"/>--}%
