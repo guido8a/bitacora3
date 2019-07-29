@@ -1,6 +1,8 @@
 package bitacora3
 
 import bitacora.Actividad
+import utilitarios.DiaLaborable
+import utilitarios.DiaLaborableController
 
 
 class ActividadController {
@@ -179,24 +181,23 @@ class ActividadController {
 
     def mostrarFechaFin_ajax() {
 //        println("params ff " + params)
-        def dias
-        if(params.dias == 1 || params.dias == 0){
-            dias = params.dias
-        }else{
-            dias = params.dias.toInteger() -1
+        def fcha = Date.parse("dd-MM-yyyy", params.fecha)
+        def esFeriado = DiaLaborable.findByFecha(fcha)?.ordinal
+//        println "fcha: $fcha, es feriado: ${esFeriado}"
+        def dias = params.dias.toInteger() - 1
+        if(!esFeriado){
+            dias = params.dias.toInteger()
         }
         def cn = dbConnectionService.getConnection()
         def sql = "select * from tmpo_hasta('${params.fecha}', '${dias}')"
         def res = cn.firstRow(sql.toString())
 //        println("sql " + sql)
 
-//        def formateado = new Date().parse("yyyy-MM-dd", res.tmpo_hasta.toString())
-
         def dateFormat = "yyyy-MM-dd HH:mm"
         def dateString = "${res.tmpo_hasta.toString()}"
         def date = Date.parse(dateFormat, dateString)
 
-        render date.format("dd-MM-yyyy HH:mm")
+        render date.format("dd-MM-yyyy")
     }
 
 }
