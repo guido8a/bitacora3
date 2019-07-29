@@ -10,20 +10,21 @@
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
 
     <asset:javascript src="/jquery/jquery-2.2.4.js"/>
-    %{--    <asset:javascript src="/apli/bootstrap.min.js"/>--}%
     <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>
+
+    <asset:javascript src="/jquery/bootstrap-datepicker.js"/>
+    <asset:javascript src="/jquery/bootstrap-datepicker.es.js"/>
 
     <asset:javascript src="/apli/bootstrap.js"/>
 
     <asset:javascript src="/apli/funciones.js"/>
-    <asset:javascript src="/apli/functions.js.js"/>
+    <asset:javascript src="/apli/functions.js"/>
     <asset:javascript src="/apli/loader.js"/>
     <asset:javascript src="/apli/bootbox.js"/>
     <asset:javascript src="/apli/lzm.context-0.5.js"/>
 
     <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.min.js"/>
     <asset:javascript src="/jquery-validation-1.11.1/js/jquery.validate.js"/>
-    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>
     <asset:javascript src="/jquery-validation-1.11.1/localization/messages_es.js"/>
 
     <asset:javascript src="/apli/jquery.pnotify.js"/>
@@ -39,6 +40,7 @@
     <asset:stylesheet src="/apli/font-awesome.min.css"/>
     <asset:stylesheet src="/apli/CustomSvt.css"/>
     <asset:stylesheet src="/apli/tulpen/stylesheet.css"/>
+    <asset:stylesheet src="/jquery/datepicker.css"/>
 %{--    <asset:stylesheet src="/fontawesome-5.9.0/css/fontawesome.css"/>--}%
 %{--    <asset:stylesheet src="/fontawesome-5.9.0/css/brands.css"/>--}%
 %{--    <asset:stylesheet src="/fontawesome-5.9.0/css/solid.css"/>--}%
@@ -57,29 +59,14 @@
 
 <body>
 
-%{--<g:layoutBody/>--}%
-
-
 
 <div id="modalTabelGray"></div>
-
-%{--<div id="modalDiv" class="ui-corner-all">--}%
-%{--    <div class="loading-title">Procesando</div>--}%
-%{--    <img src="${resource(dir: 'images', file: 'spinner32.gif')}">--}%
-%{--    <asset:image src="apli/spinner32.gif" style="padding: 40px;"/>--}%
-
-%{--    <div class="loading-footer">Espere por favor</div>--}%
-%{--</div>--}%
 
 <mn:menu title="${g.layoutTitle(default: 'Bitácora')}"/>
 
 <div class="container" style="min-width: 1000px !important; margin-top: 80px; overflow-y: hidden">
     <g:layoutBody/>
 </div>
-
-%{--<div id="spinner" class="spinner" style="display:none;">--}%
-%{--    <g:message code="spinner.alt" default="Loading&hellip;"/>--}%
-%{--</div>--}%
 
 <asset:javascript src="jquery/application.js"/>
 

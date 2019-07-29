@@ -93,17 +93,6 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-
-%{--<script>--}%
-%{--    $(function () {--}%
-
-%{--        $("#limpiaBuscar").click(function(){--}%
-%{--            $("#buscar").val('');--}%
-%{--        });--}%
-
-%{--    });--}%
-%{--</script>--}%
-
 <script type="text/javascript">
 
     function submitForm() {
@@ -119,9 +108,10 @@
                     var parts = msg.split("_");
                     log(parts[1], parts[0] == "OK" ? "success" : "error"); // log(msg, type, title, hide)
                     if (parts[0] == "OK") {
-                        location.reload(true);
+                        cargarBandeja();
                     } else {
-                        spinner.replaceWith($btn);
+                        // spinner.replaceWith($btn);
+                        cargarBandeja();
                         return false;
                     }
                 }
@@ -131,12 +121,11 @@
         } //else
     }
 
-    $(".btnBusqueda").click(function () {
+
+    function cargarBandeja(){
         $("#bandeja").html("").append($("<div style='width:100%; text-align: center;'/>").append(spinnerSquare64));
         var buscar = $("#buscar").val();
-
         var datos = "buscar=" + buscar;
-
         $.ajax({
             type    : "POST",
             url     : "${g.createLink(controller: 'buscarActividad', action: 'tablaBusquedaActv')}",
@@ -148,7 +137,10 @@
                 $("#bandeja").html("Ha ocurrido un error");
             }
         });
+    }
 
+    $(".btnBusqueda").click(function () {
+        cargarBandeja();
     });
 
     $("input").keyup(function (ev) {

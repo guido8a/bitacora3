@@ -81,7 +81,7 @@
             $btn.replaceWith(spinner);
             $.ajax({
                 type: "POST",
-                url: '${createLink(action:'save_ajax')}',
+                url: '${createLink(controller: 'actividad', action:'save_ajax')}',
                 data: $form.serialize(),
                 success: function (msg) {
                     var parts = msg.split("_");

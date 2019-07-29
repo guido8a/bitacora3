@@ -5,6 +5,7 @@ import bitacora.Actividad
 
 class ActividadController {
 
+    def dbConnectionService
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]
 
     def index() {
@@ -71,6 +72,7 @@ class ActividadController {
     } //form para cargar con ajax en un dialog
 
     def save_ajax() {
+        params.fechaFin = new Date().parse("dd-MM-yyyy HH:mm", params.fechaFin.toString())
         def actividadInstance = new Actividad()
         if (params.id) {
             actividadInstance = Actividad.get(params.id)
@@ -173,5 +175,23 @@ class ActividadController {
     protected void notFound_ajax() {
         render "NO_No se encontró Actividad."
     } //notFound para ajax
+
+
+    def mostrarFechaFin_ajax() {
+//        println("params ff " + params)
+        def dias = params.dias
+        def cn = dbConnectionService.getConnection()
+        def sql = "select * from tmpo_hasta('${params.fecha}', '${dias}')"
+        def res = cn.firstRow(sql.toString())
+//        println("sql " + sql)
+
+//        def formateado = new Date().parse("yyyy-MM-dd", res.tmpo_hasta.toString())
+
+        def dateFormat = "yyyy-MM-dd HH:mm"
+        def dateString = "${res.tmpo_hasta.toString()}"
+        def date = Date.parse(dateFormat, dateString)
+
+        render date.format("dd-MM-yyyy HH:mm")
+    }
 
 }

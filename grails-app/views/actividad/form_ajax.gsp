@@ -1,13 +1,16 @@
 <%@ page import="bitacora.Actividad" %>
 
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
+
+%{--<asset:javascript src="/jquery/ui.js"/>--}%
+
 <g:if test="${!actividadInstance}">
     <elm:notFound elem="Actividad" genero="o" />
 </g:if>
 <g:else>
-    <g:form class="form-horizontal" name="frmActividad" role="form" action="save" method="POST">
+    <g:form class="form-horizontal" name="frmActividad" role="form" action="save_ajax" method="POST">
         <g:hiddenField name="id" value="${actividadInstance?.id}" />
-        
+
         <div class="form-group ${hasErrors(bean: actividadInstance, field: 'padre', 'error')} ">
             <span class="grupo">
                 <label for="padre" class="col-md-2 control-label text-info">
@@ -15,13 +18,12 @@
                 </label>
                 <div class="col-md-10">
                     <g:select id="padre" name="padre.id" from="${bitacora.Actividad.list()}" optionKey="id"
-                        optionValue="${{it?.descripcion?.size() < 60 ? it?.descripcion : (it?.descripcion[0..60] + "...")}}"
+                              optionValue="${{it?.descripcion?.size() < 60 ? it?.descripcion : (it?.descripcion[0..60] + "...")}}"
                               value="${actividadInstance?.padre?.id}" class="many-to-one form-control" noSelection="['null': '']"/>
                 </div>
-                
             </span>
         </div>
-        
+
         <div class="form-group ${hasErrors(bean: actividadInstance, field: 'descripcion', 'error')} ">
             <span class="grupo">
                 <label for="descripcion" class="col-md-2 control-label text-info">
@@ -32,7 +34,7 @@
                 </div>
             </span>
         </div>
-        
+
 
         <div class="form-group ${hasErrors(bean: actividadInstance, field: 'horas', 'error')} ">
             <span class="grupo">
@@ -40,8 +42,8 @@
                     Tiempo estimado
                 </label>
                 <div class="col-md-2">
-                    <g:field name="horas" type="number" value="${actividadInstance.horas}" class="digits form-control required" required="*"/>
-                    <span>horas</span>
+                    <g:field name="horas" type="number" id="diasVal" value="${actividadInstance.horas}" class="digits form-control required" required="*"/>
+                    <span>días</span>
                 </div>
 
                 <label for="responsable" class="col-md-2 control-label text-info">
@@ -55,27 +57,30 @@
             </span>
         </div>
 
-%{--
+
         <div class="form-group ${hasErrors(bean: actividadInstance, field: 'fechaRegistro', 'error')} ">
             <span class="grupo">
                 <label for="fechaInicio" class="col-md-2 control-label text-info">
                     Fecha de inicio
                 </label>
                 <div class="col-md-4">
-                    <elm:datepicker name="fechaInicio"  class="datepicker form-control" value="${actividadInstance?.fechaInicio}"  />
+                    <elm:datepicker name="fechaInicio" id='finicio' class="form-control" value="${actividadInstance?.fechaInicio}"  />
+                    %{--                    <g:datePicker name="fechaInicio" value="${actividadInstance?.fechaInicio}"/>--}%
                 </div>
             </span>
             <span class="grupo">
-                <label for="fechaFin" class="col-md-2 control-label text-info">
+                <label for="textoFechaFin" class="col-md-2 control-label text-info">
                     Fecha de finalización
                 </label>
-                <div class="col-md-4">
-                    <elm:datepicker name="fechaFin"  class="datepicker form-control" value="${actividadInstance?.fechaFin}"  />
+
+                <div class="col-md-4" style="font-size: 14px">
+%{--                    <g:if test="${actividadInstance?.fechaFin}">--}%
+%{--                        ${actividadInstance?.fechaFin?.format("dd-MM-yyyy HH:mm")}--}%
+                        <g:textField name="fechaFin" id="textoFechaFin"  value="${actividadInstance?.fechaFin?.format("dd-MM-yyyy HH:mm")}" class="form-control required" required=""/>
+%{--                    </g:if>--}%
                 </div>
             </span>
         </div>
---}%
-
 
         <div class="form-group ${hasErrors(bean: actividadInstance, field: 'prioridad', 'error')} ">
             <span class="grupo">
@@ -96,7 +101,7 @@
                 </div>
             </span>
         </div>
-        
+
         <div class="form-group ${hasErrors(bean: actividadInstance, field: 'avance', 'error')} ">
             <span class="grupo">
                 <label for="como" class="col-md-2 control-label text-info">
@@ -108,7 +113,7 @@
 
             </span>
         </div>
-        
+
         <div class="form-group ${hasErrors(bean: actividadInstance, field: 'observaciones', 'error')} ">
             <span class="grupo">
                 <label for="observaciones" class="col-md-2 control-label text-info">
@@ -117,13 +122,40 @@
                 <div class="col-md-10">
                     <g:textField name="observaciones" class="form-control" value="${actividadInstance?.observaciones}"/>
                 </div>
-                
+
             </span>
         </div>
 
     </g:form>
 
     <script type="text/javascript">
+
+        <g:if test="${!actividadInstance?.fechaFin && actividadInstance?.fechaInicio}">
+        var fecha1 = $("#finicio").val();
+        var dias1 = $("#diasVal").val();
+        cargarFechaFin(fecha1, dias1);
+        </g:if>
+
+        $("#finicio").change(function () {
+            var fecha = $(this).val();
+            var dias = $("#diasVal").val();
+            cargarFechaFin(fecha, dias)
+        });
+
+        function cargarFechaFin (fechaIni, dias) {
+            $.ajax({
+                type: 'POST',
+                url: "${createLink(controller: 'actividad', action: 'mostrarFechaFin_ajax')}",
+                data:{
+                    fecha: fechaIni,
+                    dias: dias
+                },
+                success: function (msg) {
+                    $("#textoFechaFin").val(msg)
+                }
+            })
+        }
+
         var validator = $("#frmActividad").validate({
             errorClass     : "help-block",
             errorPlacement : function (error, element) {

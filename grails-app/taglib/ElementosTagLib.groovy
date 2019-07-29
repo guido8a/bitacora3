@@ -837,7 +837,7 @@ class ElementosTagLib {
      *}*      daysOfWeekDisabled  lista de números para deshabilitar ciertos días: 0:domingo, 1:lunes, 2:martes, 3:miercoles, 4:jueves, 5:viernes, 6:sabado
      *      img             imagen del calendario. clase de glyphicons o font awsome
      **/
-    def datepicker = { attrs ->
+    def  datepicker = { attrs ->
         def name = attrs.name
         def nameInput = name + "_input"
         def nameHiddenDay = name + "_day"
