@@ -130,6 +130,8 @@
 
     <script type="text/javascript">
 
+
+
         <g:if test="${!actividadInstance?.fechaFin && actividadInstance?.fechaInicio}">
         var fecha1 = $("#finicio").val();
         var dias1 = $("#diasVal").val();
@@ -140,6 +142,13 @@
             var fecha = $(this).val();
             var dias = $("#diasVal").val();
             cargarFechaFin(fecha, dias)
+        });
+
+
+        $("#diasVal").change(function () {
+            var fecha2 = $("#finicio").val();
+            var dias2 = $(this).val();
+            cargarFechaFin(fecha2, dias2);
         });
 
         function cargarFechaFin (fechaIni, dias) {

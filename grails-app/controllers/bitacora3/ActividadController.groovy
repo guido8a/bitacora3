@@ -179,7 +179,12 @@ class ActividadController {
 
     def mostrarFechaFin_ajax() {
 //        println("params ff " + params)
-        def dias = params.dias
+        def dias
+        if(params.dias == 1 || params.dias == 0){
+            dias = params.dias
+        }else{
+            dias = params.dias.toInteger() -1
+        }
         def cn = dbConnectionService.getConnection()
         def sql = "select * from tmpo_hasta('${params.fecha}', '${dias}')"
         def res = cn.firstRow(sql.toString())
