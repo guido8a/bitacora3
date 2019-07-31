@@ -981,100 +981,100 @@ class ElementosTagLib {
      *      daysOfWeekDisabled  lista de números para deshabilitar ciertos días: 0:domingo, 1:lunes, 2:martes, 3:miercoles, 4:jueves, 5:viernes, 6:sabado
      *      img             imagen del calendario. clase de glyphicons o font awsome
      **/
-    def datetimepicker = { attrs ->
-        def name = attrs.name
-        def nameInput = name + "_input"
-        def nameHiddenDay = name + "_day"
-        def nameHiddenMonth = name + "_month"
-        def nameHiddenYear = name + "_year"
-        def id = nameInput
-        if (attrs.id) {
-            id = attrs.id
-        }
-        def readonly = attrs.readonly ?: true
-        def value = attrs.value
-
-        def clase = attrs["class"]
-
-        def format = attrs.format ?: "dd-mm-yyyy"
-
-        def startDate = attrs.minDate ?: false
-        def endDate = attrs.maxDate ?: false
-
-        def orientation = attrs.orientation ?: "top auto"
-
-        def autoclose = attrs.autoclose ?: true
-        def todayHighlight = attrs.todayHighlight ?: true
-
-        def beforeShowDay = attrs.beforeShowDay ?: false
-        def onChangeDate = attrs.onChangeDate ?: false
-
-        def daysOfWeekDisabled = attrs.daysOfWeekDisabled ?: false
-
-        def img = attrs.img ?: "fa fa-calendar"
-
-        if (value instanceof Date) {
-            value = value.format(format)
-        }
-        if (!value) {
-            value = ""
-        }
-
-        def br = "\n"
-
-        def textfield = "<input type='text' name='${nameInput}' id='${id}' " + (readonly ? "readonly=''" : "") + " value='${value}' class='${clase}' />"
-        def hiddenDay = "<input type='hidden' name='${nameHiddenDay}' id='${nameHiddenDay}'/>"
-        def hiddenMonth = "<input type='hidden' name='${nameHiddenMonth}' id='${nameHiddenMonth}'/>"
-        def hiddenYear = "<input type='hidden' name='${nameHiddenYear}' id='${nameHiddenYear}'/>"
-        def hidden = "<input type='hidden' name='${name}' id='${name}' value='date.struct'/>"
-
-        def div = ""
-        div += hiddenDay + br
-        div += hiddenMonth + br
-        div += hiddenYear + br
-        div += hidden + br
-        div += "<div class='input-group'>" + br
-        div += textfield + br
-        div += "<span class=\"input-group-addon\"><i class=\"${img}\"></i></span>" + br
-        div += "</div>" + br
-
-        def js = "<script type=\"text/javascript\">" + br
-        js += '$("#' + id + '").datepicker({' + br
-        if (startDate) {
-            js += "startDate: '${startDate}'," + br
-        }
-        if (endDate) {
-            js += "endDate: '${endDate}'," + br
-        }
-        if (daysOfWeekDisabled) {
-            js += "daysOfWeekDisabled: '${daysOfWeekDisabled}'," + br
-        }
-        if (beforeShowDay) {
-//            js += "beforeShowDay: function() { ${beforeShowDay}() }," + br
-            js += "beforeShowDay: ${beforeShowDay}," + br
-        }
-        js += 'language: "es",' + br
-        js += "format: '${format}'," + br
-        js += "orientation: '${orientation}'," + br
-        js += "autoclose: ${autoclose}," + br
-        js += "todayHighlight: ${todayHighlight}" + br
-        js += "}).on('changeDate', function(e) {" + br
-        js += "var fecha = e.date;" + br
-        js += "if(fecha) {" + br
-        js += '$("#' + nameHiddenDay + '").val(fecha.getDate());' + br
-        js += '$("#' + nameHiddenMonth + '").val(fecha.getMonth() + 1);' + br
-        js += '$("#' + nameHiddenYear + '").val(fecha.getFullYear());' + br
-        js += '$(e.currentTarget).parents(".grupo").removeClass("has-error").find("label.help-block").hide();' + br
-        js += "}" + br
-        if (onChangeDate) {
-            js += onChangeDate + "();"
-        }
-        js += "});" + br
-        js += "</script>" + br
-
-        out << div
-        out << js
-    }
+//    def datetimepicker = { attrs ->
+//        def name = attrs.name
+//        def nameInput = name + "_input"
+//        def nameHiddenDay = name + "_day"
+//        def nameHiddenMonth = name + "_month"
+//        def nameHiddenYear = name + "_year"
+//        def id = nameInput
+//        if (attrs.id) {
+//            id = attrs.id
+//        }
+//        def readonly = attrs.readonly ?: true
+//        def value = attrs.value
+//
+//        def clase = attrs["class"]
+//
+//        def format = attrs.format ?: "dd-mm-yyyy"
+//
+//        def startDate = attrs.minDate ?: false
+//        def endDate = attrs.maxDate ?: false
+//
+//        def orientation = attrs.orientation ?: "top auto"
+//
+//        def autoclose = attrs.autoclose ?: true
+//        def todayHighlight = attrs.todayHighlight ?: true
+//
+//        def beforeShowDay = attrs.beforeShowDay ?: false
+//        def onChangeDate = attrs.onChangeDate ?: false
+//
+//        def daysOfWeekDisabled = attrs.daysOfWeekDisabled ?: false
+//
+//        def img = attrs.img ?: "fa fa-calendar"
+//
+//        if (value instanceof Date) {
+//            value = value.format(format)
+//        }
+//        if (!value) {
+//            value = ""
+//        }
+//
+//        def br = "\n"
+//
+//        def textfield = "<input type='text' name='${nameInput}' id='${id}' " + (readonly ? "readonly=''" : "") + " value='${value}' class='${clase}' />"
+//        def hiddenDay = "<input type='hidden' name='${nameHiddenDay}' id='${nameHiddenDay}'/>"
+//        def hiddenMonth = "<input type='hidden' name='${nameHiddenMonth}' id='${nameHiddenMonth}'/>"
+//        def hiddenYear = "<input type='hidden' name='${nameHiddenYear}' id='${nameHiddenYear}'/>"
+//        def hidden = "<input type='hidden' name='${name}' id='${name}' value='date.struct'/>"
+//
+//        def div = ""
+//        div += hiddenDay + br
+//        div += hiddenMonth + br
+//        div += hiddenYear + br
+//        div += hidden + br
+//        div += "<div class='input-group'>" + br
+//        div += textfield + br
+//        div += "<span class=\"input-group-addon\"><i class=\"${img}\"></i></span>" + br
+//        div += "</div>" + br
+//
+//        def js = "<script type=\"text/javascript\">" + br
+//        js += '$("#' + id + '").datepicker({' + br
+//        if (startDate) {
+//            js += "startDate: '${startDate}'," + br
+//        }
+//        if (endDate) {
+//            js += "endDate: '${endDate}'," + br
+//        }
+//        if (daysOfWeekDisabled) {
+//            js += "daysOfWeekDisabled: '${daysOfWeekDisabled}'," + br
+//        }
+//        if (beforeShowDay) {
+////            js += "beforeShowDay: function() { ${beforeShowDay}() }," + br
+//            js += "beforeShowDay: ${beforeShowDay}," + br
+//        }
+//        js += 'language: "es",' + br
+//        js += "format: '${format}'," + br
+//        js += "orientation: '${orientation}'," + br
+//        js += "autoclose: ${autoclose}," + br
+//        js += "todayHighlight: ${todayHighlight}" + br
+//        js += "}).on('changeDate', function(e) {" + br
+//        js += "var fecha = e.date;" + br
+//        js += "if(fecha) {" + br
+//        js += '$("#' + nameHiddenDay + '").val(fecha.getDate());' + br
+//        js += '$("#' + nameHiddenMonth + '").val(fecha.getMonth() + 1);' + br
+//        js += '$("#' + nameHiddenYear + '").val(fecha.getFullYear());' + br
+//        js += '$(e.currentTarget).parents(".grupo").removeClass("has-error").find("label.help-block").hide();' + br
+//        js += "}" + br
+//        if (onChangeDate) {
+//            js += onChangeDate + "();"
+//        }
+//        js += "});" + br
+//        js += "</script>" + br
+//
+//        out << div
+//        out << js
+//    }
 
     /**
      * hace la paginacion para una lista
@@ -1568,6 +1568,146 @@ class ElementosTagLib {
             out << ""
         }
     }
+
+
+
+    def datetimepicker = { attrs ->
+        def str = ""
+        def clase = attrs.remove("class")
+        def name = attrs.remove("name")
+        def id = attrs.id ? attrs.remove("id") : name
+        if (id.contains(".")) {
+            id = id.replaceAll("\\.", "_")
+        }
+
+        def value = attrs.remove("value")
+        if (value.toString() == 'none') {
+            value = null
+        } else if (!value) {
+            value = null
+        }
+
+        def format = attrs.format ? attrs.remove("format") : "dd-MM-yyyy"
+        def formatJs = format
+        formatJs = formatJs.replaceAll("M", "m")
+        formatJs = formatJs.replaceAll("yyyy", "yy")
+
+        def timeFormat = attrs.timeFormat ? attrs.remove("format") : "HH:mm"
+
+        def dateTimeFormat = format + " " + timeFormat
+
+        str += "<input type='text'  autocomplete='off' class='datetimepicker " + clase + "' name='" + name + "' id='" + id + "' value='" + g.formatDate(date: value, format: dateTimeFormat) + "'"
+        str += renderAttributes(attrs)
+        str += "/>"
+
+        def js = "<script type='text/javascript'>"
+        js += '$(function() {'
+        js += '$("#' + id + '").datetimepicker({'
+        js += 'dateFormat: "' + formatJs + '",'
+//        js += 'locale: es,'
+        js += 'changeMonth: true,'
+        js += 'changeYear: true'
+        if (attrs.onClose) {
+            js += ','
+            js += 'onClose: ' + attrs.onClose
+        }
+        if (attrs.onSelect) {
+            js += ','
+            js += 'onSelect: ' + attrs.onSelect
+        }
+        if (attrs.yearRange) {
+            js += ','
+//            println attrs.yearRange
+            js += 'yearRange: "' + attrs.yearRange + '"'
+        }
+        if (attrs.minDate) {
+            js += ","
+            js += "minDate:" + attrs.minDate
+        }
+        if (attrs.maxDate) {
+            js += ","
+            js += "maxDate:" + attrs.maxDate
+        }
+        /* **************** hasta aqui lo de date....ahora lo de time ******************************* */
+        if (attrs.controlType) {
+            js += ","
+            js += "controlType: '${attrs.controlType}'"
+        }
+        js += ","
+        js += "timeFormat: '${timeFormat}',"
+        js += "timeText: 'Hora',"
+        js += "hourText: 'Horas',"
+        js += "minuteText: 'Minutos',"
+        js += "secondText: 'Segundos',"
+        js += "currentText: 'Hoy',"
+        js += "closeText: 'Aceptar'"
+        if (attrs.showTime) {
+            js += ","
+            js += "showTime:" + attrs.showTime
+        }
+        if (attrs.minHour) {
+            js += ","
+            js += "hourMin:" + attrs.minHour
+        }
+        if (attrs.minMin) {
+            js += ","
+            js += "minuteMin:" + attrs.minMin
+        }
+        if (attrs.minSec) {
+            js += ","
+            js += "secondMin:" + attrs.minSec
+        }
+        if (attrs.maxHour) {
+            js += ","
+            js += "hourMax:" + attrs.maxHour
+        }
+        if (attrs.maxMin) {
+            js += ","
+            js += "minuteMax:" + attrs.maxMin
+        }
+        if (attrs.maxSec) {
+            js += ","
+            js += "secondMax:" + attrs.maxSec
+        }
+
+        if (attrs.hourGrid) {
+            js += ","
+            js += "hourGrid:" + attrs.hourGrid
+        }
+
+        if (attrs.minuteGrid) {
+            js += ","
+            js += "minuteGrid:" + attrs.minuteGrid
+        }
+
+        if (attrs.secondGrid) {
+            js += ","
+            js += "secondGrid:" + attrs.secondGrid
+        }
+
+        if (attrs.stepHour) {
+            js += ","
+            js += "stepHour:" + attrs.stepHour
+        }
+
+        if (attrs.stepMinute) {
+            js += ","
+            js += "stepMinute:" + attrs.stepMinute
+        }
+
+        if (attrs.stepSecond) {
+            js += ","
+            js += "stepSecond:" + attrs.stepSecond
+        }
+
+        js += '});'
+        js += '});'
+        js += "</script>"
+//       println "js "+js
+        out << str
+        out << js
+    }
+
 
 
 }

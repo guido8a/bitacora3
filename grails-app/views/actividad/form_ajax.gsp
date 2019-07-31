@@ -1,9 +1,5 @@
 <%@ page import="bitacora.Actividad" %>
 
-%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
-
-%{--<asset:javascript src="/jquery/ui.js"/>--}%
-
 <g:if test="${!actividadInstance}">
     <elm:notFound elem="Actividad" genero="o" />
 </g:if>
@@ -64,8 +60,18 @@
                     Fecha de inicio
                 </label>
                 <div class="col-md-4">
-                    <elm:datepicker name="fechaInicio" id='finicio' class="form-control" value="${actividadInstance?.fechaInicio}"  />
-                    %{--                    <g:datePicker name="fechaInicio" value="${actividadInstance?.fechaInicio}"/>--}%
+                    %{--                    <elm:datepicker name="fechaInicio" id='finicio' class="form-control" value="${actividadInstance?.fechaInicio}"  />--}%
+                    %{--                <elm:datetimepicker showTime="false" name="fechaInicio" class="" value="${actividadInstance?.fechaInicio}" controlType="select" minHour="${minHour}" maxHour="${maxHour}" stepMinute="${stepMin}"/>--}%
+
+
+                    <div class="container">
+%{--                        <div class="row">--}%
+                            <div class="form-group">
+                            <input name="fechaInicio" id='datetimepicker1' type='text' class="form-control" value="${actividadInstance?.fechaInicio?.format("dd-MM-yyyy HH:mm")}"/>
+%{--                            </div>--}%
+                        </div>
+                    </div>
+
                 </div>
             </span>
             <span class="grupo">
@@ -74,10 +80,10 @@
                 </label>
 
                 <div class="col-md-4" style="font-size: 14px">
-%{--                    <g:if test="${actividadInstance?.fechaFin}">--}%
-%{--                        ${actividadInstance?.fechaFin?.format("dd-MM-yyyy HH:mm")}--}%
-                        <g:textField name="fechaFin" id="textoFechaFin"  value="${actividadInstance?.fechaFin?.format("dd-MM-yyyy HH:mm")}" class="form-control required" required=""/>
-%{--                    </g:if>--}%
+                    %{--                    <g:if test="${actividadInstance?.fechaFin}">--}%
+                    %{--                        ${actividadInstance?.fechaFin?.format("dd-MM-yyyy HH:mm")}--}%
+                    <g:textField name="fechaFin" id="textoFechaFin"  value="${actividadInstance?.fechaFin?.format("dd-MM-yyyy HH:mm")}" class="form-control required" required=""/>
+                    %{--                    </g:if>--}%
                 </div>
             </span>
         </div>
@@ -130,23 +136,39 @@
 
     <script type="text/javascript">
 
-
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                locale: 'es',
+                format: 'DD-MM-YYYY HH:mm',
+                daysOfWeekDisabled: [0, 6],
+                // inline: true,
+                sideBySide: true
+            });
+        });
 
         <g:if test="${!actividadInstance?.fechaFin && actividadInstance?.fechaInicio}">
-        var fecha1 = $("#finicio").val();
+        var fecha1 = $("#datetimepicker1").val();
         var dias1 = $("#diasVal").val();
         cargarFechaFin(fecha1, dias1);
         </g:if>
 
-        $("#finicio").change(function () {
-            var fecha = $(this).val();
-            var dias = $("#diasVal").val();
-            cargarFechaFin(fecha, dias)
+        // $("#datetimepicker1").change(function () {
+        //     console.log("-----")
+        //     var fecha = $(this).val();
+        //     var dias = $("#diasVal").val();
+        //     cargarFechaFin(fecha, dias)
+        // });
+
+        $('#datetimepicker1').on('dp.change', function(e){
+            // console.log(e.date);
+                var fecha = $(this).val();
+                var dias = $("#diasVal").val();
+                cargarFechaFin(fecha, dias)
         });
 
 
         $("#diasVal").change(function () {
-            var fecha2 = $("#finicio").val();
+            var fecha2 = $("#datetimepicker1").val();
             var dias2 = $(this).val();
             cargarFechaFin(fecha2, dias2);
         });

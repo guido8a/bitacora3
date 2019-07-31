@@ -74,7 +74,9 @@ class ActividadController {
     } //form para cargar con ajax en un dialog
 
     def save_ajax() {
+//        println("params sa " + params)
         params.fechaFin = new Date().parse("dd-MM-yyyy HH:mm", params.fechaFin.toString())
+        params.fechaInicio = new Date().parse("dd-MM-yyyy HH:mm", params.fechaInicio.toString())
         def actividadInstance = new Actividad()
         if (params.id) {
             actividadInstance = Actividad.get(params.id)
@@ -192,12 +194,11 @@ class ActividadController {
         def sql = "select * from tmpo_hasta('${params.fecha}', '${dias}')"
         def res = cn.firstRow(sql.toString())
 //        println("sql " + sql)
-
         def dateFormat = "yyyy-MM-dd HH:mm"
         def dateString = "${res.tmpo_hasta.toString()}"
         def date = Date.parse(dateFormat, dateString)
 
-        render date.format("dd-MM-yyyy")
+        render date.format("dd-MM-yyyy HH:mm")
     }
 
 }
