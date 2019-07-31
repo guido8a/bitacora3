@@ -1,5 +1,14 @@
 <%@ page import="bitacora.Actividad" %>
 
+<style>
+
+.closeText:before {
+
+    content: 'Cerrar';
+}
+
+</style>
+
 <g:if test="${!actividadInstance}">
     <elm:notFound elem="Actividad" genero="o" />
 </g:if>
@@ -65,10 +74,10 @@
 
 
                     <div class="container">
-%{--                        <div class="row">--}%
-                            <div class="form-group">
+                        %{--                        <div class="row">--}%
+                        <div class="form-group">
                             <input name="fechaInicio" id='datetimepicker1' type='text' class="form-control" value="${actividadInstance?.fechaInicio?.format("dd-MM-yyyy HH:mm")}"/>
-%{--                            </div>--}%
+                            %{--                            </div>--}%
                         </div>
                     </div>
 
@@ -142,7 +151,11 @@
                 format: 'DD-MM-YYYY HH:mm',
                 daysOfWeekDisabled: [0, 6],
                 // inline: true,
-                sideBySide: true
+                sideBySide: true,
+                showClose: true,
+                icons: {
+                    close: 'closeText'
+                }
             });
         });
 
@@ -161,9 +174,11 @@
 
         $('#datetimepicker1').on('dp.change', function(e){
             // console.log(e.date);
-                var fecha = $(this).val();
-                var dias = $("#diasVal").val();
-                cargarFechaFin(fecha, dias)
+            var fecha = $(this).val();
+            var dias = $("#diasVal").val();
+            cargarFechaFin(fecha, dias)
+        }).on('dp.hide', function(ev) {
+
         });
 
 
