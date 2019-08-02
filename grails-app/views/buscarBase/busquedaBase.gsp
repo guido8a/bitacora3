@@ -116,6 +116,11 @@
 
 <script type="text/javascript">
 
+
+    $("#btnBase").click(function () {
+        location.href="${createLink(controller: 'base', action: 'base')}"
+    });
+
     $(".btnBusqueda").click(function () {
 
         $("#bandeja").append($("#cargando").removeClass('hidden'));

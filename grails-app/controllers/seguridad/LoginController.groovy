@@ -272,6 +272,7 @@ class LoginController {
     }
 
     def savePer() {
+        println("entro save" + params)
         def sesn = Sesn.get(params.prfl)
         def perf = sesn.perfil
 
@@ -319,8 +320,10 @@ class LoginController {
 
             def count = borrarAlertas()
             if (count > 0) {
+                println("entro 1")
                 redirect(controller: 'alertas', action: 'list')
-            } else {//
+            } else {
+                println("entro 2")
 //                if (session.usuario.getPuedeDirector() || session.usuario.getPuedeJefe()) {
 //
 //                    redirect(controller: "retrasadosWeb", action: "reporteRetrasadosConsolidadoDir", params: [dpto: Persona.get(session.usuario.id).departamento.id, inicio: "1", dir: "1"])

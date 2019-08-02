@@ -24,7 +24,7 @@
                 <h3 class="text-center">Perfil</h3>
                 <g:select name="prfl" class="form-control" from="${perfilesUsr}" optionKey="id" optionValue="perfil"/>
                 <div class="divBtn" style="margin-top: 40px">
-                    <a href="#" class="btn btn-primary btn-lg btn-block btn-login" style="width: 140px; margin: auto">
+                    <a href="#" class="btn btn-primary btn-lg btn-block btn-login" id="btnPerfiles" style="width: 140px; margin: auto">
                         <i class="fa fa-lock"></i> Entrar
                     </a>
                 </div>
@@ -41,13 +41,15 @@
                 if ($frm.valid()) {
                     // $("#cargando").removeClass('hidden');
                     var dialog = cargarLoader("Cargando...");
-                    $(".btn-login").replaceWith($("#cargando"));
+                    // $(".btn-login").replaceWith($("#cargando"));
+                    $("#btnPerfiles").replaceWith($("#cargando"));
                     $("#frmLogin").submit();
                 }
             }
             $(function () {
                 $frm.validate();
-                $(".btn-login").click(function () {
+                // $(".btn-login").click(function () {
+                $("#btnPerfiles").click(function () {
                     doLogin();
                 });
                 $("input").keyup(function (ev) {
