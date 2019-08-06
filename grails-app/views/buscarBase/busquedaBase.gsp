@@ -42,7 +42,7 @@
             <div class="btn-group">
                 <input id="buscar" type="search" class="form-control">
             </div>
-            <a href="#" name="busqueda" class="btn btn-info btnBusqueda btn-ajax"><i
+            <a href="#" name="busqueda" id="btnBuscar" class="btn btn-info btnBusqueda btn-ajax"><i
                     class="fas fa-search"></i> Buscar</a>
             <a href="#" id="actualizarPlbr" class="btn btn-success btnActualizar"><i
                     class="fa fa-redo"></i> Actualiza Buscador</a>
@@ -121,7 +121,7 @@
         location.href="${createLink(controller: 'base', action: 'base')}"
     });
 
-    $(".btnBusqueda").click(function () {
+    $("#btnBuscar").click(function () {
 
         $("#bandeja").append($("#cargando").removeClass('hidden'));
         var buscar = $("#buscar").val();
@@ -161,6 +161,7 @@
 
         var ver = {
             label: 'Ver',
+            id: 'ver',
             icon: "fa fa-search",
             action: function (e) {
                 $("#dialog-body").html(spinner);
