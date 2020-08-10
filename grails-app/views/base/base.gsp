@@ -1,9 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
+
+
+
 <html>
 <head>
     <meta name="layout" content="main">
     <title>Bitácora - Artículo</title>
+
+
 
     <asset:javascript src="/ckeditor/ckeditor.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>

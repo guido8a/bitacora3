@@ -49,6 +49,9 @@ dependencies {
     compile "org.hibernate:hibernate-core:5.1.16.Final"
     compile "org.grails.plugins:gsp"
     compile fileTree(dir: 'lib', include: '*.jar')
+    compile group: 'com.itextpdf', name: 'itext7-core', version: '7.0.4', ext: 'pom'
+    
+    
 //    compile fileTree(dir: 'lib/', include: '*.jar')
     compile files('iText-2.0.8.jar')
 //    runtime 'com.lowagie:itext:2.0.8'

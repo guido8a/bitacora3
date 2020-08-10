@@ -3,8 +3,11 @@ package bitacora3
 import bitacora.Base
 import bitacora.Imagen
 import bitacora.Tema
+import com.itextpdf.html2pdf.ConverterProperties
+import com.itextpdf.html2pdf.HtmlConverter
 import groovy.json.JsonBuilder
 import org.grails.core.io.ResourceLocator
+import org.xhtmlrenderer.pdf.ITextRenderer
 import seguridad.Persona
 
 import grails.config.Config
@@ -14,9 +17,18 @@ import groovy.transform.CompileStatic
 import grails.core.GrailsApplication
 
 import javax.imageio.ImageIO
+import javax.swing.Renderer
 import java.awt.image.BufferedImage;
 
 import groovy.io.FileType
+
+
+import java.io.*;
+import com.itextpdf.kernel.pdf.*;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+
+
 
 class BaseController {
 
@@ -517,7 +529,14 @@ class BaseController {
 
     def creaPdf() {
         def mensaje = "hola"
-        def baos = enviarService.crearPdf(mensaje)
+
+        StringBuilder htmlString = new StringBuilder();
+        htmlString.append(new String("<html><body> This is HMTL to PDF conversion Example<table border='2' align='center'> "));
+        htmlString.append(new String("<tr><td>JavaCodeGeeks</td><td><a href='examples.javacodegeeks.com'>JavaCodeGeeks</a> </td></tr>"));
+        htmlString.append(new String("<tr> <td> Google Here </td> <td><a href='www.google.com'>Google</a> </td> </tr></table></body></html>"));
+
+
+        def baos = enviarService.crearPdf(htmlString.toString())
         byte[] b = baos.toByteArray();
         println "responde"
         response.setContentType("application/pdf")
