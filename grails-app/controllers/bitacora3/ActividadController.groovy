@@ -2,13 +2,14 @@ package bitacora3
 
 import bitacora.Actividad
 import utilitarios.DiaLaborable
-import utilitarios.DiaLaborableController
-
 
 class ActividadController {
 
     def dbConnectionService
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]
+
+    def firmaService
+
 
     def index() {
         redirect(action: "list", params: params)
@@ -199,6 +200,12 @@ class ActividadController {
         def date = Date.parse(dateFormat, dateString)
 
         render date.format("dd-MM-yyyy HH:mm")
+    }
+
+    def firma() {
+        println "firma"
+        firmaService.haceLaFirma()
+        render "Firma electrónica realizada exitosamente en: /var/bitacora/firmas/salida.pdf  --> firmaService.haceLaFirma"
     }
 
 }

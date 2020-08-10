@@ -125,14 +125,14 @@ class EnviarService {
 
 //        File pdfDest = new File("output.pdf");
 //        ConverterProperties converterProperties = new ConverterProperties();
-        HtmlConverter.convertToPdf(content,baos)
+        HtmlConverter.convertToPdf(content, baos)
 //        HtmlConverter.convertToPdf(new FileInputStream(content),
 //                new FileOutputStream(pdfDest), converterProperties);
 
 
 
 //        println "creado pdf"
-        byte[] b = baos.toByteArray();
+//        byte[] b = baos.toByteArray();
 
         return baos
     }

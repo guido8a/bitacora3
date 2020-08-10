@@ -34,6 +34,18 @@
         border-style: solid;
     }
 
+    .item3 {
+        width: 660px;
+        height: 40px;
+        float: left;
+        margin: 4px;
+        font-family: 'open sans condensed';
+        background-color: #eceeff;
+        border: 1px;
+        border-color: #5c6e80;
+        border-style: solid;
+    }
+
     .imagen {
         width: 200px;
         height: 160px;
@@ -127,18 +139,31 @@
                     </div>
 
                     <div style="margin-top: 50px; margin-left: 140px;">
-                        <span class="text-success" style="font-size: large"><strong>Mis Actividades</strong></span></div>
-                        <span class="text-success" style="margin-top: 20px; margin-left: 30px; width: 400px; display: block"><strong>Actividades en las que estoy involucrado o pertenecen a mi grupo de trabajo</strong></span></div>
+                        <span class="text-success" style="font-size: large"><strong>Mis Actividades</strong></span>
+                    </div>
+                        <span class="text-success" style="margin-top: 20px; margin-left: 30px; width: 400px; display: block"><strong>Actividades en las que estoy involucrado o pertenecen a mi grupo de trabajo</strong></span>
                 </div>
             </div>
         </a>
 
 
+        <a href= "${createLink(controller:'actividad', action: 'firma')}" style="text-decoration: none">
+            <div class="ui-corner-all item3 fuera">
+                <div class="ui-corner-all item3">
+                    <div style="margin-top: 10px; margin-left: 100px;">
+                        <span class="text-success" style="font-size: large"><strong>(FirmaService) Firma electrónica en
+                        /var/bitacora/firmas/salida.pdf</strong></span>
+                    </div>
+                </div>
+            </div>
+        </a>
 
     </div>
 
 
 </div>
+
+
     <script type="text/javascript">
         $(".fuera").hover(function () {
             var d = $(this).find(".imagen,.imagen2")
