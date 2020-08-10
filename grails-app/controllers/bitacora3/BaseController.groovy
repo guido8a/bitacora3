@@ -7,7 +7,7 @@ import com.itextpdf.html2pdf.ConverterProperties
 import com.itextpdf.html2pdf.HtmlConverter
 import groovy.json.JsonBuilder
 import org.grails.core.io.ResourceLocator
-import org.xhtmlrenderer.pdf.ITextRenderer
+//import org.xhtmlrenderer.pdf.ITextRenderer
 import seguridad.Persona
 
 import grails.config.Config
@@ -535,7 +535,6 @@ class BaseController {
         htmlString.append(new String("<tr><td>JavaCodeGeeks</td><td><a href='examples.javacodegeeks.com'>JavaCodeGeeks</a> </td></tr>"));
         htmlString.append(new String("<tr> <td> Google Here </td> <td><a href='www.google.com'>Google</a> </td> </tr></table></body></html>"));
 
-
         def baos = enviarService.crearPdf(htmlString.toString())
         byte[] b = baos.toByteArray();
         println "responde"
@@ -545,6 +544,16 @@ class BaseController {
         response.getOutputStream().write(b)
 
         return
+    }
+
+    public static void main() throws IOException {
+        // IO
+        File htmlSource = new File("input.html");
+        File pdfDest = new File("output.pdf");
+        // pdfHTML specific code
+        ConverterProperties converterProperties = new ConverterProperties();
+        HtmlConverter.convertToPdf(new FileInputStream(htmlSource),
+                new FileOutputStream(pdfDest), converterProperties);
     }
 
 

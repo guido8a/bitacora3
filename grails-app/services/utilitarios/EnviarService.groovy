@@ -2,7 +2,7 @@ package utilitarios
 
 import com.itextpdf.html2pdf.ConverterProperties
 import com.itextpdf.html2pdf.HtmlConverter
-import org.xhtmlrenderer.pdf.ITextRenderer
+//import org.xhtmlrenderer.pdf.ITextRenderer
 
 class EnviarService {
 
@@ -112,15 +112,25 @@ class EnviarService {
 //        def texto = renderTemplateWithModel()
 //        println "texto: $texto"
 
-        ITextRenderer renderer = new ITextRenderer();
+//        ITextRenderer renderer = new ITextRenderer();
 //        renderer.setDocument(doc, null);
 //        println "------------ pasa renderer"
-        renderer.setDocumentFromString(content);
+//        renderer.setDocumentFromString(content);
 //        renderer.setDocumentFromString(texto);
 //        println "-----setDoc..."
-        renderer.layout();
+//        renderer.layout();
 //        println "crea layout pdf"
-        renderer.createPDF(baos);
+//        renderer.createPDF(baos);
+
+
+//        File pdfDest = new File("output.pdf");
+//        ConverterProperties converterProperties = new ConverterProperties();
+        HtmlConverter.convertToPdf(content,baos)
+//        HtmlConverter.convertToPdf(new FileInputStream(content),
+//                new FileOutputStream(pdfDest), converterProperties);
+
+
+
 //        println "creado pdf"
         byte[] b = baos.toByteArray();
 
