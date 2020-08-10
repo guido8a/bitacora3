@@ -20,6 +20,8 @@ import groovy.io.FileType
 
 class BaseController {
 
+    def enviarService
+
     static allowedMethods = [save: "POST", delete: "POST", save_ajax: "POST", delete_ajax: "POST"]
 
     def index() {
@@ -511,6 +513,19 @@ class BaseController {
             render "no"
         }
 
+    }
+
+    def creaPdf() {
+        def mensaje = "hola"
+        def baos = enviarService.crearPdf(mensaje)
+        byte[] b = baos.toByteArray();
+        println "responde"
+        response.setContentType("application/pdf")
+        response.setHeader("Content-disposition", "attachment; filename=tramite")
+        response.setContentLength(b.length)
+        response.getOutputStream().write(b)
+
+        return
     }
 
 

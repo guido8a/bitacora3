@@ -116,8 +116,11 @@
            style="margin-left: 200px" title="Crear nuevo registro">
             <i class="fa fa-check"></i> Crear Nuevo
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 325px" title="Ver registro">
+        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 320px" title="Ver registro">
             <i class="fa fa-search"></i> Ver
+        </a>
+        <a href="#" id="btnImprimir" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 380px" title="Ver registro">
+            <i class="fa fa-print"></i>
         </a>
     </div>
 
@@ -336,6 +339,12 @@
     $("#btnBase").click(function () {
         location.href="${createLink(controller: 'base', action: 'base')}"
     });
+
+    $("#btnImprimir").click(function () {
+        location.href="${createLink(controller: 'base', action: 'creaPdf')}"
+    });
+
+
 
     $("#btnGuardar").click(function () {
 

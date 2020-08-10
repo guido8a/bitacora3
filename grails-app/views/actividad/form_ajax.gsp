@@ -2,9 +2,8 @@
 
 <style>
 
-.closeText:before {
-
-    content: 'Cerrar';
+.cerrar:before {
+    content: 'Aceptar';
 }
 
 </style>
@@ -151,10 +150,10 @@
                 format: 'DD-MM-YYYY HH:mm',
                 daysOfWeekDisabled: [0, 6],
                 // inline: true,
-                sideBySide: true,
+                sideBySide: true,  /* false: muestra separado horas y días */
                 showClose: true,
                 icons: {
-                    close: 'closeText'
+                    close: 'cerrar'
                 }
             });
         });

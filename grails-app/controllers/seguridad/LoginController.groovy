@@ -364,6 +364,8 @@ class LoginController {
         session.invalidate()
 
         redirect(controller: 'login', action: 'login')
+//        redirect uri: '/'
+
     }
 
     def finDeSesion() {

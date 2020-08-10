@@ -36,8 +36,8 @@ spring:
             max-request-size: 50MB
 server:
   session:
-    timeout: 1800 #30 minutos
-#    timeout: 60 #1 minuto
+#    timeout: 1800 #30 minutos
+    timeout: 60 #1 minuto
 
 # Spring Actuator Endpoints are Disabled by Default
 endpoints:
@@ -118,7 +118,9 @@ environments:
     development:
         dataSource:
             dbCreate: update
-            url: jdbc:postgresql://192.168.100.9:5432/bitacora3
+            url: jdbc:postgresql://127.0.0.1:5432/kbase
+        grails:
+          serverURL: http://localhost:8080
     test:
         dataSource:
             dbCreate: update

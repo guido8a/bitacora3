@@ -98,6 +98,16 @@
 
 <script type="text/javascript">
     var $frm = $("#frmLogin");
+    var recargar = true
+
+    function timedRefresh(timeoutPeriod) {
+        if(recargar) {
+            setTimeout("location.reload(true);",timeoutPeriod);
+        }
+        recargar = false
+    }
+
+
     function doLogin() {
         if ($frm.valid()) {
             // $("#cargando").removeClass('hidden');
@@ -149,6 +159,9 @@
                 doLogin();
             }
         })
+
+        // window.onload = timedRefresh(5000);
+
     });
 
 </script>
