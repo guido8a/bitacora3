@@ -43,7 +43,7 @@
                     Responsable
                 </label>
                 <div class="col-md-8">
-                    <g:textField name="responsable" maxlength="15" required="" class="form-control" value="${proyecto?.responsable}" />
+                    <g:textField name="responsable" maxlength="63" required="" class="form-control" value="${proyecto?.responsable}" />
                 </div>
             </span>
         </div>
