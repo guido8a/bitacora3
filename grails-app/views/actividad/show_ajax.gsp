@@ -6,6 +6,19 @@
 </g:if>
 <g:else>
 
+    <g:if test="${actividadInstance?.proyecto}">
+        <div class="row">
+            <div class="col-md-2 text-info">
+                Proyecto
+            </div>
+
+            <div class="col-md-10">
+                ${actividadInstance?.proyecto?.descripcion?.encodeAsHTML()}
+            </div>
+
+        </div>
+    </g:if>
+
     <g:if test="${actividadInstance?.padre}">
         <div class="row">
             <div class="col-md-2 text-info">

@@ -15,6 +15,19 @@
     <g:form class="form-horizontal" name="frmActividad" role="form" action="save_ajax" method="POST">
         <g:hiddenField name="id" value="${actividadInstance?.id}" />
 
+        <div class="form-group ${hasErrors(bean: actividadInstance, field: 'proyecto', 'error')} ">
+            <span class="grupo">
+                <label for="proyecto" class="col-md-2 control-label text-info">
+                    Proyecto
+                </label>
+                <div class="col-md-10">
+                    <g:select name="proyecto" from="${bitacora.Proyecto.list()}" optionKey="id"
+                              optionValue="descripcion"
+                              value="${actividadInstance?.proyecto?.id}" class="many-to-one form-control" noSelection="['null': '']"/>
+                </div>
+            </span>
+        </div>
+
         <div class="form-group ${hasErrors(bean: actividadInstance, field: 'padre', 'error')} ">
             <span class="grupo">
                 <label for="padre" class="col-md-2 control-label text-info">
@@ -90,7 +103,8 @@
                 <div class="col-md-4" style="font-size: 14px">
                     %{--                    <g:if test="${actividadInstance?.fechaFin}">--}%
                     %{--                        ${actividadInstance?.fechaFin?.format("dd-MM-yyyy HH:mm")}--}%
-                    <g:textField name="fechaFin" id="textoFechaFin"  value="${actividadInstance?.fechaFin?.format("dd-MM-yyyy HH:mm")}" class="form-control required" required=""/>
+                    <input name="fechaFin" id='datetimepicker2' type='text' class="form-control" value="${actividadInstance?.fechaFin?.format("dd-MM-yyyy HH:mm")}"/>
+
                     %{--                    </g:if>--}%
                 </div>
             </span>
@@ -148,7 +162,22 @@
             $('#datetimepicker1').datetimepicker({
                 locale: 'es',
                 format: 'DD-MM-YYYY HH:mm',
-                daysOfWeekDisabled: [0, 6],
+                // daysOfWeekDisabled: [0, 6],
+                // inline: true,
+                sideBySide: true,  /* false: muestra separado horas y días */
+                showClose: true,
+                icons: {
+                    close: 'cerrar'
+                }
+            });
+        });
+
+
+        $(function () {
+            $('#datetimepicker2').datetimepicker({
+                locale: 'es',
+                format: 'DD-MM-YYYY HH:mm',
+                // daysOfWeekDisabled: [0, 6],
                 // inline: true,
                 sideBySide: true,  /* false: muestra separado horas y días */
                 showClose: true,

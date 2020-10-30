@@ -76,8 +76,15 @@ class ActividadController {
 
     def save_ajax() {
 //        println("params sa " + params)
-        params.fechaFin = new Date().parse("dd-MM-yyyy HH:mm", params.fechaFin.toString())
-        params.fechaInicio = new Date().parse("dd-MM-yyyy HH:mm", params.fechaInicio.toString())
+        if(params.fechaFin){
+            params.fechaFin = new Date().parse("dd-MM-yyyy HH:mm", params.fechaFin.toString())
+        }
+
+        if(params.fechaInicio){
+            params.fechaInicio = new Date().parse("dd-MM-yyyy HH:mm", params.fechaInicio.toString())
+        }
+
+
         def actividadInstance = new Actividad()
         if (params.id) {
             actividadInstance = Actividad.get(params.id)

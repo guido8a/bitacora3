@@ -1,8 +1,9 @@
 package bitacora
 
+import audita.Auditable
 import seguridad.Persona
 
-class Actividad {
+class Actividad implements Auditable{
     Actividad padre
     String    descripcion
     Date      fechaRegistro
@@ -16,6 +17,7 @@ class Actividad {
     Persona responsable
     String    como
     String    observaciones
+    Proyecto proyecto
 
     static mapping = {
         table 'actv'
@@ -37,6 +39,7 @@ class Actividad {
             como          column: 'actvcomo'
             avance        column: 'actvavnc'
             observaciones column: 'actvobsr'
+            proyecto    column: 'proy__id'
 
         }
     }
@@ -58,6 +61,8 @@ class Actividad {
         como(blank: true, nullable: true)
         avance(blank: false, nullable: false)
         observaciones(blank: true, nullable: true)
+        proyecto(blank: true, nullable: true)
+
     }
 /*
     def beforeInsert = {
