@@ -361,4 +361,8 @@ class ReportesController {
 //    }
 
 
+    def aaa(){
+
+    }
+
 }
