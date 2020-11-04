@@ -188,7 +188,8 @@ class FirmaService {
 //        PdfStamper stamper = PdfStamper.createSignature(reader, os, '\0', null, true);
         Character ad = '\0'
 //        String signedBy = CertificateInfo.getSubjectFields((X509Certificate) chain[0]).getField("CN");
-        String signedBy = CertificateInfo.getSubjectFields(chain[0]).getField("CN");
+        def certificados = chain.size()
+        String signedBy = CertificateInfo.getSubjectFields(chain[certificados -1]).getField("CN");
         PdfStamper stamper = PdfStamper.createSignature(reader, os, ad)
         // Get the digital signature attribute object and set the attributes of the digital signature
         PdfSignatureAppearance appearance = stamper.getSignatureAppearance();
