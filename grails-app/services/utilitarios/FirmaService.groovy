@@ -55,44 +55,67 @@ class FirmaService {
 
     static transactional = false
 
-    def sign(String src, String dest, Certificate[] chain, PrivateKey pk,
-             String digestAlgorithm, String provider, PdfSigner.CryptoStandard subfilter,
-             String reason, String location, Collection<ICrlClient> crlList,
-             IOcspClient ocspClient, ITSAClient tsaClient, int estimatedSize)
-            throws GeneralSecurityException, IOException {
-        PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), new StampingProperties());
+//    def sign(String src, String dest, Certificate[] chain, PrivateKey pk,
+//             String digestAlgorithm, String provider, PdfSigner.CryptoStandard subfilter,
+//             String reason, String location, Collection<ICrlClient> crlList,
+//             IOcspClient ocspClient, ITSAClient tsaClient, int estimatedSize)
+//            throws GeneralSecurityException, IOException {
+//        PdfReader reader = new PdfReader(src);
+//        com.itextpdf.text.pdf.PdfReader r1 = new com.itextpdf.text.pdf.PdfReader(src)
+//        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), new StampingProperties());
+////
+//        def certificados = chain.size()
+//        String signedBy = CertificateInfo.getSubjectFields((X509Certificate) chain[certificados -1]).getField("CN");
+//        println("nombre: " + CertificateInfo.getSubjectFields(chain[0]).getField("CN"))
 //
-        def certificados = chain.size()
-        String signedBy = CertificateInfo.getSubjectFields((X509Certificate) chain[certificados -1]).getField("CN");
-        println("nombre: " + CertificateInfo.getSubjectFields(chain[0]).getField("CN"))
-
-//         Create the signature appearance
-        Rectangle rect = new Rectangle(60, 10, 300, 100);
-        PdfSignatureAppearance appearance = signer.getSignatureAppearance();
-        appearance
-                .setReason(reason)
-                .setLocation(location)
-
-        // Specify if the appearance before field is signed will be used
-        // as a background for the signed field. The "false" value is the default value.
-                .setReuseAppearance(false)
-                .setPageRect(rect)
-                .setPageNumber(1)
-                .setLayer2FontSize(7)
-                .setLayer2Text("Firmado por ${signedBy} texto asuministrado para que resulte demodelo de lo que se intenta incluir en la firma:");
-
-
-        signer.setFieldName("sig");
-
-        println "$pk, $digestAlgorithm, $provider, -->$signedBy"
-
-        IExternalSignature pks = new PrivateKeySignature(pk, digestAlgorithm, provider);
-        IExternalDigest digest = new BouncyCastleDigest();
-
-        // Sign the document using the detached mode, CMS or CAdES equivalent.
-        signer.signDetached(digest, pks, chain, crlList, ocspClient, tsaClient, estimatedSize, subfilter);
-    }
+////         Create the signature appearance
+//        Rectangle rect = new Rectangle(60, 10, 300, 100);
+//        PdfSignatureAppearance appearance = signer.getSignatureAppearance();
+//        appearance
+//                .setReason(reason)
+//                .setLocation(location)
+//
+//        // Specify if the appearance before field is signed will be used
+//        // as a background for the signed field. The "false" value is the default value.
+//                .setReuseAppearance(false)
+//                .setPageRect(rect)
+//                .setPageNumber(1)
+//                .setLayer2FontSize(7)
+//        .setLayer2Text("Firmado por ${signedBy} texto asuministrado para que resulte demodelo de lo que se intenta incluir en la firma:");
+//
+//        signer.setFieldName("sig");
+//
+//        Image image = Image.getInstance("/var/bitacora/firmas/logo.png");
+////        Image image = Image.getInstance("/var/bitacora/firmas/gatos2.jpg");
+//
+//        PdfImage stream = new PdfImage(image, "", null);
+//        PdfStamper stamper = new PdfStamper(r1, new FileOutputStream(dest))   ;
+////        def pdfContentByte = stamper.getOverContent(1);
+////        image.setAbsolutePosition(1, 1);
+////        pdfContentByte.addImage(image);
+////        stamper.close();
+//
+////        PdfContentByte content = stamper.getUnderContent(1);
+////        image.setAbsolutePosition(10, 10);
+////        content.addImage(image);
+//
+//        PdfIndirectObject ref = stamper.getWriter().addToBody(stream);
+//        image.setDirectReference(ref.getIndirectReference());
+//        image.setAbsolutePosition(0, 0);
+//        PdfContentByte over = stamper.getOverContent(1);
+//        over.addImage(image);
+//        stamper.close();
+//
+////        println("------ " + image)
+//
+//       println "$pk, $digestAlgorithm, $provider, -->$signedBy"
+//
+//        IExternalSignature pks = new PrivateKeySignature(pk, digestAlgorithm, provider);
+//        IExternalDigest digest = new BouncyCastleDigest();
+//
+//        // Sign the document using the detached mode, CMS or CAdES equivalent.
+//        signer.signDetached(digest, pks, chain, crlList, ocspClient, tsaClient, estimatedSize, subfilter);
+//    }
 
     def haceLaFirma() {
         println "inicia la firma"
@@ -136,7 +159,7 @@ class FirmaService {
 //                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
 //                "Test", "Quito", null, null, null, 0);
 
-    def  sign2(arch_pdf, arch_salida, chain, pk,
+        sign(arch_pdf, arch_salida, chain, pk,
                 DigestAlgorithms.SHA256, provider.getName(), MakeSignature.CryptoStandard.CMS,
                 "Test", "Quito");
     }
@@ -187,7 +210,7 @@ class FirmaService {
 
 
         println("nnnnnnnnn")
-                
+
         // Here itext provides 2 interfaces for signing, which can be implemented by yourself, and I will focus on this implementation later
         // Summary algorithm
         ExternalDigest digest = new BouncyCastleDigest();
