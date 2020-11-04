@@ -46,6 +46,7 @@ class FirmaService {
 //
         def certificados = chain.size()
         String signedBy = CertificateInfo.getSubjectFields((X509Certificate) chain[certificados -1]).getField("CN");
+        println("nombre: " + CertificateInfo.getSubjectFields(chain[0]).getField("CN"))
 
 //         Create the signature appearance
         Rectangle rect = new Rectangle(60, 10, 300, 100);
