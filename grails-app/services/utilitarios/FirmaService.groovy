@@ -12,7 +12,8 @@ import com.itextpdf.signatures.IOcspClient;
 import com.itextpdf.signatures.PdfSignatureAppearance;
 import com.itextpdf.signatures.PdfSigner;
 import com.itextpdf.signatures.PrivateKeySignature;
-import com.itextpdf.signatures.ITSAClient;
+import com.itextpdf.signatures.ITSAClient
+import com.itextpdf.signatures.CertificateInfo
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,11 +23,13 @@ import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.Security;
-import java.security.cert.Certificate;
+import java.security.cert.Certificate
+import java.security.cert.X509Certificate;
 import java.util.Collection;
 import java.util.Properties;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import java.security.cert.Certificate;
 
 
 class FirmaService {
@@ -40,9 +43,12 @@ class FirmaService {
             throws GeneralSecurityException, IOException {
         PdfReader reader = new PdfReader(src);
         PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), new StampingProperties());
+//
+        def certificados = chain.size()
+        String signedBy = CertificateInfo.getSubjectFields((X509Certificate) chain[certificados -1]).getField("CN");
 
-        // Create the signature appearance
-        Rectangle rect = new Rectangle(36, 648, 200, 100);
+//         Create the signature appearance
+        Rectangle rect = new Rectangle(60, 10, 300, 100);
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance
                 .setReason(reason)
@@ -52,10 +58,14 @@ class FirmaService {
         // as a background for the signed field. The "false" value is the default value.
                 .setReuseAppearance(false)
                 .setPageRect(rect)
-                .setPageNumber(1);
+                .setPageNumber(1)
+                .setLayer2FontSize(7)
+                .setLayer2Text("Firmado por ${signedBy} texto asuministrado para que resulte demodelo de lo que se intenta incluir en la firma:");
+
+
         signer.setFieldName("sig");
 
-        println "$pk, $digestAlgorithm, $provider"
+        println "$pk, $digestAlgorithm, $provider, -->$signedBy"
 
         IExternalSignature pks = new PrivateKeySignature(pk, digestAlgorithm, provider);
         IExternalDigest digest = new BouncyCastleDigest();
