@@ -209,8 +209,8 @@ class FirmaService {
         appearance.setRenderingMode(PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION);
 
 
-
-
+        println("nnnnnnnnn")
+                
         // Here itext provides 2 interfaces for signing, which can be implemented by yourself, and I will focus on this implementation later
         // Summary algorithm
         ExternalDigest digest = new BouncyCastleDigest();
