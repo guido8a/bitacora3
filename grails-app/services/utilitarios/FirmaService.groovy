@@ -187,7 +187,8 @@ class FirmaService {
         //If true, the pdf can be added to the signature, and the signature verification tool can identify whether the document has been modified after each signature
 //        PdfStamper stamper = PdfStamper.createSignature(reader, os, '\0', null, true);
         Character ad = '\0'
-        String signedBy = CertificateInfo.getSubjectFields((X509Certificate) chain[0]).getField("CN");
+//        String signedBy = CertificateInfo.getSubjectFields((X509Certificate) chain[0]).getField("CN");
+        String signedBy = CertificateInfo.getSubjectFields(chain[0]).getField("CN");
         PdfStamper stamper = PdfStamper.createSignature(reader, os, ad)
         // Get the digital signature attribute object and set the attributes of the digital signature
         PdfSignatureAppearance appearance = stamper.getSignatureAppearance();
