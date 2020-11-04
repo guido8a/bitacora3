@@ -201,7 +201,7 @@ class FirmaService {
         //Set the location of the signature, the page number, and the name of the signature domain. When the signature is added multiple times, the signature pre-name cannot be the same
         //The position of the signature is the position coordinate of the stamp relative to the pdf page, the origin is the lower left corner of the pdf page
         //The four parameters are: the lower left corner of the stamp x, the lower left corner of the stamp y, the upper right corner of the stamp x, and the upper right corner of the stamp y
-        appearance.setVisibleSignature(new com.itextpdf.text.Rectangle(200, 200, 300, 300), 1, "sig1");
+        appearance.setVisibleSignature(new com.itextpdf.text.Rectangle(60, 20, 300, 300), 1, "sig1");
         //Read the stamp image, this image is the image of the itext package
         Image image = Image.getInstance("/var/bitacora/firmas/logo.png");
         appearance.setSignatureGraphic(image);
