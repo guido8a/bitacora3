@@ -14,23 +14,39 @@ import com.itextpdf.signatures.PdfSigner;
 import com.itextpdf.signatures.PrivateKeySignature;
 import com.itextpdf.signatures.ITSAClient
 import com.itextpdf.signatures.CertificateInfo
+import com.itextpdf.signatures.SignatureUtil
+import com.itextpdf.signatures.PdfPKCS7
+
 import com.itextpdf.text.DocumentException
 import com.itextpdf.text.Image
+import com.itextpdf.text.pdf.AcroFields
+import com.itextpdf.text.pdf.PdfAcroForm
 import com.itextpdf.text.pdf.PdfContentByte
+import com.itextpdf.text.pdf.PdfDictionary
+import com.itextpdf.text.pdf.PdfDocument
 import com.itextpdf.text.pdf.PdfImage
 import com.itextpdf.text.pdf.PdfIndirectObject
+import com.itextpdf.text.pdf.PdfName
 import com.itextpdf.text.pdf.PdfSignature
 import com.itextpdf.text.pdf.PdfSignatureAppearance
 
 //import com.itextpdf.text.pdf.PdfSignatureAppearance
 import com.itextpdf.text.pdf.PdfStamper
+import com.itextpdf.text.pdf.PdfString
 import com.itextpdf.text.pdf.security.BouncyCastleDigest
 import com.itextpdf.text.pdf.security.CertificateInfo
 import com.itextpdf.text.pdf.security.DigestAlgorithms
 import com.itextpdf.text.pdf.security.ExternalDigest
 import com.itextpdf.text.pdf.security.ExternalSignature
 import com.itextpdf.text.pdf.security.MakeSignature
+//import com.itextpdf.text.pdf.security.PdfPKCS7
 import com.itextpdf.text.pdf.security.PrivateKeySignature
+
+import com.itextpdf.text.pdf.security.SignaturePermissions
+import sun.security.x509.X509CertInfo
+
+import javax.naming.ldap.LdapName
+import javax.security.auth.x500.X500Principal
 
 //import com.itextpdf.text.pdf.PdfSignatureAppearance
 
@@ -48,6 +64,8 @@ import java.util.Collection;
 import java.util.Properties;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+//import org.bouncycastle.cert.ocsp.BasicOCSPResp;
+
 import java.security.cert.Certificate;
 
 
@@ -201,16 +219,14 @@ class FirmaService {
         //Set the location of the signature, the page number, and the name of the signature domain. When the signature is added multiple times, the signature pre-name cannot be the same
         //The position of the signature is the position coordinate of the stamp relative to the pdf page, the origin is the lower left corner of the pdf page
         //The four parameters are: the lower left corner of the stamp x, the lower left corner of the stamp y, the upper right corner of the stamp x, and the upper right corner of the stamp y
-        appearance.setVisibleSignature(new com.itextpdf.text.Rectangle(60, 20, 300, 300), 1, "sig1");
+        appearance.setVisibleSignature(new com.itextpdf.text.Rectangle(10, 55, 200, 100), 1, "sig1");
         //Read the stamp image, this image is the image of the itext package
         Image image = Image.getInstance("/var/bitacora/firmas/logo.png");
-        appearance.setSignatureGraphic(image);
+//        image.setInverted(true)
+        appearance.setSignatureGraphic(image)
         appearance.setCertificationLevel(PdfSignatureAppearance.NOT_CERTIFIED);
         //Set the display mode of the stamp. The following option is to display only the stamp (there are other modes, and the stamp and the signature description can be displayed together)
         appearance.setRenderingMode(PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION);
-
-
-        println("nnnnnnnnn")
 
         // Here itext provides 2 interfaces for signing, which can be implemented by yourself, and I will focus on this implementation later
         // Summary algorithm
@@ -219,6 +235,108 @@ class FirmaService {
         ExternalSignature signature = new PrivateKeySignature(pk, digestAlgorithm, null);
         // Call itext signature method to complete the pdf signature
         MakeSignature.signDetached(appearance, digest, signature, chain, null, null, null, 0, subfilter);
+    }
+
+
+
+
+//    public PdfPKCS7 verifySignature(SignatureUtil signUtil, String name) throws GeneralSecurityException {
+//
+//        PdfPKCS7 pkcs7 = signUtil.readSignatureData(name);
+//
+//        return pkcs7;
+//    }
+
+
+    public void inspectSignatures(String path) throws IOException, GeneralSecurityException {
+        com.itextpdf.text.pdf.PdfReader reader = new com.itextpdf.text.pdf.PdfReader(path)
+//        PdfAcroForm form = PdfAcroForm.getAcroForm(reader, false);
+//        AcroFields fields = reader.acroFields;
+        AcroFields fields = reader.getAcroFields();
+        List<String> names = fields.getSignatureNames();
+//        SignaturePermissions perms = null;
+//        SignatureUtil signUtil = new SignatureUtil(pdfDoc);
+//        List<String> names = signUtil.getSignatureNames();
+
+        println("path " + path)
+        println("name " + names)
+//        println("name 2 " + fields.getSignature(names[0]))
+
+//        PdfPKCS7 pkcs7 = fields.getField(names[0])
+
+        PdfPKCS7 pkcs7 = fields.readSignatureData(names[0]);
+
+
+//        PdfPKCS7 pkcs7 = fields. (names[0]);
+//        PdfPKCS7 pkcs7 = fields.verifySignature(names[0]);
+//
+//        BouncyCastleDigest cert = pkcs7.getSigningCertificate();
+//        println("nombre: " + CertificateInfo.getSubjectFields(cert).getField("CN"))
+
+
+
+//        X509Certificate cert = (X509Certificate) pkcs7.getSigningCertificate();
+//        println("Name of the signer: " + CertificateInfo.getSubjectFields(cert).getField("CN"));
+
+
+        PdfDictionary sigDict = fields.getSignatureDictionary(names[0]);
+        PdfName sub = sigDict.getAsName(PdfName.SUBFILTER);
+        PdfString certStr = sigDict.getAsString(PdfName.CERT);
+
+        println("--> " + sub)
+        println("--> " + certStr)
+//        println("--> " + pkcs7)
+
+        //        X509CertInfo certParser = new X509CertInfo()
+//        X509CertParser certParser = new X509CertParser();
+//        certParser.engineInit(new ByteArrayInputStream(certStr.getBytes()));
+//        Collection<Certificate> certs = certParser.engineReadAll();
+//
+//        X509Certificate certificate = (X509Certificate) certs.iterator().next();
+
+//
+//        X500Principal principal = certificate.getSubjectX500Principal();
+//
+//
+//        LdapName ldapDN = new LdapName(principal.getName());
+
+
+
+
+
+
+
+//        def a = VerifySignature(fields, names[0])
+
+
+//        println("--> " + pkcs7)
+
+//        for (String name : names) {
+//            System.out.println("===== " + name + " =====");
+//            perms = inspectSignature(pdfDoc, signUtil, form, name, perms);
+//        }
+    }
+
+
+//   public PdfPKCS7 VerifySignature(AcroFields fields, String name)
+//    {
+//        println("Signature covers whole document: " + fields.signatureCoversWholeDocument(name));
+//        println("Document revision: " + fields.getRevision(name) + " of " + fields.totalRevisions);
+//        PdfPKCS7 pkcs7 = fields.verifySignature(name);
+//        println("Integrity check OK? " + pkcs7.verify());
+//        return pkcs7;
+//    }
+
+
+    def informacion(String src){
+        com.itextpdf.text.pdf.PdfReader reader = new com.itextpdf.text.pdf.PdfReader(src)
+
+            }
+
+    def verifica(){
+        def archivo = "/var/bitacora/firmas/salida.pdf"
+//        informacion(archivo)
+        inspectSignatures(archivo)
     }
 
 

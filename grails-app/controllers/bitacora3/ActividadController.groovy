@@ -215,4 +215,10 @@ class ActividadController {
         render "Firma electrónica realizada exitosamente en: /var/bitacora/firmas/salida.pdf  --> firmaService.haceLaFirma"
     }
 
+    def verifica(){
+        firmaService.verifica();
+        render "hecho"
+    }
+
+
 }
