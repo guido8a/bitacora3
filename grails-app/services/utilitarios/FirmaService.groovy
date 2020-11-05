@@ -264,7 +264,7 @@ class FirmaService {
 
 //        PdfPKCS7 pkcs7 = fields.getField(names[0])
 
-        PdfPKCS7 pkcs7 = fields.readSignatureData(names[0]);
+//        PdfPKCS7 pkcs7 = fields.readSignatureData(names[0]);
 
 
 //        PdfPKCS7 pkcs7 = fields. (names[0]);
