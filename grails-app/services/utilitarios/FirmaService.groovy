@@ -428,6 +428,7 @@ class FirmaService {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
         verifySignatures(EXAMPLE1);
+        println("Provider name: " + provider.getName())
 //        app.verifySignatures(EXAMPLE2);
 //        app.verifySignatures(EXAMPLE3);
     }
