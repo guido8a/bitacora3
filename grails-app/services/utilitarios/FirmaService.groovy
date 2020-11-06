@@ -59,7 +59,8 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.Security;
 import java.security.cert.Certificate
-import java.security.cert.X509Certificate;
+import java.security.cert.X509Certificate
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Properties;
 
@@ -69,6 +70,8 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import java.security.cert.Certificate;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
+
+import org.bouncycastle.tsp.TimeStampToken
 
 
 class FirmaService {
@@ -411,6 +414,11 @@ class FirmaService {
 
         X509Certificate cert = (X509Certificate) pkcs7.getSigningCertificate();
         System.out.println("Name of the signer: " + CertificateInfo.getSubjectFields(cert).getField("CN"));
+        System.out.println("Location: " + pkcs7.getLocation());
+        System.out.println("Reason: " + pkcs7.getReason());
+
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("Signed on: " + date_format.format(pkcs7.getSignDate().getTime()));
 
         return pkcs7;
     }
