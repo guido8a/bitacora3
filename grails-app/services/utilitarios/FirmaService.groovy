@@ -417,7 +417,7 @@ class FirmaService {
         System.out.println("Location: " + pkcs7.getLocation());
         System.out.println("Reason: " + pkcs7.getReason());
 
-        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         System.out.println("Signed on: " + date_format.format(pkcs7.getSignDate().getTime()));
 
         return pkcs7;
