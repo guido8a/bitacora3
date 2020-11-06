@@ -220,5 +220,10 @@ class ActividadController {
         render "hecho"
     }
 
+    def verifica2(){
+        firmaService.verificaFirma()
+        render "hecho2"
+    }
+
 
 }

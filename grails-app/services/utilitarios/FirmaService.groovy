@@ -68,6 +68,8 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.security.cert.Certificate;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+
 
 class FirmaService {
 
@@ -225,7 +227,8 @@ class FirmaService {
 //        image.setInverted(true)
         appearance.setSignatureGraphic(image)
         appearance.setCertificationLevel(PdfSignatureAppearance.NOT_CERTIFIED);
-        //Set the display mode of the stamp. The following option is to display only the stamp (there are other modes, and the stamp and the signature description can be displayed together)
+        //Set the display mode of the stamp. The following option is to display only the stamp
+        // (there are other modes, and the stamp and the signature description can be displayed together)
         appearance.setRenderingMode(PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION);
 
         // Here itext provides 2 interfaces for signing, which can be implemented by yourself, and I will focus on this implementation later
@@ -261,8 +264,9 @@ class FirmaService {
         println("path " + path)
         println("name " + names)
 //        println("name 2 " + fields.getSignature(names[0]))
+        println("name 2 " + fields)
 
-//        PdfPKCS7 pkcs7 = fields.getField(names[0])
+        PdfPKCS7 pkcs7 = fields.getField(names[0])
 
 //        PdfPKCS7 pkcs7 = fields.readSignatureData(names[0]);
 
@@ -300,14 +304,7 @@ class FirmaService {
 //
 //        LdapName ldapDN = new LdapName(principal.getName());
 
-
-
-
-
-
-
 //        def a = VerifySignature(fields, names[0])
-
 
 //        println("--> " + pkcs7)
 
@@ -337,6 +334,94 @@ class FirmaService {
         def archivo = "/var/bitacora/firmas/salida.pdf"
 //        informacion(archivo)
         inspectSignatures(archivo)
+    }
+
+
+    /********************* verifica firma *************/
+    public static final String DEST = "./target/test/resources/signatures/chapter05/";
+
+    public static final String EXAMPLE1 = "/var/bitacora/firmas/salida.pdf"
+
+    public static final String EXAMPLE2 = "./src/test/resources/pdfs/step_4_signed_by_alice_bob_carol_and_dave.pdf";
+    public static final String EXAMPLE3 = "./src/test/resources/pdfs/step_6_signed_by_dave_broken_by_chuck.pdf";
+
+    public static final String EXPECTED_OUTPUT = "./src/test/resources/pdfs/hello_level_1_annotated.pdf\n" +
+            "===== sig =====\n" +
+            "Signature covers whole document: false\n" +
+            "Document revision: 1 of 2\n" +
+            "Integrity check OK? true\n" +
+            "./src/test/resources/pdfs/step_4_signed_by_alice_bob_carol_and_dave.pdf\n" +
+            "===== sig1 =====\n" +
+            "Signature covers whole document: false\n" +
+            "Document revision: 1 of 4\n" +
+            "Integrity check OK? true\n" +
+            "===== sig2 =====\n" +
+            "Signature covers whole document: false\n" +
+            "Document revision: 2 of 4\n" +
+            "Integrity check OK? true\n" +
+            "===== sig3 =====\n" +
+            "Signature covers whole document: false\n" +
+            "Document revision: 3 of 4\n" +
+            "Integrity check OK? true\n" +
+            "===== sig4 =====\n" +
+            "Signature covers whole document: true\n" +
+            "Document revision: 4 of 4\n" +
+            "Integrity check OK? true\n" +
+            "./src/test/resources/pdfs/step_6_signed_by_dave_broken_by_chuck.pdf\n" +
+            "===== sig1 =====\n" +
+            "Signature covers whole document: false\n" +
+            "Document revision: 1 of 5\n" +
+            "Integrity check OK? true\n" +
+            "===== sig2 =====\n" +
+            "Signature covers whole document: false\n" +
+            "Document revision: 2 of 5\n" +
+            "Integrity check OK? true\n" +
+            "===== sig3 =====\n" +
+            "Signature covers whole document: false\n" +
+            "Document revision: 3 of 5\n" +
+            "Integrity check OK? true\n" +
+            "===== sig4 =====\n" +
+            "Signature covers whole document: false\n" +
+            "Document revision: 4 of 5\n" +
+            "Integrity check OK? true\n";
+
+    public void verifySignatures(String path) throws IOException, GeneralSecurityException {
+
+        PdfDocument pdfDoc = new PdfDocument(new PdfReader(path));
+        SignatureUtil signUtil = new SignatureUtil(pdfDoc);
+        List<String> names = signUtil.getSignatureNames();
+
+        System.out.println(path);
+        for (String name : names) {
+            System.out.println("===== " + name + " =====");
+            verifySignature(signUtil, name);
+        }
+
+        pdfDoc.close();
+    }
+
+    public PdfPKCS7 verifySignature(SignatureUtil signUtil, String name) throws GeneralSecurityException {
+        PdfPKCS7 pkcs7 = signUtil.readSignatureData(name);
+
+        System.out.println("Signature covers whole document: " + signUtil.signatureCoversWholeDocument(name));
+        System.out.println("Document revision: " + signUtil.getRevision(name) + " of " + signUtil.getTotalRevisions());
+        System.out.println("Integrity check OK? " + pkcs7.verifySignatureIntegrityAndAuthenticity());
+
+        println "verifica: ${pkcs7}"
+
+        X509Certificate cert = (X509Certificate) pkcs7.getSigningCertificate();
+        System.out.println("Name of the signer: " + CertificateInfo.getSubjectFields(cert).getField("CN"));
+
+        return pkcs7;
+    }
+
+    def verificaFirma() {
+        println "verificaFirma"
+        BouncyCastleProvider provider = new BouncyCastleProvider();
+        Security.addProvider(provider);
+        verifySignatures(EXAMPLE1);
+//        app.verifySignatures(EXAMPLE2);
+//        app.verifySignatures(EXAMPLE3);
     }
 
 
