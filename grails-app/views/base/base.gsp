@@ -1,16 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-
-
-
-
 <html>
 <head>
     <meta name="layout" content="main">
     <title>Bitácora - Artículo</title>
 
-
-
-    <asset:javascript src="/ckeditor/ckeditor.js"/>
+%{--    <asset:javascript src="/ckeditor/ckeditor.js"/>--}%
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/load-image.min.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/canvas-to-blob.min.js"/>
@@ -19,6 +13,9 @@
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-process.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/jquery.fileupload-image.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/css/jquery.fileupload.css"/>
+
+    <asset:stylesheet src="/summernote-0.8.18-dist/summernote.min.css"/>
+    <asset:javascript src="/summernote-0.8.18-dist/summernote.min.js"/>
 
     <style type="text/css">
     .mediano {
@@ -183,7 +180,9 @@
                                 <span class="col-md-2 label label-primary text-info mediano">Solución</span>
                                 <div class="col-md-10">
                                     <span class="grupo">
-                                        <g:textArea name="solucion" id="slcn" class="form-control required" maxlength="1023" style="height: 80px; resize: none" value="${base?.solucion}"/>
+                                        <g:textArea name="solucion" id="slcn" class="form-control required" style="height: 80px; resize: none" value="${base?.solucion}"/>
+%{--                                        <g:textArea name="texto" id="texto" class="form-control" value="${base?.solucion}" rows="5" cols="5"--}%
+%{--                                                    style="height: 85px; width:685px ; resize: none" maxlength="1023"/>--}%
                                     </span>
                                 </div>
                             </div>
@@ -301,6 +300,13 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function() {
+        $('#slcn').summernote({
+            spellCheck: true,
+            disableGrammar: true
+        });
+    });
+
     cargarArchivos('${base?.id}', '${lista}');
 
     function cargarArchivos (id, lista) {
@@ -319,26 +325,26 @@
 
     }
 
-    var okContents = {
-        'image/png'  : "png",
-        'image/jpeg' : "jpeg",
-        'image/jpg'  : "jpg"
-    };
+    %{--var okContents = {--}%
+    %{--    'image/png'  : "png",--}%
+    %{--    'image/jpeg' : "jpeg",--}%
+    %{--    'image/jpg'  : "jpg"--}%
+    %{--};--}%
 
 
-    CKEDITOR.replace( 'algoritmo', {
-        height: "240px",
-        customConfig: 'config.js',
-        filebrowserBrowseUrl    : '${createLink(controller: "baseImagenes", action: "browser")}',
-        filebrowserUploadUrl    : '${createLink(controller: "baseImagenes", action: "uploader")}'
-    });
+    %{--CKEDITOR.replace( 'algoritmo', {--}%
+    %{--    height: "240px",--}%
+    %{--    customConfig: 'config.js',--}%
+    %{--    filebrowserBrowseUrl    : '${createLink(controller: "baseImagenes", action: "browser")}',--}%
+    %{--    filebrowserUploadUrl    : '${createLink(controller: "baseImagenes", action: "uploader")}'--}%
+    %{--});--}%
 
-    CKEDITOR.on('instanceReady', function (ev) {
-        // Prevent drag-and-drop.
-        ev.editor.document.on('drop', function (ev) {
-            ev.data.preventDefault(true);
-        });
-    });
+    %{--CKEDITOR.on('instanceReady', function (ev) {--}%
+    %{--    // Prevent drag-and-drop.--}%
+    %{--    ev.editor.document.on('drop', function (ev) {--}%
+    %{--        ev.data.preventDefault(true);--}%
+    %{--    });--}%
+    %{--});--}%
 
 
     $("#btnBase").click(function () {
@@ -354,7 +360,7 @@
     $("#btnGuardar").click(function () {
 
         var $form = $("#frmProblema");
-        var texto = CKEDITOR.instances.algoritmo.getData();
+        // var texto = CKEDITOR.instances.algoritmo.getData();
         var base_id = '${base?.id}';
 
         if($form.valid()){
@@ -364,7 +370,7 @@
                 url: "${createLink(controller: 'base', action: 'guardarProblema_ajax')}",
                 data:  {
                     id: base_id,
-                    algoritmo: texto,
+                    // algoritmo: texto,
                     tema: $("#temaId").val(),
                     problema: $("#prbl").val(),
                     clave: $("#clve").val(),
@@ -451,145 +457,145 @@
 
 
 
-    function createContainer() {
-        var file = document.getElementById("file");
-        var next = $("#files").find(".fileContainer").size();
-        if (isNaN(next))
-            next = 1;
-        else
-            next++;
-        var ar = file.files[next - 1];
-        var div = $('<div class="fileContainer ui-corner-all d-' + next + '">');
-        var row1 = $("<div class='row resumen'>");
-        var row3 = $("<div class='row botones'  style='text-align: center'>");
-        var row4 = $("<div class='row'>");
-        row1.append("<div class='col-md-2 etiqueta' style='font-size: 14px'>Descripción</div>");
-        row1.append("<div class='col-md-5'><textarea maxlength='254' style='resize: none' class='form-control " + next + "' required id='descripcion' name='descripcion' cols='5' rows='5'></textarea></div>");
-        row3.append(" <a href='#' class='btn btn-azul subir' style='margin-left: 200px; margin-bottom: 10px' clase='" + next + "'><i class='fa fa-upload'></i> Guardar Imagen</a>");
-        div.append("<div class='row' style='margin-top: 10px; font-size: 14px'><div class='titulo-archivo col-md-10'><span style='color: #327BBA'>Archivo:</span> " + ar.name + "</div></div>");
-        div.append(row1);
-        div.append(row3);
-        $("#files").append(div);
-        if ($("#files").height() * 1 > 120) {
-            $("#titulo-arch").show();
-            $("#linea-arch").show();
-        } else {
-            $("#titulo-arch").hide();
-            $("#linea-arch").hide();
-        }
-    }
+    // function createContainer() {
+    //     var file = document.getElementById("file");
+    //     var next = $("#files").find(".fileContainer").size();
+    //     if (isNaN(next))
+    //         next = 1;
+    //     else
+    //         next++;
+    //     var ar = file.files[next - 1];
+    //     var div = $('<div class="fileContainer ui-corner-all d-' + next + '">');
+    //     var row1 = $("<div class='row resumen'>");
+    //     var row3 = $("<div class='row botones'  style='text-align: center'>");
+    //     var row4 = $("<div class='row'>");
+    //     row1.append("<div class='col-md-2 etiqueta' style='font-size: 14px'>Descripción</div>");
+    //     row1.append("<div class='col-md-5'><textarea maxlength='254' style='resize: none' class='form-control " + next + "' required id='descripcion' name='descripcion' cols='5' rows='5'></textarea></div>");
+    //     row3.append(" <a href='#' class='btn btn-azul subir' style='margin-left: 200px; margin-bottom: 10px' clase='" + next + "'><i class='fa fa-upload'></i> Guardar Imagen</a>");
+    //     div.append("<div class='row' style='margin-top: 10px; font-size: 14px'><div class='titulo-archivo col-md-10'><span style='color: #327BBA'>Archivo:</span> " + ar.name + "</div></div>");
+    //     div.append(row1);
+    //     div.append(row3);
+    //     $("#files").append(div);
+    //     if ($("#files").height() * 1 > 120) {
+    //         $("#titulo-arch").show();
+    //         $("#linea-arch").show();
+    //     } else {
+    //         $("#titulo-arch").hide();
+    //         $("#linea-arch").hide();
+    //     }
+    // }
 
     function reset() {
         $("#files").find(".fileContainer").remove()
     }
 
-    $("#file").change(function () {
-        reset();
-        archivos = $(this)[0].files;
-        var length = archivos.length;
-        for (i = 0; i < length; i++) {
-            createContainer();
-        }
-        boundBotones();
-    });
+    // $("#file").change(function () {
+    //     reset();
+    //     archivos = $(this)[0].files;
+    //     var length = archivos.length;
+    //     for (i = 0; i < length; i++) {
+    //         createContainer();
+    //     }
+    //     boundBotones();
+    // });
 
 
-    function boundBotones() {
-        $(".subir").unbind("click");
-        $(".subir").bind("click", function () {
-            error = false;
-            $("." + $(this).attr("clase")).each(function () {
-                if ($(this).val().trim() == "") {
-                    error = true;
-                }
-            });
-            if (error) {
-                bootbox.alert("La imagen debe tener una descripción")
-            } else {
-                /*Aqui subir*/
-                upload($(this).attr("clase") * 1 - 1);
-            }
-        });
-    }
+    // function boundBotones() {
+    //     $(".subir").unbind("click");
+    //     $(".subir").bind("click", function () {
+    //         error = false;
+    //         $("." + $(this).attr("clase")).each(function () {
+    //             if ($(this).val().trim() == "") {
+    //                 error = true;
+    //             }
+    //         });
+    //         if (error) {
+    //             bootbox.alert("La imagen debe tener una descripción")
+    //         } else {
+    //             /*Aqui subir*/
+    //             upload($(this).attr("clase") * 1 - 1);
+    //         }
+    //     });
+    // }
 
 
-    var request = [];
-    var tam = 0;
-    function upload(indice) {
-        var base = "${base?.id}";
-        var file = document.getElementById("file");
-        var formData = new FormData();
-        tam = file.files[indice];
-        var type = tam.type;
-        if (okContents[type]) {
-            tam = tam["size"];
-            var kb = tam / 1000;
-            var mb = kb / 1000;
-            if (mb <= 5) {
-                formData.append("file", file.files[indice]);
-                formData.append("id", base);
-                $("." + (indice + 1)).each(function () {
-                    //            console.log($(this))
-                    formData.append($(this).attr("name"), $(this).val());
-                });
-                var rs = request.length;
-                $(".d-" + (indice + 1)).addClass("subiendo").addClass("rs-" + rs);
-                $(".rs-" + rs).find(".resumen").remove();
-                $(".rs-" + rs).find(".botones").remove();
-                $(".rs-" + rs).find(".claves").remove();
-                $(".rs-" + rs).append('<div class="progress-bar-svt ui-corner-all" id="p-b"><div class="progress-svt background-image" id="p-' + rs + '"></div></div>').css({
-                    height     : 100,
-                    fontWeight : "bold"
-                });
-                request[rs] = new XMLHttpRequest();
-                request[rs].open("POST", "${g.createLink(controller: 'base',action: 'subirImagen')}");
+    %{--var request = [];--}%
+    %{--var tam = 0;--}%
+    %{--function upload(indice) {--}%
+    %{--    var base = "${base?.id}";--}%
+    %{--    var file = document.getElementById("file");--}%
+    %{--    var formData = new FormData();--}%
+    %{--    tam = file.files[indice];--}%
+    %{--    var type = tam.type;--}%
+    %{--    if (okContents[type]) {--}%
+    %{--        tam = tam["size"];--}%
+    %{--        var kb = tam / 1000;--}%
+    %{--        var mb = kb / 1000;--}%
+    %{--        if (mb <= 5) {--}%
+    %{--            formData.append("file", file.files[indice]);--}%
+    %{--            formData.append("id", base);--}%
+    %{--            $("." + (indice + 1)).each(function () {--}%
+    %{--                //            console.log($(this))--}%
+    %{--                formData.append($(this).attr("name"), $(this).val());--}%
+    %{--            });--}%
+    %{--            var rs = request.length;--}%
+    %{--            $(".d-" + (indice + 1)).addClass("subiendo").addClass("rs-" + rs);--}%
+    %{--            $(".rs-" + rs).find(".resumen").remove();--}%
+    %{--            $(".rs-" + rs).find(".botones").remove();--}%
+    %{--            $(".rs-" + rs).find(".claves").remove();--}%
+    %{--            $(".rs-" + rs).append('<div class="progress-bar-svt ui-corner-all" id="p-b"><div class="progress-svt background-image" id="p-' + rs + '"></div></div>').css({--}%
+    %{--                height     : 100,--}%
+    %{--                fontWeight : "bold"--}%
+    %{--            });--}%
+    %{--            request[rs] = new XMLHttpRequest();--}%
+    %{--            request[rs].open("POST", "${g.createLink(controller: 'base',action: 'subirImagen')}");--}%
 
 
-                request[rs].upload.onprogress = function (ev) {
-                    var loaded = ev.loaded;
-                    var width = (loaded * 100 / tam);
-                    if (width > 100)
-                        width = 100;
-                    //        console.log(width)
-                    $("#p-" + rs).css({width : parseInt(width) + "%"});
-                    if ($("#p-" + rs).width() > 50) {
-                        $("#p-" + rs).html("" + parseInt(width) + "%");
-                    }
-                };
-                request[rs].send(formData);
-                request[rs].onreadystatechange = function () {
-                    //            console.log("rs??",rs)
-                    if (request[rs].readyState == 4 && request[rs].status == 200) {
-                        if ($("#files").height() * 1 > 120) {
-                            $("#titulo-arch").show();
-                            $("#linea-arch").show();
-                        } else {
-                            $("#titulo-arch").hide();
-                            $("#linea-arch").hide();
-                        }
-                        $(".rs-" + rs).html("<div class='alert alert-success'> <i class='fa fa-check' style='color:#327BBA;margin-right: 10px'></i>" + $(".rs-" + rs).find(".titulo-archivo").html() + " subido exitosamente" + '</div>').css({
-                            height     : 50,
-                            fontWeight : "bold"
-                        }).removeClass("subiendo");
+    %{--            request[rs].upload.onprogress = function (ev) {--}%
+    %{--                var loaded = ev.loaded;--}%
+    %{--                var width = (loaded * 100 / tam);--}%
+    %{--                if (width > 100)--}%
+    %{--                    width = 100;--}%
+    %{--                //        console.log(width)--}%
+    %{--                $("#p-" + rs).css({width : parseInt(width) + "%"});--}%
+    %{--                if ($("#p-" + rs).width() > 50) {--}%
+    %{--                    $("#p-" + rs).html("" + parseInt(width) + "%");--}%
+    %{--                }--}%
+    %{--            };--}%
+    %{--            request[rs].send(formData);--}%
+    %{--            request[rs].onreadystatechange = function () {--}%
+    %{--                //            console.log("rs??",rs)--}%
+    %{--                if (request[rs].readyState == 4 && request[rs].status == 200) {--}%
+    %{--                    if ($("#files").height() * 1 > 120) {--}%
+    %{--                        $("#titulo-arch").show();--}%
+    %{--                        $("#linea-arch").show();--}%
+    %{--                    } else {--}%
+    %{--                        $("#titulo-arch").hide();--}%
+    %{--                        $("#linea-arch").hide();--}%
+    %{--                    }--}%
+    %{--                    $(".rs-" + rs).html("<div class='alert alert-success'> <i class='fa fa-check' style='color:#327BBA;margin-right: 10px'></i>" + $(".rs-" + rs).find(".titulo-archivo").html() + " subido exitosamente" + '</div>').css({--}%
+    %{--                        height     : 50,--}%
+    %{--                        fontWeight : "bold"--}%
+    %{--                    }).removeClass("subiendo");--}%
 
-                        cargarCarrusel(${base?.id})
-                    }
-                };
-            } else {
-                var $div = $(".fileContainer.d-" + (indice + 1));
-                $div.addClass("bg-danger").addClass("text-danger");
-                var $p = $("<div>").addClass("alert divError").html("No puede subir archivos de más de 5 megabytes");
-                $div.prepend($p);
-                return false;
-            }
-        } else {
-            var $div = $(".fileContainer.d-" + (indice + 1));
-            $div.addClass("bg-danger").addClass("text-danger");
-            var $p = $("<div>").addClass("alert divError").html("No puede subir archivos de tipo <b>" + type + "</b>");
-            $div.prepend($p);
-            return false;
-        }
-    }
+    %{--                    cargarCarrusel(${base?.id})--}%
+    %{--                }--}%
+    %{--            };--}%
+    %{--        } else {--}%
+    %{--            var $div = $(".fileContainer.d-" + (indice + 1));--}%
+    %{--            $div.addClass("bg-danger").addClass("text-danger");--}%
+    %{--            var $p = $("<div>").addClass("alert divError").html("No puede subir archivos de más de 5 megabytes");--}%
+    %{--            $div.prepend($p);--}%
+    %{--            return false;--}%
+    %{--        }--}%
+    %{--    } else {--}%
+    %{--        var $div = $(".fileContainer.d-" + (indice + 1));--}%
+    %{--        $div.addClass("bg-danger").addClass("text-danger");--}%
+    %{--        var $p = $("<div>").addClass("alert divError").html("No puede subir archivos de tipo <b>" + type + "</b>");--}%
+    %{--        $div.prepend($p);--}%
+    %{--        return false;--}%
+    %{--    }--}%
+    %{--}--}%
 
 
     $("#btnVer").click(function () {
