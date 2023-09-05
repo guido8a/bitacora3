@@ -68,7 +68,7 @@
             <th class="alinear" style="width: 120px">Tema</th>
             <th class="alinear" style="width: 240px">Palabras clave</th>
             <th class="alinear" style="width: 240px">Problema</th>
-            <th class="alinear" style="width: 460px">Solución</th>
+%{--            <th class="alinear" style="width: 460px">Solución</th>--}%
         </tr>
         </thead>
     </table>

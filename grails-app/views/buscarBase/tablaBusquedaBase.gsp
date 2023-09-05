@@ -34,9 +34,9 @@ th, td {
                     ${dato.problema}
                 </td>
 
-                <td width="460px" class="text-info">
-                    ${dato.solucion}
-                </td>
+%{--                <td width="460px" class="text-info">--}%
+%{--                    ${dato.solucion}--}%
+%{--                </td>--}%
             </tr>
         </g:each>
     </table>

@@ -131,7 +131,7 @@
         <div class="col-md-12" style="margin-top: 10px">
             <ul class="nav nav-pills">
                 <li class="show active col-md-5"><a data-toggle="tab" href="#home"><h4><i class="fa fa-atlas"></i> Problema</h4></a></li>
-                <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes (${contadorImas})</h4></a></li>
+%{--                <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes (${contadorImas})</h4></a></li>--}%
                 <li class="col-md-3"><a data-toggle="tab" href="#archivos"><h4><i class="fa fa-folder-open"></i> Archivos (${contadorOtros})</h4></a></li>
             </ul>
             <div style="height: 3px; background-color: #CEDDE6"></div>
@@ -181,8 +181,6 @@
                                 <div class="col-md-10">
                                     <span class="grupo">
                                         <g:textArea name="solucion" id="slcn" class="form-control required" style="height: 80px; resize: none" value="${base?.solucion}"/>
-%{--                                        <g:textArea name="texto" id="texto" class="form-control" value="${base?.solucion}" rows="5" cols="5"--}%
-%{--                                                    style="height: 85px; width:685px ; resize: none" maxlength="1023"/>--}%
                                     </span>
                                 </div>
                             </div>
@@ -191,8 +189,8 @@
                             <div class="col-md-12">
                                 <span class="col-md-2 label label-primary text-info mediano">Algoritmo</span>
                                 <div class="col-md-10">
-                                    %{--<ckeditor:editor name="algoritmo" height="240px" width="100%" toolbar="Basico2">${base?.algoritmo}</ckeditor:editor>--}%
-                                    <textArea name="algoritmo" id="algoritmo">${base?.algoritmo}</textArea>
+%{--                                    <textArea name="algoritmo" id="algoritmo">${base?.algoritmo}</textArea>--}%
+                                    <g:textArea name="algoritmo" id="algoritmo" class="form-control required" style="height: 80px; resize: none" value="${base?.algoritmo}"/>
                                 </div>
                             </div>
                         </div>
@@ -216,38 +214,33 @@
                     </g:form>
                 </div>
                 %{--//tab imágenes--}%
-                <div id="imagenes" class="tab-pane fade">
+%{--                <div id="imagenes" class="tab-pane fade">--}%
+%{--                    <g:if test="${base?.id}">--}%
+%{--                        <div class="row">--}%
+%{--                            <div class="col-md-12">--}%
+%{--                                <label class="control-label text-info" style="font-size: 14px">--}%
+%{--                                    Cargue imágenes referentes al tema: <strong>'${base?.problema}"</strong>--}%
+%{--                                </label>--}%
+%{--                            </div>--}%
+%{--                        </div>--}%
 
-                    <g:if test="${base?.id}">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="control-label text-info" style="font-size: 14px">
-                                    Cargue imágenes referentes al tema: <strong>'${base?.problema}"</strong>
-                                </label>
-                            </div>
-                        </div>
+%{--                        <div class="row">--}%
+%{--                            <div class="col-md-4"></div>--}%
+%{--                            <div class="col-md-6">--}%
+%{--                                <input type="file" name="file" id="file" title="Buscar Archivo" class="file btn btn-success" multiple accept=".jpeg, .jpg, .png">--}%
+%{--                            </div>--}%
+%{--                        </div>--}%
+%{--                    </g:if>--}%
 
-                        <div class="row">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-6">
-                                %{--                                    <span class="btn btn-success fileinput-button" style="position: relative;height: 40px;margin-top: 10px">--}%
-                                %{--                                        <i class="glyphicon glyphicon-plus"></i>--}%
-                                %{--                                        <span>Seleccionar archivos</span>--}%
-                                <input type="file" name="file" id="file" title="Buscar Archivo" class="file btn btn-success" multiple accept=".jpeg, .jpg, .png">
-                                %{--                                    </span>--}%
-                            </div>
-                        </div>
-                    </g:if>
+%{--                    <div style="margin-top:15px;margin-bottom: 20px" class="vertical-container" id="files">--}%
+%{--                        <p class="css-vertical-text" id="titulo-arch" style="display: none">Imagen</p>--}%
 
-                    <div style="margin-top:15px;margin-bottom: 20px" class="vertical-container" id="files">
-                        <p class="css-vertical-text" id="titulo-arch" style="display: none">Imagen</p>
-
-                        <div class="linea" id="linea-arch" style="display: none"></div>
-                    </div>
+%{--                        <div class="linea" id="linea-arch" style="display: none"></div>--}%
+%{--                    </div>--}%
 
 
-                    <div id="divCarrusel"></div>
-                </div>
+%{--                    <div id="divCarrusel"></div>--}%
+%{--                </div>--}%
 
                 <div id="archivos" class="tab-pane fade">
                     <div class="row">
@@ -305,6 +298,11 @@
             spellCheck: true,
             disableGrammar: true
         });
+
+        $('#algoritmo').summernote({
+            spellCheck: true,
+            disableGrammar: true
+        });
     });
 
     cargarArchivos('${base?.id}', '${lista}');
@@ -322,7 +320,6 @@
             }
 
         });
-
     }
 
     %{--var okContents = {--}%
@@ -355,8 +352,6 @@
         location.href="${createLink(controller: 'base', action: 'creaPdf')}"
     });
 
-
-
     $("#btnGuardar").click(function () {
 
         var $form = $("#frmProblema");
@@ -370,7 +365,7 @@
                 url: "${createLink(controller: 'base', action: 'guardarProblema_ajax')}",
                 data:  {
                     id: base_id,
-                    // algoritmo: texto,
+                    algoritmo: $("#algoritmo").val(),
                     tema: $("#temaId").val(),
                     problema: $("#prbl").val(),
                     clave: $("#clve").val(),
@@ -396,13 +391,8 @@
     });
 
     function reCargar(id) {
-//        console.log('recargar', id)
-        var url = "${createLink(controller: 'base', action: 'base')}" + "/" + id
-//        console.log('link', url)
-        location.href = url
+        location.href = "${createLink(controller: 'base', action: 'base')}" + "/" + id;
     }
-
-
 
     var validator = $("#frmProblema").validate({
         errorClass     : "help-block",
@@ -615,31 +605,24 @@
         $("#dialog").modal("show");
     });
 
-    <g:if test="${base?.id}">
-    cargarCarrusel(${base?.id});
-    </g:if>
+%{--    <g:if test="${base?.id}">--}%
+%{--    cargarCarrusel(${base?.id});--}%
+%{--    </g:if>--}%
 
-    function cargarCarrusel (idO) {
-        $.ajax({
-            type    : "POST",
-            url     : "${createLink(controller: 'base', action: 'carrusel_ajax')}",
-            data:{
-                id: idO
-            },
-            success : function (msg) {
-                cargarArchivos('${base?.id}', '${lista}');
-                $("#divCarrusel").html(msg);
-            }
-        });
-    }
-
-
-
+%{--    function cargarCarrusel (idO) {--}%
+%{--        $.ajax({--}%
+%{--            type    : "POST",--}%
+%{--            url     : "${createLink(controller: 'base', action: 'carrusel_ajax')}",--}%
+%{--            data:{--}%
+%{--                id: idO--}%
+%{--            },--}%
+%{--            success : function (msg) {--}%
+%{--                cargarArchivos('${base?.id}', '${lista}');--}%
+%{--                $("#divCarrusel").html(msg);--}%
+%{--            }--}%
+%{--        });--}%
+%{--    }--}%
 
 </script>
-
-
-
-
 </body>
 </html>

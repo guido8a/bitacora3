@@ -27,7 +27,8 @@
     <g:if test="${baseInstance?.solucion}">
         <div class="alert alert-dismissible alert-info" style="font-size: 15px;">
             <strong>Solución:</strong>
-            ${baseInstance?.solucion}
+%{--            ${baseInstance?.solucion}--}%
+            <util:renderHTML html="${baseInstance.solucion}"/>
         </div>
     </g:if>
 
